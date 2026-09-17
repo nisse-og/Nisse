@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nisse Study</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #f3f3f3;
+            padding: 25px 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .timer {
+            text-align: center;
+        }
+
+        .timer-title {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 9px;
+            font-size: 16px;
+            background: white;
+            margin-bottom: 12px;
+        }
+
+        #timer {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        button {
+            border: none;
+            border-radius: 9px;
+            padding: 11px 16px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .start {
+            background: #222;
+            color: white;
+        }
+
+        .reset {
+            background: #ddd;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .stat {
+            background: #f2f2f2;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-title {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .stat-value {
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .study-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .study-row:last-child {
+            border-bottom: none;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 8px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 9px;
+            font-size: 16px;
+        }
+
+        .add {
+            background: #222;
+            color: white;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 18px 0 0;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            margin-bottom: 9px;
+            background: #f2f2f2;
+            border-radius: 10px;
+        }
+
+        li span {
+            flex: 1;
+        }
+
+        .completed span {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        .delete {
+            background: #ddd;
+        }
+
+        .day {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .day:last-child {
+            border-bottom: none;
+        }
+
+        .day-title {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .week-total {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .subject-settings {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .subject-settings input {
+            flex: 1;
+        }
+
+        .small-button {
+            background: #ddd;
+        }
+
+        @media (max-width: 400px) {
+            #timer {
+                font-size: 40px;
+            }
+
+            .input-area {
+                flex-direction: column;
+            }
+
+            .add {
+                width: 100%;
+            }
+
+            .subject-settings {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Nisse Study</h1>
+
+
+    <!-- TIMER -->
+
+    <div class="card timer">
+
+        <div class="timer-title">
+            Study Timer
+        </div>
+
+        <select id="subjectSelect"></select>
+
+        <div id="timer">
+            00:00:00
+        </div>
+
+        <div class="buttons">
+
+            <button class="start" onclick="startTimer()">
+                Start
+            </button>
+
+            <button class="reset" onclick="resetTimer()">
+                Reset
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- TODAY -->
+
+    <div class="card">
+
+        <h2>Today</h2>
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    Total Study
+                </div>
+
+                <div class="stat-value" id="todayTime">
+                    0m
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    Tasks Done
+                </div>
+
+                <div class="stat-value" id="tasksDone">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUBJECTS TODAY -->
+
+    <div class="card">
+
+        <h2>Today's Subjects</h2>
+
+        <div id="todaySubjects"></div>
+
+    </div>
+
+
+    <!-- TASKS -->
+
+    <div class="card">
+
+        <h2>Tasks</h2>
+
+        <div class="input-area">
+
+            <input
+                id="taskInput"
+                type="text"
+                placeholder="Write a task..."
+            >
+
+            <button class="add" onclick="addTask()">
+                Add
+            </button>
+
+        </div>
+
+        <ul id="taskList"></ul>
+
+    </div>
+
+
+    <!-- SUBJECTS -->
+
+    <div class="card">
+
+        <h2>Subjects</h2>
+
+        <div class="input-area">
+
+            <input
+                id="subjectInput"
+                type="text"
+                placeholder="Add a subject..."
+            >
+
+            <button class="add" onclick="addSubject()">
+                Add
+            </button>
+
+        </div>
+
+        <div class="subject-settings">
+            <button class="small-button" onclick="removeSelectedSubject()">
+                Remove Selected Subject
+            </button>
+        </div>
+
+    </div>
+
+
+    <!-- WEEK -->
+
+    <div class="card">
+
+        <h2>This Week</h2>
+
+        <div id="weekStats"></div>
+
+        <div class="week-total">
+            Total:
+            <span id="weekTotal">0m</span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let tasks =
+    JSON.parse(localStorage.getItem("nisseTasks")) || [];
+
+
+let subjects =
+    JSON.parse(localStorage.getItem("nisseSubjects")) ||
+    [
+        "Math",
+        "Physics",
+        "Chemistry",
+        "English"
+    ];
+
+
+let rawStudy =
+    JSON.parse(localStorage.getItem("nisseStudy")) || {};
+
+
+let studyData = migrateStudyData(rawStudy);
+
+
+let timerSeconds = 0;
+let timerRunning = false;
+let timerInterval = null;
+let savedTimerSeconds = 0;
+
+
+/* ---------------- STUDY DATA ---------------- */
+
+
+function migrateStudyData(data) {
+
+    let result = {};
+
+    Object.keys(data).forEach(function(date) {
+
+        if (typeof data[date] === "number") {
+
+            result[date] = {
+                total: data[date],
+                subjects: {
+                    "Other": data[date]
+                }
+            };
+
+        } else {
+
+            result[date] = data[date];
+
+            if (!result[date].total) {
+                result[date].total = 0;
+            }
+
+            if (!result[date].subjects) {
+                result[date].subjects = {};
+            }
+
+        }
+
+    });
+
+    return result;
+}
+
+
+function saveStudyData() {
+
+    localStorage.setItem(
+        "nisseStudy",
+        JSON.stringify(studyData)
+    );
+
+}
+
+
+function saveSubjects() {
+
+    localStorage.setItem(
+        "nisseSubjects",
+        JSON.stringify(subjects)
+    );
+
+}
+
+
+/* ---------------- TIMER ---------------- */
+
+
+function startTimer() {
+
+    if (timerRunning) {
+        return;
+    }
+
+    if (!getSelectedSubject()) {
+
+        alert("Please select a subject.");
+
+        return;
+    }
+
+    timerRunning = true;
+
+    updateTimerButton();
+
+    timerInterval = setInterval(function() {
+
+        timerSeconds++;
+
+        updateTimer();
+
+    }, 1000);
+
+}
+
+
+function stopTimer() {
+
+    if (!timerRunning) {
+        return;
+    }
+
+    clearInterval(timerInterval);
+
+    timerInterval = null;
+
+    timerRunning = false;
+
+    saveStudyTime();
+
+    updateTimerButton();
+
+}
+
+
+function resetTimer() {
+
+    if (timerRunning) {
+
+        clearInterval(timerInterval);
+
+        timerInterval = null;
+
+        timerRunning = false;
+
+    }
+
+    // Reset only the current timer.
+    // Saved study time stays unchanged.
+    timerSeconds = 0;
+    savedTimerSeconds = 0;
+
+    updateTimer();
+
+    updateTimerButton();
+
+}
+
+
+function updateTimerButton() {
+
+    let button = document.querySelector(".start");
+
+    if (timerRunning) {
+
+        button.textContent = "Stop";
+
+        button.onclick = stopTimer;
+
+    } else {
+
+        button.textContent = "Start";
+
+        button.onclick = startTimer;
+
+    }
+
+}
+
+
+function updateTimer() {
+
+    let hours =
+        Math.floor(timerSeconds / 3600);
+
+    let minutes =
+        Math.floor((timerSeconds % 3600) / 60);
+
+    let seconds =
+        timerSeconds % 60;
+
+
+    document.getElementById("timer").textContent =
+        formatNumber(hours) + ":" +
+        formatNumber(minutes) + ":" +
+        formatNumber(seconds);
+
+}
+
+
+function formatNumber(number) {
+
+    return number < 10
+        ? "0" + number
+        : number;
+
+}
+
+
+function saveStudyTime() {
+
+    // Save only the time since the previous Stop.
+    // The timer itself is NOT reset.
+    let unsavedSeconds = timerSeconds - savedTimerSeconds;
+
+    if (unsavedSeconds <= 0) {
+        return;
+    }
+
+
+    let today =
+        getDateKey();
+
+
+    let subject =
+        getSelectedSubject();
+
+
+    if (!subject) {
+        return;
+    }
+
+
+    if (!studyData[today]) {
+
+        studyData[today] = {
+            total: 0,
+            subjects: {}
+        };
+
+    }
+
+
+    if (!studyData[today].subjects) {
+
+        studyData[today].subjects = {};
+
+    }
+
+
+    if (!studyData[today].subjects[subject]) {
+
+        studyData[today].subjects[subject] = 0;
+
+    }
+
+
+    studyData[today].total += unsavedSeconds;
+
+    studyData[today].subjects[subject] += unsavedSeconds;
+
+    savedTimerSeconds = timerSeconds;
+
+
+    saveStudyData();
+
+    updateStats();
+
+}
+
+
+/* ---------------- SUBJECTS ---------------- */
+
+
+function getSelectedSubject() {
+
+    return document.getElementById(
+        "subjectSelect"
+    ).value;
+
+}
+
+
+function renderSubjects() {
+
+    let select =
+        document.getElementById(
+            "subjectSelect"
+        );
+
+
+    select.innerHTML = "";
+
+
+    subjects.forEach(function(subject) {
+
+        let option =
+            document.createElement("option");
+
+        option.value = subject;
+
+        option.textContent = subject;
+
+        select.appendChild(option);
+
+    });
+
+}
+
+
+function addSubject() {
+
+    let input =
+        document.getElementById(
+            "subjectInput"
+        );
+
+
+    let name =
+        input.value.trim();
+
+
+    if (name === "") {
+        return;
+    }
+
+
+    if (subjects.includes(name)) {
+
+        alert("This subject already exists.");
+
+        return;
+
+    }
+
+
+    subjects.push(name);
+
+    saveSubjects();
+
+    renderSubjects();
+
+    input.value = "";
+
+}
+
+
+function removeSelectedSubject() {
+
+    let selected =
+        getSelectedSubject();
+
+
+    if (!selected) {
+        return;
+    }
+
+
+    if (subjects.length <= 1) {
+
+        alert("You need at least one subject.");
+
+        return;
+
+    }
+
+
+    subjects =
+        subjects.filter(function(subject) {
+
+            return subject !== selected;
+
+        });
+
+
+    saveSubjects();
+
+    renderSubjects();
+
+}
+
+
+/* ---------------- TASKS ---------------- */
+
+
+function addTask() {
+
+    let input =
+        document.getElementById(
+            "taskInput"
+        );
+
+
+    let text =
+        input.value.trim();
+
+
+    if (text === "") {
+        return;
+    }
+
+
+    tasks.push({
+
+        text: text,
+
+        completed: false
+
+    });
+
+
+    input.value = "";
+
+    saveTasks();
+
+    renderTasks();
+
+    updateStats();
+
+}
+
+
+function saveTasks() {
+
+    localStorage.setItem(
+        "nisseTasks",
+        JSON.stringify(tasks)
+    );
+
+}
+
+
+function renderTasks() {
+
+    let list =
+        document.getElementById(
+            "taskList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    tasks.forEach(function(task, index) {
+
+        let li =
+            document.createElement("li");
+
+
+        if (task.completed) {
+
+            li.classList.add("completed");
+
+        }
+
+
+        let checkbox =
+            document.createElement("input");
+
+
+        checkbox.type = "checkbox";
+
+        checkbox.checked =
+            task.completed;
+
+
+        checkbox.addEventListener(
+            "change",
+            function() {
+
+                tasks[index].completed =
+                    checkbox.checked;
+
+
+                saveTasks();
+
+                renderTasks();
+
+                updateStats();
+
+            }
+        );
+
+
+        let span =
+            document.createElement("span");
+
+
+        span.textContent =
+            task.text;
+
+
+        let deleteButton =
+            document.createElement("button");
+
+
+        deleteButton.textContent =
+            "Delete";
+
+
+        deleteButton.classList.add(
+            "delete"
+        );
+
+
+        deleteButton.onclick =
+            function() {
+
+                tasks.splice(index, 1);
+
+                saveTasks();
+
+                renderTasks();
+
+                updateStats();
+
+            };
+
+
+        li.appendChild(checkbox);
+
+        li.appendChild(span);
+
+        li.appendChild(deleteButton);
+
+        list.appendChild(li);
+
+    });
+
+}
+
+
+/* ---------------- DATES ---------------- */
+
+
+function getDateKey(date = new Date()) {
+
+    let year =
+        date.getFullYear();
+
+
+    let month =
+        String(date.getMonth() + 1)
+        .padStart(2, "0");
+
+
+    let day =
+        String(date.getDate())
+        .padStart(2, "0");
+
+
+    return year + "-" + month + "-" + day;
+
+}
+
+
+/* ---------------- TIME ---------------- */
+
+
+function formatStudyTime(seconds) {
+
+    let hours =
+        Math.floor(seconds / 3600);
+
+
+    let minutes =
+        Math.floor(
+            (seconds % 3600) / 60
+        );
+
+
+    if (hours > 0) {
+
+        return hours + "h " + minutes + "m";
+
+    }
+
+
+    return minutes + "m";
+
+}
+
+
+/* ---------------- TODAY ---------------- */
+
+
+function updateStats() {
+
+    let today =
+        getDateKey();
+
+
+    let todayData =
+        studyData[today] || {
+            total: 0,
+            subjects: {}
+        };
+
+
+    document.getElementById(
+        "todayTime"
+    ).textContent =
+        formatStudyTime(
+            todayData.total
+        );
+
+
+    let completed =
+        tasks.filter(
+            task => task.completed
+        ).length;
+
+
+    document.getElementById(
+        "tasksDone"
+    ).textContent =
+        completed;
+
+
+    updateTodaySubjects();
+
+    updateWeek();
+
+}
+
+
+function updateTodaySubjects() {
+
+    let container =
+        document.getElementById(
+            "todaySubjects"
+        );
+
+
+    container.innerHTML = "";
+
+
+    let today =
+        getDateKey();
+
+
+    let data =
+        studyData[today];
+
+
+    if (!data || !data.subjects) {
+
+        container.textContent =
+            "No study time yet.";
+
+        return;
+
+    }
+
+
+    subjects.forEach(function(subject) {
+
+        let seconds =
+            data.subjects[subject] || 0;
+
+
+        let row =
+            document.createElement("div");
+
+
+        row.classList.add(
+            "study-row"
+        );
+
+
+        let name =
+            document.createElement("span");
+
+
+        name.textContent =
+            subject;
+
+
+        let time =
+            document.createElement("span");
+
+
+        time.textContent =
+            formatStudyTime(seconds);
+
+
+        row.appendChild(name);
+
+        row.appendChild(time);
+
+        container.appendChild(row);
+
+    });
+
+
+    if (data.subjects["Other"]) {
+
+        let row =
+            document.createElement("div");
+
+
+        row.classList.add(
+            "study-row"
+        );
+
+
+        row.innerHTML =
+            "<span>Other</span><span>" +
+            formatStudyTime(
+                data.subjects["Other"]
+            ) +
+            "</span>";
+
+
+        container.appendChild(row);
+
+    }
+
+}
+
+
+/* ---------------- WEEK ---------------- */
+
+
+function updateWeek() {
+
+    let container =
+        document.getElementById(
+            "weekStats"
+        );
+
+
+    container.innerHTML = "";
+
+
+    let today =
+        new Date();
+
+
+    let dayOfWeek =
+        today.getDay();
+
+
+    let mondayOffset =
+        dayOfWeek === 0
+            ? -6
+            : 1 - dayOfWeek;
+
+
+    let dayNames = [
+
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+
+    ];
+
+
+    let total = 0;
+
+
+    for (
+        let i = 0;
+        i < 7;
+        i++
+    ) {
+
+        let date =
+            new Date(today);
+
+
+        date.setDate(
+            today.getDate() +
+            mondayOffset +
+            i
+        );
+
+
+        let key =
+            getDateKey(date);
+
+
+        let data =
+            studyData[key] || {
+                total: 0,
+                subjects: {}
+            };
+
+
+        total += data.total;
+
+
+        let day =
+            document.createElement("div");
+
+
+        day.classList.add("day");
+
+
+        let title =
+            document.createElement("div");
+
+
+        title.classList.add(
+            "day-title"
+        );
+
+
+        let name =
+            document.createElement("span");
+
+
+        name.textContent =
+            dayNames[i];
+
+
+        let totalTime =
+            document.createElement("span");
+
+
+        totalTime.textContent =
+            formatStudyTime(
+                data.total
+            );
+
+
+        title.appendChild(name);
+
+        title.appendChild(totalTime);
+
+        day.appendChild(title);
+
+
+        if (data.subjects) {
+
+            Object.keys(
+                data.subjects
+            ).forEach(function(subject) {
+
+                let seconds =
+                    data.subjects[subject];
+
+
+                if (seconds > 0) {
+
+                    let row =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    row.classList.add(
+                        "study-row"
+                    );
+
+
+                    let subjectName =
+                        document.createElement(
+                            "span"
+                        );
+
+
+                    subjectName.textContent =
+                        subject;
+
+
+                    let time =
+                        document.createElement(
+                            "span"
+                        );
+
+
+                    time.textContent =
+                        formatStudyTime(
+                            seconds
+                        );
+
+
+                    row.appendChild(
+                        subjectName
+                    );
+
+                    row.appendChild(
+                        time
+                    );
+
+                    day.appendChild(row);
+
+                }
+
+            });
+
+        }
+
+
+        container.appendChild(day);
+
+    }
+
+
+    document.getElementById(
+        "weekTotal"
+    ).textContent =
+        formatStudyTime(total);
+
+}
+
+
+/* ---------------- ENTER KEY ---------------- */
+
+
+document
+    .getElementById("taskInput")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                addTask();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById("subjectInput")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                addSubject();
+
+            }
+
+        }
+    );
+
+
+/* ---------------- START ---------------- */
+
+
+renderSubjects();
+
+renderTasks();
+
+updateTimer();
+
+updateTimerButton();
+
+updateStats();
+
+</script>
+
+</body>
+</html>
