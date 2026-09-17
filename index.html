@@ -2,10 +2,16 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Nisse Study</title>
+
 
     <style>
 
@@ -13,213 +19,500 @@
             box-sizing: border-box;
         }
 
+
         body {
+
             margin: 0;
+
             min-height: 100vh;
-            font-family: Arial, sans-serif;
+
+            font-family:
+                Arial,
+                sans-serif;
+
             background: #f3f3f3;
+
             padding: 25px 15px;
+
         }
+
 
         .container {
+
             width: 100%;
+
             max-width: 550px;
+
             margin: auto;
+
         }
+
 
         h1 {
+
             text-align: center;
+
             margin-bottom: 25px;
+
         }
+
+
+        h2 {
+
+            margin-top: 0;
+
+        }
+
 
         .card {
+
             background: white;
+
             border-radius: 16px;
+
             padding: 20px;
+
             margin-bottom: 18px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+            box-shadow:
+                0 4px 15px
+                rgba(0, 0, 0, 0.08);
+
         }
+
+
+        /* =========================
+           TIMER
+        ========================= */
+
 
         .timer {
+
             text-align: center;
+
         }
+
 
         .timer-title {
+
             font-size: 18px;
+
             margin-bottom: 12px;
+
+            font-weight: bold;
+
         }
+
+
+        .timer-status {
+
+            font-size: 13px;
+
+            opacity: 0.6;
+
+            margin-bottom: 8px;
+
+        }
+
 
         select {
+
             width: 100%;
+
             padding: 12px;
-            border: 1px solid #ccc;
+
+            border:
+                1px solid #ccc;
+
             border-radius: 9px;
+
             font-size: 16px;
+
             background: white;
+
             margin-bottom: 12px;
+
         }
+
 
         #timer {
+
             font-size: 48px;
+
             font-weight: bold;
+
             margin: 15px 0;
+
+            letter-spacing: 1px;
+
         }
+
 
         .buttons {
+
             display: flex;
+
             justify-content: center;
+
             gap: 10px;
+
         }
+
 
         button {
+
             border: none;
+
             border-radius: 9px;
+
             padding: 11px 16px;
+
             cursor: pointer;
+
             font-size: 15px;
+
         }
+
+
+        button:active {
+
+            transform: scale(0.97);
+
+        }
+
 
         .start {
+
             background: #222;
+
             color: white;
+
         }
+
 
         .reset {
+
             background: #ddd;
+
+            color: #222;
+
         }
+
+
+        /* =========================
+           STATS
+        ========================= */
+
 
         .stats {
+
             display: grid;
-            grid-template-columns: 1fr 1fr;
+
+            grid-template-columns:
+                1fr 1fr;
+
             gap: 12px;
+
         }
+
 
         .stat {
+
             background: #f2f2f2;
+
             border-radius: 12px;
+
             padding: 15px;
+
             text-align: center;
+
         }
+
 
         .stat-title {
+
             font-size: 14px;
+
             opacity: 0.7;
+
         }
+
 
         .stat-value {
+
             font-size: 25px;
+
             font-weight: bold;
+
             margin-top: 5px;
+
         }
+
+
+        /* =========================
+           STUDY ROWS
+        ========================= */
+
 
         .study-row {
+
             display: flex;
-            justify-content: space-between;
+
+            justify-content:
+                space-between;
+
             padding: 10px 0;
-            border-bottom: 1px solid #eee;
+
+            border-bottom:
+                1px solid #eee;
+
         }
+
 
         .study-row:last-child {
+
             border-bottom: none;
+
         }
+
+
+        /* =========================
+           INPUTS
+        ========================= */
+
 
         .input-area {
+
             display: flex;
+
             gap: 8px;
+
         }
+
 
         input[type="text"] {
+
             flex: 1;
+
             padding: 12px;
-            border: 1px solid #ccc;
+
+            border:
+                1px solid #ccc;
+
             border-radius: 9px;
+
             font-size: 16px;
+
         }
+
 
         .add {
+
             background: #222;
+
             color: white;
+
         }
+
+
+        /* =========================
+           TASKS
+        ========================= */
+
 
         ul {
+
             list-style: none;
+
             padding: 0;
+
             margin: 18px 0 0;
+
         }
+
 
         li {
+
             display: flex;
+
             align-items: center;
+
             gap: 10px;
+
             padding: 12px;
+
             margin-bottom: 9px;
+
             background: #f2f2f2;
+
             border-radius: 10px;
+
         }
+
 
         li span {
+
             flex: 1;
+
         }
+
 
         .completed span {
-            text-decoration: line-through;
+
+            text-decoration:
+                line-through;
+
             opacity: 0.5;
+
         }
+
 
         .delete {
+
             background: #ddd;
+
         }
+
+
+        /* =========================
+           WEEK
+        ========================= */
+
 
         .day {
+
             padding: 12px 0;
-            border-bottom: 1px solid #eee;
+
+            border-bottom:
+                1px solid #eee;
+
         }
+
 
         .day:last-child {
+
             border-bottom: none;
+
         }
+
 
         .day-title {
+
             display: flex;
-            justify-content: space-between;
+
+            justify-content:
+                space-between;
+
             font-weight: bold;
+
             margin-bottom: 6px;
+
         }
+
 
         .week-total {
+
             text-align: center;
+
             margin-top: 15px;
+
             font-size: 18px;
+
             font-weight: bold;
+
         }
+
+
+        /* =========================
+           SUBJECT SETTINGS
+        ========================= */
+
 
         .subject-settings {
+
             display: flex;
+
             gap: 8px;
+
             margin-top: 12px;
+
         }
 
+
         .small-button {
+
             background: #ddd;
+
         }
+
+
+        /* =========================
+           ONLINE PLACEHOLDER
+        ========================= */
+
+
+        .online-button {
+
+            width: 100%;
+
+            margin-top: 5px;
+
+            background: #222;
+
+            color: white;
+
+            padding: 14px;
+
+        }
+
+
+        .coming-soon {
+
+            text-align: center;
+
+            font-size: 13px;
+
+            opacity: 0.5;
+
+            margin-top: 8px;
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
 
         @media (max-width: 400px) {
 
             #timer {
+
                 font-size: 40px;
+
             }
+
 
             .input-area {
+
                 flex-direction: column;
+
             }
+
 
             .add {
+
                 width: 100%;
+
             }
 
+
             .subject-settings {
+
                 flex-direction: column;
+
             }
+
         }
 
     </style>
@@ -233,31 +526,53 @@
 <div class="container">
 
 
-    <h1>Nisse Study</h1>
+    <h1>
+        Nisse Study
+    </h1>
 
 
-    <!-- TIMER -->
+    <!-- =========================
+         STUDY TIMER
+    ========================= -->
+
 
     <div class="card timer">
+
 
         <div class="timer-title">
             Study Timer
         </div>
 
-        <select id="subjectSelect"></select>
+
+        <div
+            id="timerStatus"
+            class="timer-status"
+        >
+            Ready
+        </div>
+
+
+        <select
+            id="subjectSelect"
+        ></select>
+
 
         <div id="timer">
             00:00:00
         </div>
 
+
         <div class="buttons">
 
+
             <button
+                id="startButton"
                 class="start"
                 onclick="startTimer()"
             >
                 Start
             </button>
+
 
             <button
                 class="reset"
@@ -266,18 +581,29 @@
                 Reset
             </button>
 
+
         </div>
+
 
     </div>
 
 
-    <!-- TODAY -->
+
+    <!-- =========================
+         TODAY
+    ========================= -->
+
 
     <div class="card">
 
-        <h2>Today</h2>
+
+        <h2>
+            Today
+        </h2>
+
 
         <div class="stats">
+
 
             <div class="stat">
 
@@ -310,35 +636,58 @@
 
             </div>
 
+
         </div>
 
-    </div>
-
-
-    <!-- SUBJECTS TODAY -->
-
-    <div class="card">
-
-        <h2>Today's Subjects</h2>
-
-        <div id="todaySubjects"></div>
 
     </div>
 
 
-    <!-- TASKS -->
+
+    <!-- =========================
+         TODAY SUBJECTS
+    ========================= -->
+
 
     <div class="card">
 
-        <h2>Tasks</h2>
+
+        <h2>
+            Today's Subjects
+        </h2>
+
+
+        <div
+            id="todaySubjects"
+        ></div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         TASKS
+    ========================= -->
+
+
+    <div class="card">
+
+
+        <h2>
+            Tasks
+        </h2>
+
 
         <div class="input-area">
+
 
             <input
                 id="taskInput"
                 type="text"
                 placeholder="Write a task..."
             >
+
 
             <button
                 class="add"
@@ -347,26 +696,41 @@
                 Add
             </button>
 
+
         </div>
 
-        <ul id="taskList"></ul>
+
+        <ul
+            id="taskList"
+        ></ul>
+
 
     </div>
 
 
-    <!-- SUBJECTS -->
+
+    <!-- =========================
+         SUBJECTS
+    ========================= -->
+
 
     <div class="card">
 
-        <h2>Subjects</h2>
+
+        <h2>
+            Subjects
+        </h2>
+
 
         <div class="input-area">
+
 
             <input
                 id="subjectInput"
                 type="text"
                 placeholder="Add a subject..."
             >
+
 
             <button
                 class="add"
@@ -375,10 +739,12 @@
                 Add
             </button>
 
+
         </div>
 
 
         <div class="subject-settings">
+
 
             <button
                 class="small-button"
@@ -387,28 +753,74 @@
                 Remove Selected Subject
             </button>
 
+
         </div>
+
 
     </div>
 
 
-    <!-- WEEK -->
+
+    <!-- =========================
+         WEEK
+    ========================= -->
+
 
     <div class="card">
 
-        <h2>This Week</h2>
 
-        <div id="weekStats"></div>
+        <h2>
+            This Week
+        </h2>
+
+
+        <div
+            id="weekStats"
+        ></div>
+
 
         <div class="week-total">
 
             Total:
 
-            <span id="weekTotal">
+            <span
+                id="weekTotal"
+            >
                 0m
             </span>
 
         </div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         ONLINE
+    ========================= -->
+
+
+    <div class="card">
+
+
+        <h2>
+            Online Study Room
+        </h2>
+
+
+        <button
+            class="online-button"
+            onclick="onlineComingSoon()"
+        >
+            Enter Online Room
+        </button>
+
+
+        <div class="coming-soon">
+            Coming soon
+        </div>
+
 
     </div>
 
@@ -420,52 +832,69 @@
 <script>
 
 
-/* ================================
+/* =====================================================
    DATA
-================================ */
+===================================================== */
 
 
 let tasks =
     JSON.parse(
-        localStorage.getItem("nisseTasks")
+        localStorage.getItem(
+            "nisseTasks"
+        )
     ) || [];
 
 
 let subjects =
     JSON.parse(
-        localStorage.getItem("nisseSubjects")
-    ) ||
-    [
+        localStorage.getItem(
+            "nisseSubjects"
+        )
+    ) || [
+
         "Math",
+
         "Physics",
+
         "Chemistry",
+
         "English"
+
     ];
 
 
 let rawStudy =
     JSON.parse(
-        localStorage.getItem("nisseStudy")
+        localStorage.getItem(
+            "nisseStudy"
+        )
     ) || {};
 
 
 let studyData =
-    migrateStudyData(rawStudy);
+    migrateStudyData(
+        rawStudy
+    );
 
 
-
-/* ================================
-   TIMER
-================================ */
+/* =====================================================
+   TIMER STATE
+===================================================== */
 
 
 /*
-    timerSeconds
-    = current displayed timer value
+    timerSeconds:
+    The number shown on screen.
 
-    savedTimerSeconds
-    = how much of the current timer
-      has already been added to Study Time
+    savedTimerSeconds:
+    How much of the current timer
+    has already been added to Study Time.
+
+    timerRunning:
+    Whether the timer is currently running.
+
+    timerStartedAt:
+    Timestamp used to survive page reloads.
 */
 
 
@@ -477,56 +906,84 @@ let timerRunning = false;
 
 let timerInterval = null;
 
+let timerStartedAt = null;
 
 
-/* ================================
+/* =====================================================
+   TIMER STORAGE KEY
+===================================================== */
+
+
+const TIMER_STORAGE_KEY =
+    "nisseTimerState";
+
+
+/* =====================================================
    STUDY DATA
-================================ */
+===================================================== */
 
 
 function migrateStudyData(data) {
 
+
     let result = {};
 
 
-    Object.keys(data).forEach(function(date) {
+    Object.keys(data).forEach(
+        function(date) {
 
 
-        if (typeof data[date] === "number") {
+            if (
+                typeof data[date]
+                === "number"
+            ) {
 
-            result[date] = {
 
-                total: data[date],
+                result[date] = {
 
-                subjects: {
-                    "Other": data[date]
+                    total:
+                        data[date],
+
+                    subjects: {
+
+                        "Other":
+                            data[date]
+
+                    }
+
+                };
+
+
+            } else {
+
+
+                result[date] =
+                    data[date];
+
+
+                if (
+                    !result[date].total
+                ) {
+
+                    result[date].total =
+                        0;
+
                 }
 
-            };
 
-        }
+                if (
+                    !result[date].subjects
+                ) {
 
-        else {
+                    result[date].subjects =
+                        {};
 
-            result[date] = data[date];
-
-
-            if (!result[date].total) {
-
-                result[date].total = 0;
-
-            }
-
-
-            if (!result[date].subjects) {
-
-                result[date].subjects = {};
+                }
 
             }
 
         }
-
-    });
+    );
 
 
     return result;
@@ -534,32 +991,243 @@ function migrateStudyData(data) {
 }
 
 
-
 function saveStudyData() {
 
+
     localStorage.setItem(
+
         "nisseStudy",
-        JSON.stringify(studyData)
+
+        JSON.stringify(
+            studyData
+        )
+
     );
 
 }
-
 
 
 function saveSubjects() {
 
+
     localStorage.setItem(
+
         "nisseSubjects",
-        JSON.stringify(subjects)
+
+        JSON.stringify(
+            subjects
+        )
+
     );
 
 }
 
 
+/* =====================================================
+   TIMER STORAGE
+===================================================== */
 
-/* ================================
-   TIMER
-================================ */
+
+function saveTimerState() {
+
+
+    let state = {
+
+
+        timerSeconds:
+            timerSeconds,
+
+
+        savedTimerSeconds:
+            savedTimerSeconds,
+
+
+        timerRunning:
+            timerRunning,
+
+
+        timerStartedAt:
+            timerStartedAt
+
+    };
+
+
+    localStorage.setItem(
+
+        TIMER_STORAGE_KEY,
+
+        JSON.stringify(
+            state
+        )
+
+    );
+
+}
+
+
+function clearTimerState() {
+
+
+    localStorage.removeItem(
+
+        TIMER_STORAGE_KEY
+
+    );
+
+}
+
+
+/* =====================================================
+   RESTORE TIMER AFTER RELOAD
+===================================================== */
+
+
+function restoreTimer() {
+
+
+    let saved =
+
+        JSON.parse(
+
+            localStorage.getItem(
+
+                TIMER_STORAGE_KEY
+
+            )
+
+        );
+
+
+    if (!saved) {
+
+        timerSeconds = 0;
+
+        savedTimerSeconds = 0;
+
+        timerRunning = false;
+
+        timerStartedAt = null;
+
+        updateTimer();
+
+        updateTimerButton();
+
+        return;
+
+    }
+
+
+    timerSeconds =
+        saved.timerSeconds || 0;
+
+
+    savedTimerSeconds =
+        saved.savedTimerSeconds || 0;
+
+
+    timerRunning =
+        saved.timerRunning || false;
+
+
+    timerStartedAt =
+        saved.timerStartedAt || null;
+
+
+    /*
+        If the timer was running when
+        the page was reloaded, calculate
+        the missing time.
+    */
+
+
+    if (
+        timerRunning &&
+        timerStartedAt
+    ) {
+
+
+        let now =
+            Date.now();
+
+
+        let elapsed =
+
+            Math.floor(
+
+                (
+                    now -
+                    timerStartedAt
+                ) / 1000
+
+            );
+
+
+        if (elapsed > 0) {
+
+            timerSeconds +=
+                elapsed;
+
+        }
+
+
+        /*
+            Start a fresh timestamp so
+            future seconds are calculated
+            correctly.
+        */
+
+
+        timerStartedAt =
+            Date.now();
+
+
+        timerInterval =
+            setInterval(
+
+                function() {
+
+                    timerSeconds++;
+
+                    updateTimer();
+
+                    saveTimerState();
+
+                },
+
+                1000
+
+            );
+
+
+        updateTimerStatus(
+            "Studying"
+        );
+
+
+    } else {
+
+
+        timerRunning =
+            false;
+
+
+        updateTimerStatus(
+            "Paused"
+        );
+
+    }
+
+
+    updateTimer();
+
+    updateTimerButton();
+
+}
+
+
+/* =====================================================
+   START TIMER
+===================================================== */
 
 
 function startTimer() {
@@ -567,11 +1235,9 @@ function startTimer() {
 
     /*
         If already running,
-        Start does nothing.
-
-        The button itself has already
-        changed to Stop.
+        do absolutely nothing.
     */
+
 
     if (timerRunning) {
 
@@ -580,9 +1246,17 @@ function startTimer() {
     }
 
 
-    if (!getSelectedSubject()) {
+    let subject =
+        getSelectedSubject();
 
-        alert("Please select a subject.");
+
+    if (!subject) {
+
+
+        alert(
+            "Please select a subject."
+        );
+
 
         return;
 
@@ -592,23 +1266,48 @@ function startTimer() {
     timerRunning = true;
 
 
+    timerStartedAt =
+        Date.now();
+
+
     updateTimerButton();
+
+    updateTimerStatus(
+        "Studying"
+    );
 
 
     timerInterval =
-        setInterval(function() {
+
+        setInterval(
+
+            function() {
 
 
-            timerSeconds++;
+                timerSeconds++;
 
 
-            updateTimer();
+                updateTimer();
 
 
-        }, 1000);
+                saveTimerState();
+
+
+            },
+
+            1000
+
+        );
+
+
+    saveTimerState();
 
 }
 
+
+/* =====================================================
+   STOP TIMER
+===================================================== */
 
 
 function stopTimer() {
@@ -621,118 +1320,214 @@ function stopTimer() {
     }
 
 
-    clearInterval(timerInterval);
+    /*
+        Stop the interval.
+    */
+
+
+    clearInterval(
+        timerInterval
+    );
+
 
     timerInterval = null;
+
+
+    /*
+        Save only the new part
+        that hasn't been saved yet.
+    */
+
+
+    saveStudyTime();
 
 
     timerRunning = false;
 
 
-    /*
-        Save only the new part of the timer.
-    */
-
-    saveStudyTime();
+    timerStartedAt = null;
 
 
     updateTimerButton();
 
+
+    updateTimerStatus(
+        "Paused"
+    );
+
+
+    saveTimerState();
+
 }
 
+
+/* =====================================================
+   RESET TIMER
+===================================================== */
 
 
 function resetTimer() {
 
 
     /*
-        Stop the current counting.
+        Reset does NOT touch
+        Study Time.
     */
+
 
     if (timerRunning) {
 
-        clearInterval(timerInterval);
+
+        clearInterval(
+            timerInterval
+        );
+
 
         timerInterval = null;
 
+
         timerRunning = false;
+
 
     }
 
 
     /*
-        Reset ONLY the current timer.
-
-        Saved Study Time is NOT touched.
+        The current unsaved part is
+        intentionally discarded.
     */
 
+
     timerSeconds = 0;
+
 
     savedTimerSeconds = 0;
 
 
+    timerStartedAt = null;
+
+
+    clearTimerState();
+
+
     updateTimer();
+
 
     updateTimerButton();
 
+
+    updateTimerStatus(
+        "Ready"
+    );
+
 }
 
+
+/* =====================================================
+   TIMER BUTTON
+===================================================== */
 
 
 function updateTimerButton() {
 
 
     let button =
-        document.querySelector(".start");
+
+        document.getElementById(
+            "startButton"
+        );
 
 
     if (timerRunning) {
 
-        button.textContent = "Stop";
 
-        button.onclick = stopTimer;
+        button.textContent =
+            "Stop";
 
-    }
 
-    else {
+        button.onclick =
+            stopTimer;
 
-        button.textContent = "Start";
 
-        button.onclick = startTimer;
+    } else {
+
+
+        button.textContent =
+            "Start";
+
+
+        button.onclick =
+            startTimer;
 
     }
 
 }
 
 
+/* =====================================================
+   TIMER STATUS
+===================================================== */
+
+
+function updateTimerStatus(
+    text
+) {
+
+
+    document.getElementById(
+
+        "timerStatus"
+
+    ).textContent = text;
+
+}
+
+
+/* =====================================================
+   TIMER DISPLAY
+===================================================== */
+
 
 function updateTimer() {
 
 
     let hours =
+
         Math.floor(
+
             timerSeconds / 3600
+
         );
 
 
     let minutes =
+
         Math.floor(
-            (timerSeconds % 3600) / 60
+
+            (
+                timerSeconds % 3600
+            ) / 60
+
         );
 
 
     let seconds =
+
         timerSeconds % 60;
 
 
     document.getElementById(
+
         "timer"
+
     ).textContent =
 
         formatNumber(hours) +
+
         ":" +
 
         formatNumber(minutes) +
+
         ":" +
 
         formatNumber(seconds);
@@ -740,47 +1535,57 @@ function updateTimer() {
 }
 
 
+function formatNumber(
+    number
+) {
 
-function formatNumber(number) {
 
     return number < 10
+
         ? "0" + number
+
         : number;
 
 }
 
+
+/* =====================================================
+   SAVE STUDY TIME
+===================================================== */
 
 
 function saveStudyTime() {
 
 
     /*
+        Only save the amount that has
+        NOT already been saved.
+
         Example:
 
-        First session:
-        timer = 25:30
-        saved = 00:00
+        Timer = 25:30
+        Saved = 00:00
 
-        Save:
-        25:30 - 00:00
-        = 25:30
+        Save = 25:30
 
+        Then:
 
-        Second session:
-        timer = 40:10
-        saved = 25:30
+        Timer = 40:10
+        Saved = 25:30
 
-        Save:
-        40:10 - 25:30
-        = 14:40
+        Save = 14:40
     */
 
+
     let unsavedSeconds =
+
         timerSeconds -
         savedTimerSeconds;
 
 
-    if (unsavedSeconds <= 0) {
+    if (
+        unsavedSeconds <= 0
+    ) {
 
         return;
 
@@ -804,6 +1609,7 @@ function saveStudyTime() {
 
     if (!studyData[today]) {
 
+
         studyData[today] = {
 
             total: 0,
@@ -815,16 +1621,24 @@ function saveStudyTime() {
     }
 
 
-    if (!studyData[today].subjects) {
+    if (
+        !studyData[today].subjects
+    ) {
 
-        studyData[today].subjects = {};
+        studyData[today].subjects =
+            {};
 
     }
 
 
-    if (!studyData[today].subjects[subject]) {
+    if (
+        !studyData[today]
+            .subjects[subject]
+    ) {
 
-        studyData[today].subjects[subject] = 0;
+        studyData[today]
+            .subjects[subject] =
+            0;
 
     }
 
@@ -833,7 +1647,8 @@ function saveStudyTime() {
         unsavedSeconds;
 
 
-    studyData[today].subjects[subject] +=
+    studyData[today]
+        .subjects[subject] +=
         unsavedSeconds;
 
 
@@ -841,6 +1656,7 @@ function saveStudyTime() {
         Mark the current timer amount
         as already saved.
     */
+
 
     savedTimerSeconds =
         timerSeconds;
@@ -851,66 +1667,111 @@ function saveStudyTime() {
 
     updateStats();
 
+
+    saveTimerState();
+
 }
 
 
-
-/* ================================
+/* =====================================================
    SUBJECTS
-================================ */
+===================================================== */
 
 
 function getSelectedSubject() {
 
 
     return document.getElementById(
+
         "subjectSelect"
+
     ).value;
 
 }
-
 
 
 function renderSubjects() {
 
 
     let select =
+
         document.getElementById(
+
             "subjectSelect"
+
         );
+
+
+    let previousValue =
+        select.value;
 
 
     select.innerHTML = "";
 
 
-    subjects.forEach(function(subject) {
+    subjects.forEach(
+
+        function(subject) {
 
 
-        let option =
-            document.createElement(
-                "option"
+            let option =
+
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                subject;
+
+
+            option.textContent =
+                subject;
+
+
+            select.appendChild(
+                option
             );
 
+        }
 
-        option.value = subject;
-
-        option.textContent = subject;
+    );
 
 
-        select.appendChild(option);
+    /*
+        Keep the previously selected
+        subject when possible.
+    */
 
-    });
+
+    if (
+        subjects.includes(
+            previousValue
+        )
+    ) {
+
+        select.value =
+            previousValue;
+
+    }
 
 }
 
+
+/* =====================================================
+   ADD SUBJECT
+===================================================== */
 
 
 function addSubject() {
 
 
     let input =
+
         document.getElementById(
+
             "subjectInput"
+
         );
 
 
@@ -925,11 +1786,15 @@ function addSubject() {
     }
 
 
-    if (subjects.includes(name)) {
+    if (
+        subjects.includes(name)
+    ) {
+
 
         alert(
             "This subject already exists."
         );
+
 
         return;
 
@@ -950,6 +1815,10 @@ function addSubject() {
 }
 
 
+/* =====================================================
+   REMOVE SUBJECT
+===================================================== */
+
 
 function removeSelectedSubject() {
 
@@ -965,27 +1834,15 @@ function removeSelectedSubject() {
     }
 
 
-    if (subjects.length <= 1) {
+    if (
+        subjects.length <= 1
+    ) {
+
 
         alert(
             "You need at least one subject."
         );
 
-        return;
-
-    }
-
-
-    /*
-        Don't remove a subject while
-        the timer is running.
-    */
-
-    if (timerRunning) {
-
-        alert(
-            "Stop the timer before removing a subject."
-        );
 
         return;
 
@@ -993,12 +1850,16 @@ function removeSelectedSubject() {
 
 
     subjects =
+
         subjects.filter(
+
             function(subject) {
 
-                return subject !== selected;
+                return subject !==
+                    selected;
 
             }
+
         );
 
 
@@ -1010,18 +1871,20 @@ function removeSelectedSubject() {
 }
 
 
-
-/* ================================
+/* =====================================================
    TASKS
-================================ */
+===================================================== */
 
 
 function addTask() {
 
 
     let input =
+
         document.getElementById(
+
             "taskInput"
+
         );
 
 
@@ -1059,25 +1922,41 @@ function addTask() {
 }
 
 
+/* =====================================================
+   SAVE TASKS
+===================================================== */
+
 
 function saveTasks() {
 
 
     localStorage.setItem(
+
         "nisseTasks",
-        JSON.stringify(tasks)
+
+        JSON.stringify(
+            tasks
+        )
+
     );
 
 }
 
+
+/* =====================================================
+   RENDER TASKS
+===================================================== */
 
 
 function renderTasks() {
 
 
     let list =
+
         document.getElementById(
+
             "taskList"
+
         );
 
 
@@ -1085,10 +1964,12 @@ function renderTasks() {
 
 
     tasks.forEach(
+
         function(task, index) {
 
 
             let li =
+
                 document.createElement(
                     "li"
                 );
@@ -1104,12 +1985,14 @@ function renderTasks() {
 
 
             let checkbox =
+
                 document.createElement(
                     "input"
                 );
 
 
-            checkbox.type = "checkbox";
+            checkbox.type =
+                "checkbox";
 
 
             checkbox.checked =
@@ -1117,11 +2000,14 @@ function renderTasks() {
 
 
             checkbox.addEventListener(
+
                 "change",
+
                 function() {
 
 
-                    tasks[index].completed =
+                    tasks[index]
+                        .completed =
                         checkbox.checked;
 
 
@@ -1134,10 +2020,12 @@ function renderTasks() {
                     updateStats();
 
                 }
+
             );
 
 
             let span =
+
                 document.createElement(
                     "span"
                 );
@@ -1148,6 +2036,7 @@ function renderTasks() {
 
 
             let deleteButton =
+
                 document.createElement(
                     "button"
                 );
@@ -1163,6 +2052,7 @@ function renderTasks() {
 
 
             deleteButton.onclick =
+
                 function() {
 
 
@@ -1203,15 +2093,15 @@ function renderTasks() {
             );
 
         }
+
     );
 
 }
 
 
-
-/* ================================
+/* =====================================================
    DATES
-================================ */
+===================================================== */
 
 
 function getDateKey(
@@ -1224,56 +2114,76 @@ function getDateKey(
 
 
     let month =
+
         String(
             date.getMonth() + 1
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
     let day =
+
         String(
             date.getDate()
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
     return (
+
         year +
         "-" +
         month +
         "-" +
         day
+
     );
 
 }
 
 
+/* =====================================================
+   FORMAT STUDY TIME
+===================================================== */
 
-/* ================================
-   TIME FORMAT
-================================ */
 
-
-function formatStudyTime(seconds) {
+function formatStudyTime(
+    seconds
+) {
 
 
     let hours =
+
         Math.floor(
             seconds / 3600
         );
 
 
     let minutes =
+
         Math.floor(
-            (seconds % 3600) / 60
+
+            (
+                seconds % 3600
+            ) / 60
+
         );
 
 
     if (hours > 0) {
 
+
         return (
+
             hours +
             "h " +
             minutes +
             "m"
+
         );
 
     }
@@ -1284,10 +2194,9 @@ function formatStudyTime(seconds) {
 }
 
 
-
-/* ================================
+/* =====================================================
    TODAY
-================================ */
+===================================================== */
 
 
 function updateStats() {
@@ -1298,34 +2207,46 @@ function updateStats() {
 
 
     let todayData =
-        studyData[today] ||
-        {
+
+        studyData[today] || {
+
             total: 0,
+
             subjects: {}
+
         };
 
 
     document.getElementById(
+
         "todayTime"
+
     ).textContent =
 
         formatStudyTime(
+
             todayData.total
+
         );
 
 
     let completed =
+
         tasks.filter(
+
             function(task) {
 
                 return task.completed;
 
             }
+
         ).length;
 
 
     document.getElementById(
+
         "tasksDone"
+
     ).textContent =
         completed;
 
@@ -1338,13 +2259,20 @@ function updateStats() {
 }
 
 
+/* =====================================================
+   TODAY SUBJECTS
+===================================================== */
+
 
 function updateTodaySubjects() {
 
 
     let container =
+
         document.getElementById(
+
             "todaySubjects"
+
         );
 
 
@@ -1359,80 +2287,110 @@ function updateTodaySubjects() {
         studyData[today];
 
 
-    if (!data || !data.subjects) {
+    if (
+        !data ||
+        !data.subjects
+    ) {
+
 
         container.textContent =
             "No study time yet.";
+
 
         return;
 
     }
 
 
+    let hasStudy = false;
+
+
     subjects.forEach(
+
         function(subject) {
 
 
             let seconds =
-                data.subjects[subject] ||
-                0;
+
+                data.subjects[
+                    subject
+                ] || 0;
 
 
-            let row =
-                document.createElement(
-                    "div"
+            if (seconds > 0) {
+
+
+                hasStudy = true;
+
+
+                let row =
+
+                    document.createElement(
+                        "div"
+                    );
+
+
+                row.classList.add(
+                    "study-row"
                 );
 
 
-            row.classList.add(
-                "study-row"
-            );
+                let name =
+
+                    document.createElement(
+                        "span"
+                    );
 
 
-            let name =
-                document.createElement(
-                    "span"
+                name.textContent =
+                    subject;
+
+
+                let time =
+
+                    document.createElement(
+                        "span"
+                    );
+
+
+                time.textContent =
+
+                    formatStudyTime(
+                        seconds
+                    );
+
+
+                row.appendChild(
+                    name
                 );
 
 
-            name.textContent =
-                subject;
-
-
-            let time =
-                document.createElement(
-                    "span"
+                row.appendChild(
+                    time
                 );
 
 
-            time.textContent =
-                formatStudyTime(
-                    seconds
+                container.appendChild(
+                    row
                 );
 
-
-            row.appendChild(
-                name
-            );
-
-
-            row.appendChild(
-                time
-            );
-
-
-            container.appendChild(
-                row
-            );
+            }
 
         }
+
     );
 
 
-    if (data.subjects["Other"]) {
+    if (
+        data.subjects["Other"]
+    ) {
+
+
+        hasStudy = true;
 
 
         let row =
+
             document.createElement(
                 "div"
             );
@@ -1443,13 +2401,43 @@ function updateTodaySubjects() {
         );
 
 
-        row.innerHTML =
-            "<span>Other</span>" +
-            "<span>" +
+        let name =
+
+            document.createElement(
+                "span"
+            );
+
+
+        name.textContent =
+            "Other";
+
+
+        let time =
+
+            document.createElement(
+                "span"
+            );
+
+
+        time.textContent =
+
             formatStudyTime(
-                data.subjects["Other"]
-            ) +
-            "</span>";
+
+                data.subjects[
+                    "Other"
+                ]
+
+            );
+
+
+        row.appendChild(
+            name
+        );
+
+
+        row.appendChild(
+            time
+        );
 
 
         container.appendChild(
@@ -1458,21 +2446,32 @@ function updateTodaySubjects() {
 
     }
 
+
+    if (!hasStudy) {
+
+
+        container.textContent =
+            "No study time yet.";
+
+    }
+
 }
 
 
-
-/* ================================
+/* =====================================================
    WEEK
-================================ */
+===================================================== */
 
 
 function updateWeek() {
 
 
     let container =
+
         document.getElementById(
+
             "weekStats"
+
         );
 
 
@@ -1487,30 +2486,29 @@ function updateWeek() {
         today.getDay();
 
 
-    /*
-        JavaScript:
-
-        Sunday = 0
-        Monday = 1
-        ...
-        Saturday = 6
-    */
-
-
     let mondayOffset =
+
         dayOfWeek === 0
+
             ? -6
+
             : 1 - dayOfWeek;
 
 
     let dayNames = [
 
         "Monday",
+
         "Tuesday",
+
         "Wednesday",
+
         "Thursday",
+
         "Friday",
+
         "Saturday",
+
         "Sunday"
 
     ];
@@ -1531,9 +2529,13 @@ function updateWeek() {
 
 
         date.setDate(
+
             today.getDate() +
+
             mondayOffset +
+
             i
+
         );
 
 
@@ -1542,17 +2544,22 @@ function updateWeek() {
 
 
         let data =
-            studyData[key] ||
-            {
+
+            studyData[key] || {
+
                 total: 0,
+
                 subjects: {}
+
             };
 
 
-        total += data.total;
+        total +=
+            data.total;
 
 
         let day =
+
             document.createElement(
                 "div"
             );
@@ -1564,6 +2571,7 @@ function updateWeek() {
 
 
         let title =
+
             document.createElement(
                 "div"
             );
@@ -1575,6 +2583,7 @@ function updateWeek() {
 
 
         let name =
+
             document.createElement(
                 "span"
             );
@@ -1585,12 +2594,14 @@ function updateWeek() {
 
 
         let totalTime =
+
             document.createElement(
                 "span"
             );
 
 
         totalTime.textContent =
+
             formatStudyTime(
                 data.total
             );
@@ -1617,19 +2628,24 @@ function updateWeek() {
             Object.keys(
                 data.subjects
             ).forEach(
+
                 function(subject) {
 
 
                     let seconds =
+
                         data.subjects[
                             subject
                         ];
 
 
-                    if (seconds > 0) {
+                    if (
+                        seconds > 0
+                    ) {
 
 
                         let row =
+
                             document.createElement(
                                 "div"
                             );
@@ -1641,6 +2657,7 @@ function updateWeek() {
 
 
                         let subjectName =
+
                             document.createElement(
                                 "span"
                             );
@@ -1651,12 +2668,14 @@ function updateWeek() {
 
 
                         let time =
+
                             document.createElement(
                                 "span"
                             );
 
 
                         time.textContent =
+
                             formatStudyTime(
                                 seconds
                             );
@@ -1679,6 +2698,7 @@ function updateWeek() {
                     }
 
                 }
+
             );
 
         }
@@ -1692,69 +2712,110 @@ function updateWeek() {
 
 
     document.getElementById(
+
         "weekTotal"
+
     ).textContent =
-        formatStudyTime(total);
+
+        formatStudyTime(
+            total
+        );
 
 }
 
 
+/* =====================================================
+   ONLINE ROOM
+===================================================== */
 
-/* ================================
+
+function onlineComingSoon() {
+
+
+    alert(
+
+        "Online Study Room is coming soon."
+
+    );
+
+}
+
+
+/* =====================================================
    ENTER KEY
-================================ */
+===================================================== */
 
 
 document
-    .getElementById("taskInput")
+
+    .getElementById(
+        "taskInput"
+    )
+
     .addEventListener(
+
         "keydown",
+
         function(event) {
 
 
-            if (event.key === "Enter") {
+            if (
+                event.key === "Enter"
+            ) {
 
                 addTask();
 
             }
 
         }
+
     );
 
 
-
 document
-    .getElementById("subjectInput")
+
+    .getElementById(
+        "subjectInput"
+    )
+
     .addEventListener(
+
         "keydown",
+
         function(event) {
 
 
-            if (event.key === "Enter") {
+            if (
+                event.key === "Enter"
+            ) {
 
                 addSubject();
 
             }
 
         }
+
     );
 
 
-
-/* ================================
-   START
-================================ */
+/* =====================================================
+   START APPLICATION
+===================================================== */
 
 
 renderSubjects();
 
+
 renderTasks();
+
 
 updateTimer();
 
-updateTimerButton();
 
 updateStats();
+
+
+restoreTimer();
 
 
 </script>
@@ -1762,4 +2823,4 @@ updateStats();
 
 </body>
 
-</html>
+    </html>
