@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Nisse Study</title>
 
     <style>
@@ -43,7 +44,17 @@
 
         .timer-title {
             font-size: 18px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 9px;
+            font-size: 16px;
+            background: white;
+            margin-bottom: 12px;
         }
 
         #timer {
@@ -99,6 +110,17 @@
             margin-top: 5px;
         }
 
+        .study-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .study-row:last-child {
+            border-bottom: none;
+        }
+
         .input-area {
             display: flex;
             gap: 8px;
@@ -147,9 +169,7 @@
         }
 
         .day {
-            display: flex;
-            justify-content: space-between;
-            padding: 9px 0;
+            padding: 12px 0;
             border-bottom: 1px solid #eee;
         }
 
@@ -157,11 +177,32 @@
             border-bottom: none;
         }
 
+        .day-title {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
         .week-total {
             text-align: center;
             margin-top: 15px;
             font-size: 18px;
             font-weight: bold;
+        }
+
+        .subject-settings {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .subject-settings input {
+            flex: 1;
+        }
+
+        .small-button {
+            background: #ddd;
         }
 
         @media (max-width: 400px) {
@@ -176,6 +217,10 @@
             .add {
                 width: 100%;
             }
+
+            .subject-settings {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -186,11 +231,16 @@
 
     <h1>Nisse Study</h1>
 
+
+    <!-- TIMER -->
+
     <div class="card timer">
 
         <div class="timer-title">
             Study Timer
         </div>
+
+        <select id="subjectSelect"></select>
 
         <div id="timer">
             00:00:00
@@ -210,6 +260,9 @@
 
     </div>
 
+
+    <!-- TODAY -->
+
     <div class="card">
 
         <h2>Today</h2>
@@ -219,7 +272,7 @@
             <div class="stat">
 
                 <div class="stat-title">
-                    Study Time
+                    Total Study
                 </div>
 
                 <div class="stat-value" id="todayTime">
@@ -244,6 +297,20 @@
 
     </div>
 
+
+    <!-- SUBJECTS TODAY -->
+
+    <div class="card">
+
+        <h2>Today's Subjects</h2>
+
+        <div id="todaySubjects"></div>
+
+    </div>
+
+
+    <!-- TASKS -->
+
     <div class="card">
 
         <h2>Tasks</h2>
@@ -266,6 +333,38 @@
 
     </div>
 
+
+    <!-- SUBJECTS -->
+
+    <div class="card">
+
+        <h2>Subjects</h2>
+
+        <div class="input-area">
+
+            <input
+                id="subjectInput"
+                type="text"
+                placeholder="Add a subject..."
+            >
+
+            <button class="add" onclick="addSubject()">
+                Add
+            </button>
+
+        </div>
+
+        <div class="subject-settings">
+            <button class="small-button" onclick="removeSelectedSubject()">
+                Remove Selected Subject
+            </button>
+        </div>
+
+    </div>
+
+
+    <!-- WEEK -->
+
     <div class="card">
 
         <h2>This Week</h2>
@@ -273,24 +372,102 @@
         <div id="weekStats"></div>
 
         <div class="week-total">
-            Total: <span id="weekTotal">0m</span>
+            Total:
+            <span id="weekTotal">0m</span>
         </div>
 
     </div>
 
 </div>
 
+
 <script>
 
 let tasks =
     JSON.parse(localStorage.getItem("nisseTasks")) || [];
 
-let studyData =
+
+let subjects =
+    JSON.parse(localStorage.getItem("nisseSubjects")) ||
+    [
+        "Math",
+        "Physics",
+        "Chemistry",
+        "English"
+    ];
+
+
+let rawStudy =
     JSON.parse(localStorage.getItem("nisseStudy")) || {};
+
+
+let studyData = migrateStudyData(rawStudy);
+
 
 let timerSeconds = 0;
 let timerRunning = false;
 let timerInterval = null;
+
+
+/* ---------------- STUDY DATA ---------------- */
+
+
+function migrateStudyData(data) {
+
+    let result = {};
+
+    Object.keys(data).forEach(function(date) {
+
+        if (typeof data[date] === "number") {
+
+            result[date] = {
+                total: data[date],
+                subjects: {
+                    "Other": data[date]
+                }
+            };
+
+        } else {
+
+            result[date] = data[date];
+
+            if (!result[date].total) {
+                result[date].total = 0;
+            }
+
+            if (!result[date].subjects) {
+                result[date].subjects = {};
+            }
+
+        }
+
+    });
+
+    return result;
+}
+
+
+function saveStudyData() {
+
+    localStorage.setItem(
+        "nisseStudy",
+        JSON.stringify(studyData)
+    );
+
+}
+
+
+function saveSubjects() {
+
+    localStorage.setItem(
+        "nisseSubjects",
+        JSON.stringify(subjects)
+    );
+
+}
+
+
+/* ---------------- TIMER ---------------- */
 
 
 function startTimer() {
@@ -305,6 +482,15 @@ function startTimer() {
 
         return;
     }
+
+
+    if (!getSelectedSubject()) {
+
+        alert("Please select a subject.");
+
+        return;
+    }
+
 
     timerRunning = true;
 
@@ -347,6 +533,7 @@ function updateTimer() {
     let seconds =
         timerSeconds % 60;
 
+
     document.getElementById("timer").textContent =
         formatNumber(hours) + ":" +
         formatNumber(minutes) + ":" +
@@ -370,18 +557,46 @@ function saveStudyTime() {
         return;
     }
 
-    let today = getDateKey();
+
+    let today =
+        getDateKey();
+
+
+    let subject =
+        getSelectedSubject();
+
 
     if (!studyData[today]) {
-        studyData[today] = 0;
+
+        studyData[today] = {
+            total: 0,
+            subjects: {}
+        };
+
     }
 
-    studyData[today] += timerSeconds;
 
-    localStorage.setItem(
-        "nisseStudy",
-        JSON.stringify(studyData)
-    );
+    if (!studyData[today].subjects) {
+
+        studyData[today].subjects = {};
+
+    }
+
+
+    if (!studyData[today].subjects[subject]) {
+
+        studyData[today].subjects[subject] = 0;
+
+    }
+
+
+    studyData[today].total += timerSeconds;
+
+    studyData[today].subjects[subject] += timerSeconds;
+
+
+    saveStudyData();
+
 
     timerSeconds = 0;
 
@@ -392,22 +607,145 @@ function saveStudyTime() {
 }
 
 
+/* ---------------- SUBJECTS ---------------- */
+
+
+function getSelectedSubject() {
+
+    return document.getElementById(
+        "subjectSelect"
+    ).value;
+
+}
+
+
+function renderSubjects() {
+
+    let select =
+        document.getElementById(
+            "subjectSelect"
+        );
+
+
+    select.innerHTML = "";
+
+
+    subjects.forEach(function(subject) {
+
+        let option =
+            document.createElement("option");
+
+        option.value = subject;
+
+        option.textContent = subject;
+
+        select.appendChild(option);
+
+    });
+
+}
+
+
+function addSubject() {
+
+    let input =
+        document.getElementById(
+            "subjectInput"
+        );
+
+
+    let name =
+        input.value.trim();
+
+
+    if (name === "") {
+        return;
+    }
+
+
+    if (subjects.includes(name)) {
+
+        alert("This subject already exists.");
+
+        return;
+
+    }
+
+
+    subjects.push(name);
+
+    saveSubjects();
+
+    renderSubjects();
+
+    input.value = "";
+
+}
+
+
+function removeSelectedSubject() {
+
+    let selected =
+        getSelectedSubject();
+
+
+    if (!selected) {
+        return;
+    }
+
+
+    if (subjects.length <= 1) {
+
+        alert("You need at least one subject.");
+
+        return;
+
+    }
+
+
+    subjects =
+        subjects.filter(function(subject) {
+
+            return subject !== selected;
+
+        });
+
+
+    saveSubjects();
+
+    renderSubjects();
+
+}
+
+
+/* ---------------- TASKS ---------------- */
+
+
 function addTask() {
 
     let input =
-        document.getElementById("taskInput");
+        document.getElementById(
+            "taskInput"
+        );
+
 
     let text =
         input.value.trim();
+
 
     if (text === "") {
         return;
     }
 
+
     tasks.push({
+
         text: text,
+
         completed: false
+
     });
+
 
     input.value = "";
 
@@ -433,26 +771,36 @@ function saveTasks() {
 function renderTasks() {
 
     let list =
-        document.getElementById("taskList");
+        document.getElementById(
+            "taskList"
+        );
+
 
     list.innerHTML = "";
+
 
     tasks.forEach(function(task, index) {
 
         let li =
             document.createElement("li");
 
+
         if (task.completed) {
+
             li.classList.add("completed");
+
         }
+
 
         let checkbox =
             document.createElement("input");
+
 
         checkbox.type = "checkbox";
 
         checkbox.checked =
             task.completed;
+
 
         checkbox.addEventListener(
             "change",
@@ -460,6 +808,7 @@ function renderTasks() {
 
                 tasks[index].completed =
                     checkbox.checked;
+
 
                 saveTasks();
 
@@ -470,19 +819,27 @@ function renderTasks() {
             }
         );
 
+
         let span =
             document.createElement("span");
+
 
         span.textContent =
             task.text;
 
+
         let deleteButton =
             document.createElement("button");
+
 
         deleteButton.textContent =
             "Delete";
 
-        deleteButton.classList.add("delete");
+
+        deleteButton.classList.add(
+            "delete"
+        );
+
 
         deleteButton.onclick =
             function() {
@@ -497,6 +854,7 @@ function renderTasks() {
 
             };
 
+
         li.appendChild(checkbox);
 
         li.appendChild(span);
@@ -510,22 +868,31 @@ function renderTasks() {
 }
 
 
+/* ---------------- DATES ---------------- */
+
+
 function getDateKey(date = new Date()) {
 
     let year =
         date.getFullYear();
 
+
     let month =
         String(date.getMonth() + 1)
         .padStart(2, "0");
+
 
     let day =
         String(date.getDate())
         .padStart(2, "0");
 
+
     return year + "-" + month + "-" + day;
 
 }
+
+
+/* ---------------- TIME ---------------- */
 
 
 function formatStudyTime(seconds) {
@@ -533,8 +900,12 @@ function formatStudyTime(seconds) {
     let hours =
         Math.floor(seconds / 3600);
 
+
     let minutes =
-        Math.floor((seconds % 3600) / 60);
+        Math.floor(
+            (seconds % 3600) / 60
+        );
+
 
     if (hours > 0) {
 
@@ -542,9 +913,13 @@ function formatStudyTime(seconds) {
 
     }
 
+
     return minutes + "m";
 
 }
+
+
+/* ---------------- TODAY ---------------- */
 
 
 function updateStats() {
@@ -552,52 +927,166 @@ function updateStats() {
     let today =
         getDateKey();
 
-    let todaySeconds =
-        studyData[today] || 0;
+
+    let todayData =
+        studyData[today] || {
+            total: 0,
+            subjects: {}
+        };
+
 
     document.getElementById(
         "todayTime"
     ).textContent =
-        formatStudyTime(todaySeconds);
+        formatStudyTime(
+            todayData.total
+        );
+
 
     let completed =
         tasks.filter(
             task => task.completed
         ).length;
 
+
     document.getElementById(
         "tasksDone"
     ).textContent =
         completed;
+
+
+    updateTodaySubjects();
 
     updateWeek();
 
 }
 
 
+function updateTodaySubjects() {
+
+    let container =
+        document.getElementById(
+            "todaySubjects"
+        );
+
+
+    container.innerHTML = "";
+
+
+    let today =
+        getDateKey();
+
+
+    let data =
+        studyData[today];
+
+
+    if (!data || !data.subjects) {
+
+        container.textContent =
+            "No study time yet.";
+
+        return;
+
+    }
+
+
+    subjects.forEach(function(subject) {
+
+        let seconds =
+            data.subjects[subject] || 0;
+
+
+        let row =
+            document.createElement("div");
+
+
+        row.classList.add(
+            "study-row"
+        );
+
+
+        let name =
+            document.createElement("span");
+
+
+        name.textContent =
+            subject;
+
+
+        let time =
+            document.createElement("span");
+
+
+        time.textContent =
+            formatStudyTime(seconds);
+
+
+        row.appendChild(name);
+
+        row.appendChild(time);
+
+        container.appendChild(row);
+
+    });
+
+
+    if (data.subjects["Other"]) {
+
+        let row =
+            document.createElement("div");
+
+
+        row.classList.add(
+            "study-row"
+        );
+
+
+        row.innerHTML =
+            "<span>Other</span><span>" +
+            formatStudyTime(
+                data.subjects["Other"]
+            ) +
+            "</span>";
+
+
+        container.appendChild(row);
+
+    }
+
+}
+
+
+/* ---------------- WEEK ---------------- */
+
+
 function updateWeek() {
 
-    let weekContainer =
+    let container =
         document.getElementById(
             "weekStats"
         );
 
-    weekContainer.innerHTML = "";
+
+    container.innerHTML = "";
+
 
     let today =
         new Date();
 
+
     let dayOfWeek =
         today.getDay();
+
 
     let mondayOffset =
         dayOfWeek === 0
             ? -6
             : 1 - dayOfWeek;
 
-    let total = 0;
 
     let dayNames = [
+
         "Monday",
         "Tuesday",
         "Wednesday",
@@ -605,7 +1094,12 @@ function updateWeek() {
         "Friday",
         "Saturday",
         "Sunday"
+
     ];
+
+
+    let total = 0;
+
 
     for (
         let i = 0;
@@ -616,44 +1110,135 @@ function updateWeek() {
         let date =
             new Date(today);
 
+
         date.setDate(
             today.getDate() +
             mondayOffset +
             i
         );
 
+
         let key =
             getDateKey(date);
 
-        let seconds =
-            studyData[key] || 0;
 
-        total += seconds;
+        let data =
+            studyData[key] || {
+                total: 0,
+                subjects: {}
+            };
 
-        let row =
+
+        total += data.total;
+
+
+        let day =
             document.createElement("div");
 
-        row.classList.add("day");
+
+        day.classList.add("day");
+
+
+        let title =
+            document.createElement("div");
+
+
+        title.classList.add(
+            "day-title"
+        );
+
 
         let name =
             document.createElement("span");
 
+
         name.textContent =
             dayNames[i];
 
-        let time =
+
+        let totalTime =
             document.createElement("span");
 
-        time.textContent =
-            formatStudyTime(seconds);
 
-        row.appendChild(name);
+        totalTime.textContent =
+            formatStudyTime(
+                data.total
+            );
 
-        row.appendChild(time);
 
-        weekContainer.appendChild(row);
+        title.appendChild(name);
+
+        title.appendChild(totalTime);
+
+        day.appendChild(title);
+
+
+        if (data.subjects) {
+
+            Object.keys(
+                data.subjects
+            ).forEach(function(subject) {
+
+                let seconds =
+                    data.subjects[subject];
+
+
+                if (seconds > 0) {
+
+                    let row =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    row.classList.add(
+                        "study-row"
+                    );
+
+
+                    let subjectName =
+                        document.createElement(
+                            "span"
+                        );
+
+
+                    subjectName.textContent =
+                        subject;
+
+
+                    let time =
+                        document.createElement(
+                            "span"
+                        );
+
+
+                    time.textContent =
+                        formatStudyTime(
+                            seconds
+                        );
+
+
+                    row.appendChild(
+                        subjectName
+                    );
+
+                    row.appendChild(
+                        time
+                    );
+
+                    day.appendChild(row);
+
+                }
+
+            });
+
+        }
+
+
+        container.appendChild(day);
 
     }
+
 
     document.getElementById(
         "weekTotal"
@@ -661,6 +1246,9 @@ function updateWeek() {
         formatStudyTime(total);
 
 }
+
+
+/* ---------------- ENTER KEY ---------------- */
 
 
 document
@@ -678,6 +1266,27 @@ document
         }
     );
 
+
+document
+    .getElementById("subjectInput")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                addSubject();
+
+            }
+
+        }
+    );
+
+
+/* ---------------- START ---------------- */
+
+
+renderSubjects();
 
 renderTasks();
 
