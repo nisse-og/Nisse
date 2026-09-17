@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Nisse Study</title>
 
     <style>
@@ -187,6 +186,506 @@
 
     <h1>Nisse Study</h1>
 
-    <!-- TIMER -->
+    <div class="card timer">
 
-    <div class="card
+        <div class="timer-title">
+            Study Timer
+        </div>
+
+        <div id="timer">
+            00:00:00
+        </div>
+
+        <div class="buttons">
+
+            <button class="start" onclick="startTimer()">
+                Start
+            </button>
+
+            <button class="reset" onclick="resetTimer()">
+                Reset
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Today</h2>
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    Study Time
+                </div>
+
+                <div class="stat-value" id="todayTime">
+                    0m
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div class="stat-title">
+                    Tasks Done
+                </div>
+
+                <div class="stat-value" id="tasksDone">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Tasks</h2>
+
+        <div class="input-area">
+
+            <input
+                id="taskInput"
+                type="text"
+                placeholder="Write a task..."
+            >
+
+            <button class="add" onclick="addTask()">
+                Add
+            </button>
+
+        </div>
+
+        <ul id="taskList"></ul>
+
+    </div>
+
+    <div class="card">
+
+        <h2>This Week</h2>
+
+        <div id="weekStats"></div>
+
+        <div class="week-total">
+            Total: <span id="weekTotal">0m</span>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let tasks =
+    JSON.parse(localStorage.getItem("nisseTasks")) || [];
+
+let studyData =
+    JSON.parse(localStorage.getItem("nisseStudy")) || {};
+
+let timerSeconds = 0;
+let timerRunning = false;
+let timerInterval = null;
+
+
+function startTimer() {
+
+    if (timerRunning) {
+
+        clearInterval(timerInterval);
+
+        timerRunning = false;
+
+        saveStudyTime();
+
+        return;
+    }
+
+    timerRunning = true;
+
+    timerInterval = setInterval(function() {
+
+        timerSeconds++;
+
+        updateTimer();
+
+    }, 1000);
+
+}
+
+
+function resetTimer() {
+
+    if (timerRunning) {
+
+        clearInterval(timerInterval);
+
+        timerRunning = false;
+
+    }
+
+    timerSeconds = 0;
+
+    updateTimer();
+
+}
+
+
+function updateTimer() {
+
+    let hours =
+        Math.floor(timerSeconds / 3600);
+
+    let minutes =
+        Math.floor((timerSeconds % 3600) / 60);
+
+    let seconds =
+        timerSeconds % 60;
+
+    document.getElementById("timer").textContent =
+        formatNumber(hours) + ":" +
+        formatNumber(minutes) + ":" +
+        formatNumber(seconds);
+
+}
+
+
+function formatNumber(number) {
+
+    return number < 10
+        ? "0" + number
+        : number;
+
+}
+
+
+function saveStudyTime() {
+
+    if (timerSeconds === 0) {
+        return;
+    }
+
+    let today = getDateKey();
+
+    if (!studyData[today]) {
+        studyData[today] = 0;
+    }
+
+    studyData[today] += timerSeconds;
+
+    localStorage.setItem(
+        "nisseStudy",
+        JSON.stringify(studyData)
+    );
+
+    timerSeconds = 0;
+
+    updateTimer();
+
+    updateStats();
+
+}
+
+
+function addTask() {
+
+    let input =
+        document.getElementById("taskInput");
+
+    let text =
+        input.value.trim();
+
+    if (text === "") {
+        return;
+    }
+
+    tasks.push({
+        text: text,
+        completed: false
+    });
+
+    input.value = "";
+
+    saveTasks();
+
+    renderTasks();
+
+    updateStats();
+
+}
+
+
+function saveTasks() {
+
+    localStorage.setItem(
+        "nisseTasks",
+        JSON.stringify(tasks)
+    );
+
+}
+
+
+function renderTasks() {
+
+    let list =
+        document.getElementById("taskList");
+
+    list.innerHTML = "";
+
+    tasks.forEach(function(task, index) {
+
+        let li =
+            document.createElement("li");
+
+        if (task.completed) {
+            li.classList.add("completed");
+        }
+
+        let checkbox =
+            document.createElement("input");
+
+        checkbox.type = "checkbox";
+
+        checkbox.checked =
+            task.completed;
+
+        checkbox.addEventListener(
+            "change",
+            function() {
+
+                tasks[index].completed =
+                    checkbox.checked;
+
+                saveTasks();
+
+                renderTasks();
+
+                updateStats();
+
+            }
+        );
+
+        let span =
+            document.createElement("span");
+
+        span.textContent =
+            task.text;
+
+        let deleteButton =
+            document.createElement("button");
+
+        deleteButton.textContent =
+            "Delete";
+
+        deleteButton.classList.add("delete");
+
+        deleteButton.onclick =
+            function() {
+
+                tasks.splice(index, 1);
+
+                saveTasks();
+
+                renderTasks();
+
+                updateStats();
+
+            };
+
+        li.appendChild(checkbox);
+
+        li.appendChild(span);
+
+        li.appendChild(deleteButton);
+
+        list.appendChild(li);
+
+    });
+
+}
+
+
+function getDateKey(date = new Date()) {
+
+    let year =
+        date.getFullYear();
+
+    let month =
+        String(date.getMonth() + 1)
+        .padStart(2, "0");
+
+    let day =
+        String(date.getDate())
+        .padStart(2, "0");
+
+    return year + "-" + month + "-" + day;
+
+}
+
+
+function formatStudyTime(seconds) {
+
+    let hours =
+        Math.floor(seconds / 3600);
+
+    let minutes =
+        Math.floor((seconds % 3600) / 60);
+
+    if (hours > 0) {
+
+        return hours + "h " + minutes + "m";
+
+    }
+
+    return minutes + "m";
+
+}
+
+
+function updateStats() {
+
+    let today =
+        getDateKey();
+
+    let todaySeconds =
+        studyData[today] || 0;
+
+    document.getElementById(
+        "todayTime"
+    ).textContent =
+        formatStudyTime(todaySeconds);
+
+    let completed =
+        tasks.filter(
+            task => task.completed
+        ).length;
+
+    document.getElementById(
+        "tasksDone"
+    ).textContent =
+        completed;
+
+    updateWeek();
+
+}
+
+
+function updateWeek() {
+
+    let weekContainer =
+        document.getElementById(
+            "weekStats"
+        );
+
+    weekContainer.innerHTML = "";
+
+    let today =
+        new Date();
+
+    let dayOfWeek =
+        today.getDay();
+
+    let mondayOffset =
+        dayOfWeek === 0
+            ? -6
+            : 1 - dayOfWeek;
+
+    let total = 0;
+
+    let dayNames = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+    ];
+
+    for (
+        let i = 0;
+        i < 7;
+        i++
+    ) {
+
+        let date =
+            new Date(today);
+
+        date.setDate(
+            today.getDate() +
+            mondayOffset +
+            i
+        );
+
+        let key =
+            getDateKey(date);
+
+        let seconds =
+            studyData[key] || 0;
+
+        total += seconds;
+
+        let row =
+            document.createElement("div");
+
+        row.classList.add("day");
+
+        let name =
+            document.createElement("span");
+
+        name.textContent =
+            dayNames[i];
+
+        let time =
+            document.createElement("span");
+
+        time.textContent =
+            formatStudyTime(seconds);
+
+        row.appendChild(name);
+
+        row.appendChild(time);
+
+        weekContainer.appendChild(row);
+
+    }
+
+    document.getElementById(
+        "weekTotal"
+    ).textContent =
+        formatStudyTime(total);
+
+}
+
+
+document
+    .getElementById("taskInput")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                addTask();
+
+            }
+
+        }
+    );
+
+
+renderTasks();
+
+updateTimer();
+
+updateStats();
+
+</script>
+
+</body>
+</html>
