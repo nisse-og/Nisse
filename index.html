@@ -878,219 +878,140 @@
             padding-bottom: 3px;
         }
 
-        .day-title {
+        .day-heading {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 5px;
-            color: #7d7770;
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 0.015em;
-        }
-
-        .day-title-name {
-            display: inline-flex;
             align-items: center;
             gap: 8px;
-        }
-
-        .day-title-name::before {
-            content: "";
-            width: 6px;
-            height: 6px;
-            border: 1px solid #7c807f;
-            border-radius: 50%;
-            background: transparent;
-            flex: 0 0 6px;
-        }
-
-        .day.today .day-title-name::before {
-            background: #26344a;
-            border-color: #26344a;
-        }
-
-        .day.today .day-title {
-            color: #5c6674;
-        }
-
-        .day-total {
-            color: #868077;
-            font-size: 11px;
-            font-weight: 700;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .week-day-content {
-            padding-left: 14px;
-        }
-
-        .study-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            min-height: 30px;
-            padding: 4px 0;
-            color: #45423e;
+            margin-bottom: 8px;
+            color: #77736d;
             font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.06em;
         }
 
-        .study-row-name {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+        .day-heading::before {
+            content: "";
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #8b877f;
+            flex: 0 0 auto;
         }
 
-        .study-row-time {
-            color: #555e6b;
-            font-variant-numeric: tabular-nums;
-            font-weight: 700;
+        .day-entry {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 28px;
+            padding-left: 14px;
+            color: #44413d;
+            font-size: 13px;
         }
 
-        .week-empty {
-            padding: 3px 0 3px;
-            color: #aaa39b;
-            font-family: "Comic Sans MS", "Bradley Hand", cursive;
+        .day-entry::before {
+            content: "•";
+            color: #7f7a73;
+            font-size: 13px;
+        }
+
+        .day-entry-time {
+            margin-left: auto;
+            color: #777169;
             font-size: 11px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .day-empty {
+            padding-left: 14px;
+            color: #aaa39a;
+            font-size: 12px;
+            font-style: italic;
         }
 
         /* =========================================================
-           POSITIVE NOTE / MASCOT MESSAGE
+           MOTIVATION CARD
         ========================================================= */
 
-        .better-days-card {
+        .motivation-card {
             display: grid;
-            grid-template-columns: minmax(0, 1fr) 82px;
+            grid-template-columns: minmax(0, 1fr) 88px;
             align-items: center;
-            gap: 14px;
-            min-height: 106px;
-            background: #f8f3ea;
+            gap: 15px;
+            padding: 18px 19px;
         }
 
-        .better-days-copy {
-            padding-right: 5px;
-        }
-
-        .better-days-title {
+        .motivation-title {
             margin: 0 0 5px;
-            color: #27354b;
-            font-family: "Comic Sans MS", "Bradley Hand", cursive;
-            font-size: 21px;
-            font-weight: 700;
+            color: #2f3742;
+            font-size: 15px;
+            font-weight: 800;
         }
 
-        .better-days-text {
+        .motivation-text {
             margin: 0;
-            color: #7b756d;
+            color: #746f68;
+            font-family: "Comic Sans MS", "Bradley Hand", cursive;
             font-size: 12px;
             line-height: 1.55;
         }
 
-        .sleepy-mascot {
-            width: 82px;
-            height: 82px;
-            transform: rotate(-2deg);
+        .motivation-doodle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 88px;
+            height: 74px;
+            color: #77726a;
         }
 
-        .sleepy-mascot svg {
+        .motivation-doodle svg {
             width: 100%;
             height: 100%;
         }
 
         /* =========================================================
-           SUBJECT MANAGEMENT / SETTINGS
-        ========================================================= */
-
-        .subject-settings {
-            display: flex;
-            justify-content: flex-end;
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .small-button {
-            border: 1px solid #d4cec5;
-            border-radius: 10px;
-            padding: 8px 10px;
-            background: #eeebe4;
-            color: #595650;
-            cursor: pointer;
-            font-size: 11px;
-        }
-
-        .online-description {
-            margin: 0;
-            color: #827c74;
-            font-size: 12px;
-            line-height: 1.5;
-        }
-
-        /* =========================================================
-           FLOATING ONLINE BUTTON
+           ONLINE FLOATING BUTTON
         ========================================================= */
 
         .online-float {
             position: fixed;
-            right: 18px;
-            bottom: 18px;
-            width: 57px;
-            height: 57px;
-            border: 1px solid #d0c9bf;
+            right: 16px;
+            bottom: 16px;
+            z-index: 80;
+            width: 58px;
+            height: 58px;
+            border: 1px solid #cbc4ba;
             border-radius: 50%;
-            padding: 0;
-            background: #fffdf9;
-            color: #26344a;
-            box-shadow: 0 8px 22px rgba(44, 40, 34, 0.14);
+            background: rgba(255, 253, 249, 0.96);
+            color: #4d5665;
+            cursor: pointer;
+            box-shadow:
+                0 9px 24px rgba(42, 38, 32, 0.14),
+                0 2px 5px rgba(42, 38, 32, 0.07);
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            z-index: 60;
-            transition: transform 0.12s ease, box-shadow 0.12s ease;
+            transition:
+                transform 0.15s ease,
+                box-shadow 0.15s ease,
+                background 0.15s ease;
         }
 
         .online-float:hover {
-            box-shadow: 0 10px 27px rgba(44, 40, 34, 0.17);
+            transform: translateY(-2px);
+            background: #fffefa;
+            box-shadow:
+                0 12px 28px rgba(42, 38, 32, 0.16),
+                0 2px 6px rgba(42, 38, 32, 0.08);
         }
 
         .online-float:active {
-            transform: scale(0.95);
+            transform: translateY(0) scale(0.97);
         }
 
         .online-float svg {
-            width: 34px;
-            height: 34px;
-        }
-
-        /* =========================================================
-           TOAST
-        ========================================================= */
-
-        .toast {
-            position: fixed;
-            left: 50%;
-            bottom: 84px;
-            z-index: 80;
-            width: min(420px, calc(100vw - 28px));
-            padding: 10px 13px;
-            border: 1px solid #d7d0c6;
-            border-radius: 12px;
-            background: rgba(255, 253, 249, 0.96);
-            color: #4d4a45;
-            box-shadow: 0 8px 26px rgba(40, 35, 29, 0.13);
-            text-align: center;
-            font-size: 12px;
-            opacity: 0;
-            pointer-events: none;
-            transform: translate(-50%, 8px);
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-
-        .toast.show {
-            opacity: 1;
-            transform: translate(-50%, 0);
+            width: 32px;
+            height: 32px;
         }
 
         /* =========================================================
@@ -1100,48 +1021,63 @@
         .modal-backdrop {
             position: fixed;
             inset: 0;
-            z-index: 90;
-            display: flex;
+            z-index: 100;
+            display: none;
             align-items: center;
             justify-content: center;
             padding: 18px;
-            background: rgba(42, 39, 35, 0.28);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.18s ease;
+            background: rgba(36, 35, 33, 0.28);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
         }
 
         .modal-backdrop.open {
-            opacity: 1;
-            pointer-events: auto;
+            display: flex;
+            animation: modalFade 0.16s ease-out;
+        }
+
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .modal {
-            width: min(430px, 100%);
-            border: 1px solid #d5cec4;
-            border-radius: 17px;
-            padding: 19px;
+            width: 100%;
+            max-width: 390px;
+            padding: 20px;
+            border: 1px solid #d7d0c6;
+            border-radius: 18px;
             background: #fffdf9;
-            box-shadow: 0 15px 45px rgba(29, 26, 22, 0.2);
-            transform: translateY(7px) rotate(-0.2deg);
-            transition: transform 0.18s ease;
+            box-shadow: 0 18px 60px rgba(32, 30, 27, 0.2);
+            animation: modalIn 0.18s ease-out;
         }
 
-        .modal-backdrop.open .modal {
-            transform: translateY(0) rotate(-0.2deg);
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: translateY(7px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
-        .modal-title {
-            margin: 0;
-            color: #26344a;
-            font-size: 18px;
+        .modal h3 {
+            margin: 0 0 7px;
+            color: #2b3038;
+            font-size: 19px;
         }
 
-        .modal-text {
-            margin: 6px 0 13px;
-            color: #7f7971;
+        .modal p {
+            margin: 0 0 14px;
+            color: #777169;
             font-size: 12px;
-            line-height: 1.45;
+            line-height: 1.5;
         }
 
         .modal-actions {
@@ -1151,83 +1087,44 @@
             margin-top: 12px;
         }
 
-        .modal-actions .button {
-            min-height: 38px;
-            padding: 8px 13px;
-        }
-
-        /* =========================================================
-           DECORATIVE DOODLES
-        ========================================================= */
-
-        .doodle-star {
-            position: absolute;
-            width: 27px;
-            height: 27px;
-            opacity: 0.38;
-            transform: rotate(-8deg);
-            pointer-events: none;
-        }
-
-        .doodle-star.one {
-            right: 13px;
-            top: 12px;
-        }
-
-        .doodle-star.two {
-            left: 9px;
-            bottom: 11px;
-            width: 21px;
-            height: 21px;
-            transform: rotate(8deg);
-            opacity: 0.24;
-        }
-
-        .doodle-note {
-            position: absolute;
-            right: 15px;
-            bottom: 15px;
-            width: 42px;
-            height: 54px;
-            opacity: 0.13;
-            transform: rotate(6deg);
-            pointer-events: none;
+        .modal-close {
+            border: none;
+            background: transparent;
+            color: #8c857c;
+            cursor: pointer;
+            padding: 6px;
         }
 
         /* =========================================================
            RESPONSIVE
         ========================================================= */
 
-        @media (max-width: 480px) {
-
+        @media (max-width: 430px) {
             body {
-                padding: 15px 11px 88px;
+                padding: 14px 10px 84px;
             }
 
             .site-header {
                 padding-left: 5px;
-                padding-right: 4px;
-                margin-bottom: 1px;
+                padding-right: 5px;
             }
 
             .header-copy {
-                padding-right: 80px;
+                padding-right: 78px;
             }
 
             .mascot-wrap {
-                width: 74px;
-                height: 74px;
-                right: -1px;
-                top: 2px;
+                width: 72px;
+                height: 72px;
             }
 
             .folder-nav {
-                gap: 4px;
-                padding: 4px;
+                top: 6px;
             }
 
             .folder-tab {
-                padding: 10px 4px;
+                padding-left: 5px;
+                padding-right: 5px;
                 font-size: 12px;
             }
 
@@ -1236,697 +1133,693 @@
                 border-radius: 16px;
             }
 
-            #timer {
-                font-size: 45px;
-                letter-spacing: 0.02em;
+            .timer-card {
+                padding: 18px 15px 16px;
             }
 
             .subject-grid {
-                grid-template-columns: 1fr 1fr;
+                gap: 7px;
             }
 
-            .better-days-card {
+            .motivation-card {
                 grid-template-columns: minmax(0, 1fr) 68px;
             }
 
-            .sleepy-mascot {
+            .motivation-doodle {
                 width: 68px;
-                height: 68px;
+                height: 64px;
             }
 
             .online-float {
                 right: 12px;
                 bottom: 12px;
-                width: 53px;
-                height: 53px;
             }
-
-        }
-
-        @media (max-width: 360px) {
-
-            .header-copy {
-                padding-right: 70px;
-            }
-
-            .mascot-wrap {
-                width: 65px;
-                height: 65px;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .subject-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .input-area {
-                flex-direction: column;
-            }
-
-            .add-button {
-                width: 100%;
-            }
-
-            .timer-controls {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .timer-controls .primary {
-                grid-column: 1 / -1;
-            }
-
         }
 
         @media (prefers-reduced-motion: reduce) {
-
-            html {
-                scroll-behavior: auto;
-            }
-
             *,
             *::before,
             *::after {
+                scroll-behavior: auto !important;
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
-
         }
 
     </style>
-
 </head>
-
 
 <body>
 
-<div class="paper-grain" aria-hidden="true"></div>
+<div class="paper-grain"></div>
 
 <div class="app-shell">
+    <div class="container">
 
-<div class="container">
+        <header class="site-header">
 
-    <!-- =========================================================
-         HEADER
-    ========================================================== -->
-
-    <header class="site-header">
-
-        <div class="header-copy">
-
-            <div class="eyebrow">
-                Nisse Study
-            </div>
-
-            <h1>
-                Study a little.
-                <br>
-                Keep going.
-            </h1>
-
-            <p class="header-note" id="headerNote">
-                A quiet little place for study time, tasks, and better days ahead.
-            </p>
-
-        </div>
-
-        <div class="mascot-wrap" aria-hidden="true">
-
-            <div class="mascot-shadow"></div>
-
-            <div class="mascot">
-                <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- loose pencil-circle behind the character -->
-                    <path d="M16 39C16 19 31 8 50 8C72 8 84 21 82 40" stroke="#80766A" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="2 4" opacity=".6"/>
-                    <!-- hair -->
-                    <path d="M28 34C25 24 31 15 41 13C49 8 65 11 71 18C78 23 76 34 70 39L30 40C26 38 27 36 28 34Z" fill="#4A4036" stroke="#302C28" stroke-width="1.5"/>
-                    <path d="M32 28C36 21 40 20 46 16L43 29L50 19L53 30L60 17L62 30L69 21L70 34" stroke="#2D2925" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                    <!-- face -->
-                    <path d="M33 32C34 44 41 51 51 51C62 51 70 43 69 32C66 29 61 27 51 27C42 27 36 29 33 32Z" fill="#EBD7C5" stroke="#3A3430" stroke-width="1.3"/>
-                    <!-- eyes -->
-                    <path d="M42 37C44 34 47 34 49 37C47 40 44 40 42 37Z" fill="#37434C"/>
-                    <path d="M56 37C58 34 61 34 63 37C61 40 58 40 56 37Z" fill="#37434C"/>
-                    <!-- tiny nose / cheek -->
-                    <path d="M52 39L50.8 42" stroke="#9D8070" stroke-width="1" stroke-linecap="round"/>
-                    <path d="M39 41C42 43 43 43 45 43" stroke="#C58F86" stroke-width="1" stroke-linecap="round" opacity=".55"/>
-                    <!-- collar -->
-                    <path d="M42 49L50 57L58 49L69 54L67 78L32 78L33 54L42 49Z" fill="#E7E1D6" stroke="#3D4147" stroke-width="1.4"/>
-                    <path d="M42 49L50 57L58 49L56 60H44L42 49Z" fill="#F7F2E9" stroke="#3D4147" stroke-width="1.1"/>
-                    <!-- navy sweater -->
-                    <path d="M33 53C24 57 20 68 19 79H81C79 67 75 57 67 53L58 61H42L33 53Z" fill="#33425A" stroke="#2D3543" stroke-width="1.5"/>
-                    <!-- pencil texture -->
-                    <path d="M24 70L38 62M28 75L43 67M48 74L64 65M55 77L72 69M67 76L77 71" stroke="#697389" stroke-width="1" stroke-linecap="round" opacity=".55"/>
-                    <!-- book -->
-                    <path d="M18 75L29 73L32 85L21 87L18 75Z" fill="#6E6C63" stroke="#3A3935" stroke-width="1.2"/>
-                    <path d="M21 76L29 74L31 83L23 85L21 76Z" fill="#E8E2D8" stroke="#A8A29A" stroke-width=".9"/>
-                    <!-- backpack strap -->
-                    <path d="M28 56C25 60 23 64 22 69" stroke="#554C43" stroke-width="3" stroke-linecap="round"/>
-                </svg>
-            </div>
-
-        </div>
-
-        <svg class="header-doodle" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-            <path d="M4 18L10 15L12 8L14 15L22 17L15 20L14 27L10 21L4 18Z" stroke="#665F56" stroke-width="1.2" stroke-linejoin="round"/>
-        </svg>
-
-    </header>
-
-
-    <!-- =========================================================
-         FOLDERS
-    ========================================================== -->
-
-    <nav class="folder-nav" aria-label="Main sections">
-
-        <button
-            class="folder-tab active"
-            data-page="studyPage"
-            type="button"
-            onclick="showPage('studyPage', this)"
-        >
-            Study
-        </button>
-
-        <button
-            class="folder-tab"
-            data-page="todoPage"
-            type="button"
-            onclick="showPage('todoPage', this)"
-        >
-            To-Do
-        </button>
-
-        <button
-            class="folder-tab"
-            data-page="weekPage"
-            type="button"
-            onclick="showPage('weekPage', this)"
-        >
-            This Week
-        </button>
-
-    </nav>
-
-
-    <!-- =========================================================
-         STUDY PAGE
-    ========================================================== -->
-
-    <main id="studyPage" class="folder-page active">
-
-        <div class="page-title-row">
-
-            <div>
-                <h2 class="page-title">
-                    Study
-                </h2>
-                <p class="page-caption" id="studyCaption">
-                    Today is another small page in the notebook.
+            <div class="header-copy">
+                <div class="eyebrow">Nisse / study log</div>
+                <h1>Study a little.<br>Keep going.</h1>
+                <p class="header-note">
+                    A quiet little place for today's work, small plans,
+                    and proof that you showed up.
                 </p>
             </div>
 
-            <div class="page-doodle" aria-hidden="true">
-                <svg width="54" height="32" viewBox="0 0 54 32" fill="none">
-                    <path d="M4 25C12 21 16 12 18 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-                    <path d="M16 6L19 3L20 8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M30 7C34 10 39 10 45 7" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-                    <path d="M41 14L45 10L47 15" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+            <div class="mascot-wrap" aria-hidden="true">
+
+                <div class="mascot-shadow"></div>
+
+                <div class="mascot">
+                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                        <path
+                            d="M25 62C25 42 35 27 51 27C67 27 77 41 77 61C77 76 69 83 51 83C33 83 25 76 25 62Z"
+                            fill="#ECE7DE"
+                            stroke="#5C6470"
+                            stroke-width="2.2"
+                        />
+
+                        <path
+                            d="M35 35C37 24 43 18 50 17C57 18 64 24 67 35"
+                            stroke="#5C6470"
+                            stroke-width="2.2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M31 48C28 43 27 37 29 33C32 35 35 40 35 45"
+                            fill="#E1DBD1"
+                            stroke="#5C6470"
+                            stroke-width="2"
+                        />
+
+                        <path
+                            d="M69 48C72 43 73 37 71 33C68 35 65 40 65 45"
+                            fill="#E1DBD1"
+                            stroke="#5C6470"
+                            stroke-width="2"
+                        />
+
+                        <circle cx="42" cy="53" r="2.4" fill="#343A43"/>
+                        <circle cx="60" cy="53" r="2.4" fill="#343A43"/>
+
+                        <path
+                            d="M46 63C49 65 53 65 56 63"
+                            stroke="#5C6470"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M39 70C45 73 55 73 62 69"
+                            stroke="#A39C92"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M23 57C18 59 15 64 16 69C17 74 21 77 27 76"
+                            stroke="#5C6470"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M78 57C83 59 86 64 85 69C84 74 80 77 74 76"
+                            stroke="#5C6470"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M36 79C37 87 43 91 50 91C57 91 63 87 64 79"
+                            stroke="#5C6470"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+                </div>
+
+            </div>
+
+            <div class="header-doodle" aria-hidden="true">
+                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M5 29C10 20 14 17 19 19C23 20 24 26 29 25C32 24 34 21 35 17"
+                        stroke="#7D776F"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                    />
+                    <path
+                        d="M27 15L35 17L31 23"
+                        stroke="#7D776F"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
                 </svg>
             </div>
 
-        </div>
+        </header>
 
+        <nav class="folder-nav" aria-label="Study sections">
 
-        <!-- =====================================================
-             TIMER
-        ====================================================== -->
+            <button
+                class="folder-tab active"
+                type="button"
+                data-page="studyPage"
+            >
+                Study
+            </button>
 
-        <section class="card timer-card" id="timerCard">
+            <button
+                class="folder-tab"
+                type="button"
+                data-page="todoPage"
+            >
+                To-Do
+            </button>
 
-            <div class="timer-topline">
+            <button
+                class="folder-tab"
+                type="button"
+                data-page="weekPage"
+            >
+                This Week
+            </button>
 
-                <div class="timer-label">
-                    Study Timer
-                </div>
+        </nav>
 
-                <div class="timer-status" id="timerStatus" aria-live="polite">
-                    <span class="status-dot"></span>
-                    <span id="timerStatusText">Ready</span>
-                </div>
+        <main>
 
-            </div>
+            <section
+                class="folder-page active"
+                id="studyPage"
+            >
 
-            <p class="timer-note" id="timerNote">
-                Let's begin.
-            </p>
+                <div class="page-title-row">
 
-            <div id="timer" aria-live="off">
-                00:00:00
-            </div>
-
-            <p class="selected-subject-line">
-                Studying:
-                <strong id="selectedSubjectLabel">
-                    Math
-                </strong>
-            </p>
-
-            <!-- Hidden compatibility select: data is still stored exactly as before. -->
-            <select
-                id="subjectSelect"
-                class="subject-select-hidden"
-                aria-label="Study subject"
-                tabindex="-1"
-            ></select>
-
-            <div class="timer-controls">
-
-                <button
-                    id="timerButton"
-                    class="button primary"
-                    type="button"
-                    onclick="startTimer()"
-                >
-                    Start
-                </button>
-
-                <button
-                    id="resetButton"
-                    class="button secondary"
-                    type="button"
-                    onclick="resetTimer()"
-                >
-                    Reset
-                </button>
-
-            </div>
-
-            <p class="timer-reset-note">
-                Reset clears only the current timer. Saved Study Time stays safe.
-            </p>
-
-            <!-- =================================================
-                 SUBJECT PICKER
-            ================================================== -->
-
-            <div class="subject-picker">
-
-                <div class="subject-picker-title">
-                    Choose subject
-                </div>
-
-                <div
-                    class="subject-grid"
-                    id="subjectGrid"
-                    aria-label="Subjects"
-                ></div>
-
-                <div class="subject-management-row">
-
-                    <span class="tiny-note">
-                        Subject changes are locked while the timer is running.
-                    </span>
-
-                    <button
-                        class="small-button"
-                        type="button"
-                        onclick="removeSelectedSubject()"
-                    >
-                        Remove
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             TODAY
-        ====================================================== -->
-
-        <section class="card">
-
-            <div class="section-heading-row">
-
-                <div>
-                    <h2>
-                        Today
-                    </h2>
-                    <div class="today-date-line" id="todayDateLine">
-                        —
+                    <div>
+                        <h2 class="page-title">Study</h2>
+                        <p class="page-caption">
+                            Start where you are. Keep the clock honest.
+                        </p>
                     </div>
+
+                    <div class="page-doodle" aria-hidden="true">
+                        <svg
+                            width="46"
+                            height="36"
+                            viewBox="0 0 46 36"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M4 28C10 25 12 16 18 14C24 12 27 19 32 18C37 17 39 10 42 6"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            />
+                            <path
+                                d="M36 7L42 6L40 12"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </div>
+
                 </div>
 
-                <span class="hand-note" id="todayMoodNote">
-                    keep going.
-                </span>
+                <section class="card timer-card" id="timerCard">
 
-            </div>
+                    <div class="timer-topline">
 
-            <div class="stats">
+                        <span class="timer-label">
+                            Study Timer
+                        </span>
 
-                <div class="stat">
-                    <div class="stat-title">
-                        Total Study
+                        <span class="timer-status">
+                            <span class="status-dot"></span>
+                            <span id="timerStatusText">Ready</span>
+                        </span>
+
                     </div>
-                    <div
-                        class="stat-value"
-                        id="todayTime"
-                    >
-                        0m
+
+                    <p class="timer-note" id="timerNote">
+                        One honest session is enough to start.
+                    </p>
+
+                    <div id="timer">
+                        00:00:00
                     </div>
-                </div>
 
-                <div class="stat">
-                    <div class="stat-title">
-                        Tasks Done
+                    <p class="selected-subject-line">
+                        Subject:
+                        <strong id="selectedSubjectText">Math</strong>
+                    </p>
+
+                    <div class="timer-controls">
+
+                        <button
+                            class="button primary"
+                            id="timerStartButton"
+                            type="button"
+                        >
+                            Start
+                        </button>
+
+                        <button
+                            class="button secondary"
+                            id="timerResetButton"
+                            type="button"
+                        >
+                            Reset
+                        </button>
+
                     </div>
-                    <div
-                        class="stat-value"
-                        id="tasksDone"
-                    >
-                        0
-                    </div>
-                </div>
 
-            </div>
+                    <p class="timer-reset-note">
+                        Reset clears only the current timer.
+                        Saved study time stays safe.
+                    </p>
 
-            <div class="study-summary-list" id="todaySubjects"></div>
+                    <div class="subject-picker">
 
-            <div class="summary-line" id="todaySummaryLine">
-                Start with one page.
-            </div>
+                        <div class="subject-picker-title">
+                            Choose a subject
+                        </div>
 
-        </section>
-
-
-        <!-- =====================================================
-             BETTER DAYS AHEAD
-        ====================================================== -->
-
-        <section class="card better-days-card">
-
-            <svg class="doodle-star one" viewBox="0 0 27 27" fill="none" aria-hidden="true">
-                <path d="M13.5 2L15.6 11.4L24.5 13.5L15.6 15.7L13.5 25L11.5 15.7L2.5 13.5L11.5 11.4L13.5 2Z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
-            </svg>
-
-            <div class="better-days-copy">
-                <h2 class="better-days-title">
-                    Better days ahead.
-                </h2>
-                <p class="better-days-text" id="betterDaysText">
-                    You do not need a perfect day. One honest study session is enough to move the page forward.
-                </p>
-            </div>
-
-            <div class="sleepy-mascot" aria-hidden="true">
-                <svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- sleeping / tired notebook mascot, kept intentionally simple -->
-                    <path d="M13 63C20 48 26 40 43 39C57 38 67 45 76 62" stroke="#3C3935" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M22 42C22 30 31 22 45 22C59 22 67 31 65 43C61 49 55 52 45 52C34 52 27 49 22 42Z" fill="#EBD8C6" stroke="#393632" stroke-width="1.4"/>
-                    <path d="M24 37C25 27 33 21 42 20C54 17 64 22 68 31L63 38L59 31L54 36L48 29L43 36L37 30L33 37L28 32L24 37Z" fill="#4A4137" stroke="#302E2B" stroke-width="1.4" stroke-linejoin="round"/>
-                    <path d="M34 41C37 44 40 44 43 41" stroke="#3D3D3A" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M49 41C52 44 55 44 58 41" stroke="#3D3D3A" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M24 56L17 72H73L66 56L57 61H34L24 56Z" fill="#33425A" stroke="#2E3642" stroke-width="1.5"/>
-                    <path d="M39 60L45 67L51 60" stroke="#ECE7DE" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M65 14C70 11 74 14 72 18C78 16 80 20 76 23" stroke="#6E655C" stroke-width="1.2" stroke-linecap="round"/>
-                    <path d="M79 29L82 28" stroke="#6E655C" stroke-width="1.2" stroke-linecap="round"/>
-                </svg>
-            </div>
-
-            <svg class="doodle-star two" viewBox="0 0 21 21" fill="none" aria-hidden="true">
-                <path d="M10.5 2L11.8 8.8L18.8 10.5L11.8 12.2L10.5 19L9.2 12.2L2.2 10.5L9.2 8.8L10.5 2Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
-            </svg>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================================================
-         TO-DO PAGE
-    ========================================================== -->
-
-    <main id="todoPage" class="folder-page">
-
-        <div class="page-title-row">
-
-            <div>
-                <h2 class="page-title">
-                    To-Do
-                </h2>
-                <p class="page-caption">
-                    A small notebook for the next thing that needs doing.
-                </p>
-            </div>
-
-            <div class="page-doodle" aria-hidden="true">
-                <svg width="55" height="34" viewBox="0 0 55 34" fill="none">
-                    <path d="M6 7H37V28H6V7Z" stroke="currentColor" stroke-width="1.1"/>
-                    <path d="M10 12H31M10 17H27M10 22H22" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-                    <path d="M39 9L46 2L50 6L43 13L39 9Z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
-                </svg>
-            </div>
-
-        </div>
-
-
-        <section class="card todo-paper">
-
-            <div class="section-heading-row">
-                <h2>
-                    Tasks
-                </h2>
-                <span class="hand-note" id="todoHandNote">
-                    one thing at a time.
-                </span>
-            </div>
-
-            <div class="input-area">
-
-                <input
-                    id="taskInput"
-                    type="text"
-                    placeholder="Write a task..."
-                    autocomplete="off"
-                    maxlength="180"
-                    aria-label="New task"
-                >
-
-                <button
-                    class="add-button"
-                    type="button"
-                    onclick="addTask()"
-                >
-                    Add
-                </button>
-
-            </div>
-
-            <ul
-                class="todo-list"
-                id="taskList"
-                aria-live="polite"
-            ></ul>
-
-            <div class="todo-footer">
-                <span id="todoCountLabel">
-                    0 tasks
-                </span>
-                <span>
-                    checked tasks stay saved.
-                </span>
-            </div>
-
-            <svg class="doodle-note" viewBox="0 0 42 54" fill="none" aria-hidden="true">
-                <path d="M5 6L37 3L39 45L7 49L5 6Z" stroke="#26344A" stroke-width="1.1"/>
-                <path d="M11 16L30 14M12 22L32 20M13 28L27 27M14 35L31 33" stroke="#26344A" stroke-width="1" stroke-linecap="round"/>
-            </svg>
-
-        </section>
-
-
-        <section class="card">
-
-            <div class="section-heading-row">
-                <h2>
-                    A tiny rule
-                </h2>
-                <span class="tiny-note">
-                    for difficult days
-                </span>
-            </div>
-
-            <p class="hand-note" style="margin: 0; line-height: 1.65;">
-                Make the next step smaller until it feels possible.
-            </p>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================================================
-         THIS WEEK PAGE
-    ========================================================== -->
-
-    <main id="weekPage" class="folder-page">
-
-        <div class="page-title-row">
-
-            <div>
-                <h2 class="page-title">
-                    This Week
-                </h2>
-                <p class="page-caption">
-                    Seven small pages, all in one place.
-                </p>
-            </div>
-
-            <div class="page-doodle" aria-hidden="true">
-                <svg width="54" height="32" viewBox="0 0 54 32" fill="none">
-                    <path d="M5 24L14 8L24 20L32 11L49 24" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="14" cy="8" r="2" stroke="currentColor" stroke-width="1"/>
-                    <circle cx="32" cy="11" r="2" stroke="currentColor" stroke-width="1"/>
-                </svg>
-            </div>
-
-        </div>
-
-
-        <section class="card">
-
-            <div class="week-overview">
-
-                <div>
-                    <div class="week-total-big" id="weekTotal">
-                        0m
-                    </div>
-                    <div class="week-total-label">
-                        weekly study
-                    </div>
-                </div>
-
-                <div class="week-progress-illustration">
-                    <div class="week-progress-track">
                         <div
-                            class="week-progress-fill"
-                            id="weekProgressFill"
+                            class="subject-grid"
+                            id="subjectGrid"
                         ></div>
+
+                        <div class="subject-management-row">
+
+                            <span class="tiny-note">
+                                Your choice is saved automatically.
+                            </span>
+
+                            <button
+                                class="button subtle"
+                                id="manageSubjectsButton"
+                                type="button"
+                            >
+                                + Add subject
+                            </button>
+
+                        </div>
+
                     </div>
+
+                </section>
+
+                <section class="card">
+
+                    <div class="section-heading-row">
+
+                        <h2>Today</h2>
+
+                        <span
+                            class="tiny-note"
+                            id="todayMiniDate"
+                        ></span>
+
+                    </div>
+
+                    <div class="stats">
+
+                        <div class="stat">
+
+                            <div class="stat-title">
+                                Study time
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="todayTotal"
+                            >
+                                0m
+                            </div>
+
+                        </div>
+
+                        <div class="stat">
+
+                            <div class="stat-title">
+                                Subjects
+                            </div>
+
+                            <div
+                                class="stat-value"
+                                id="todaySubjectsCount"
+                            >
+                                0
+                            </div>
+
+                        </div>
+
+                    </div>
+
                     <div
-                        class="week-progress-label"
-                        id="weekProgressLabel"
+                        class="study-summary-list"
+                        id="todaySummaryList"
+                    ></div>
+
+                    <div
+                        class="summary-line"
+                        id="todaySummaryLine"
                     >
-                        0 / 7 days
+                        Nothing logged yet. That's okay.
                     </div>
+
+                </section>
+
+                <section class="card motivation-card">
+
+                    <div>
+
+                        <p class="motivation-title">
+                            Tiny progress still counts.
+                        </p>
+
+                        <p class="motivation-text">
+                            You don't need a perfect day.
+                            You only need one small thing you can honestly
+                            say you finished.
+                        </p>
+
+                    </div>
+
+                    <div
+                        class="motivation-doodle"
+                        aria-hidden="true"
+                    >
+
+                        <svg
+                            viewBox="0 0 100 80"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+
+                            <path
+                                d="M10 63C24 55 31 57 42 48C52 40 56 29 70 30C81 31 86 39 91 27"
+                                stroke="#77726A"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                            />
+
+                            <path
+                                d="M83 27L91 27L88 35"
+                                stroke="#77726A"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                            <circle
+                                cx="28"
+                                cy="48"
+                                r="4"
+                                stroke="#A29B91"
+                                stroke-width="1.4"
+                            />
+
+                            <path
+                                d="M19 22C22 18 26 17 29 19C31 21 30 25 28 28"
+                                stroke="#A29B91"
+                                stroke-width="1.4"
+                                stroke-linecap="round"
+                            />
+
+                        </svg>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+            <section
+                class="folder-page"
+                id="todoPage"
+            >
+
+                <div class="page-title-row">
+
+                    <div>
+                        <h2 class="page-title">To-Do</h2>
+                        <p class="page-caption">
+                            Put the next few things somewhere safe.
+                        </p>
+                    </div>
+
+                    <div class="page-doodle" aria-hidden="true">
+                        <svg
+                            width="46"
+                            height="36"
+                            viewBox="0 0 46 36"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M6 7H40M6 17H40M6 27H29"
+                                stroke="currentColor"
+                                stroke-width="1.6"
+                                stroke-linecap="round"
+                            />
+                            <path
+                                d="M34 25L38 29L44 20"
+                                stroke="currentColor"
+                                stroke-width="1.6"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </div>
+
                 </div>
 
-            </div>
+                <section class="card todo-paper">
 
-            <div
-                class="week-list"
-                id="weekStats"
-            ></div>
+                    <div class="section-heading-row">
 
-        </section>
+                        <h2>Today's list</h2>
 
+                        <span
+                            class="hand-note"
+                            id="todoCount"
+                        >
+                            0 left
+                        </span>
 
-        <section class="card">
+                    </div>
 
-            <div class="section-heading-row">
-                <h2>
-                    Week note
-                </h2>
-                <span class="hand-note">
-                    not a competition.
-                </span>
-            </div>
+                    <div class="input-area">
 
-            <p class="online-description" style="margin: 0;">
-                The week view only records the study time you actually save. Nothing here needs to be perfect.
-            </p>
+                        <input
+                            type="text"
+                            id="todoInput"
+                            placeholder="Write the next task..."
+                            autocomplete="off"
+                        >
 
-        </section>
+                        <button
+                            class="add-button"
+                            id="addTodoButton"
+                            type="button"
+                        >
+                            Add
+                        </button>
 
-    </main>
+                    </div>
 
+                    <ul
+                        class="todo-list"
+                        id="todoList"
+                    ></ul>
+
+                    <div class="todo-footer">
+
+                        <span>
+                            Check it when it's genuinely done.
+                        </span>
+
+                        <button
+                            class="todo-delete"
+                            id="clearCompletedButton"
+                            type="button"
+                        >
+                            Clear completed
+                        </button>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+            <section
+                class="folder-page"
+                id="weekPage"
+            >
+
+                <div class="page-title-row">
+
+                    <div>
+                        <h2 class="page-title">This Week</h2>
+                        <p class="page-caption">
+                            A simple record of where your time went.
+                        </p>
+                    </div>
+
+                    <div class="page-doodle" aria-hidden="true">
+                        <svg
+                            width="46"
+                            height="36"
+                            viewBox="0 0 46 36"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M7 27L15 18L22 23L33 10L40 15"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M34 10H40V16"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </div>
+
+                </div>
+
+                <section class="card">
+
+                    <div class="week-overview">
+
+                        <div>
+
+                            <div
+                                class="week-total-big"
+                                id="weekTotal"
+                            >
+                                0m
+                            </div>
+
+                            <div class="week-total-label">
+                                total this week
+                            </div>
+
+                        </div>
+
+                        <div class="week-progress-illustration">
+
+                            <div class="week-progress-track">
+
+                                <div
+                                    class="week-progress-fill"
+                                    id="weekProgressFill"
+                                ></div>
+
+                            </div>
+
+                            <div
+                                class="week-progress-label"
+                                id="weekProgressLabel"
+                            >
+                                0 / 20h
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="week-list"
+                        id="weekList"
+                    ></div>
+
+                </section>
+
+            </section>
+
+        </main>
+
+        <button
+            class="online-float"
+            id="onlineButton"
+            type="button"
+            aria-label="Open online study room"
+            title="Online study room"
+        >
+
+            <svg
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+            >
+
+                <path
+                    d="M10 28C10 20 14 15 20 15C26 15 30 20 30 28V32H10V28Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                />
+
+                <circle
+                    cx="20"
+                    cy="11"
+                    r="4"
+                    stroke="currentColor"
+                    stroke-width="2"
+                />
+
+                <path
+                    d="M29 29C29 23 33 19 38 19C42 19 45 23 45 29V32H29"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                />
+
+                <circle
+                    cx="37"
+                    cy="15"
+                    r="3.5"
+                    stroke="currentColor"
+                    stroke-width="2"
+                />
+
+                <path
+                    d="M7 37H41"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                />
+
+            </svg>
+
+        </button>
+
+    </div>
 </div>
-
-
-<!-- =========================================================
-     ONLINE FLOATING BUTTON
-========================================================== -->
-
-<button
-    class="online-float"
-    aria-label="Online Study Room"
-    title="Online Study Room"
-    type="button"
-    onclick="openOnlineRoom()"
->
-    <svg
-        viewBox="0 0 64 64"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-    >
-        <!-- desk/table -->
-        <path
-            d="M14 42H50"
-            stroke="currentColor"
-            stroke-width="3.5"
-            stroke-linecap="round"
-        />
-        <path
-            d="M19 42V51M45 42V51"
-            stroke="currentColor"
-            stroke-width="3.5"
-            stroke-linecap="round"
-        />
-
-        <!-- three people -->
-        <circle cx="20" cy="23" r="5" stroke="currentColor" stroke-width="3"/>
-        <path
-            d="M12 38C12.7 31.5 15.4 29 20 29C24.6 29 27.3 31.5 28 38"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-        />
-
-        <circle cx="32" cy="20" r="5" stroke="currentColor" stroke-width="3"/>
-        <path
-            d="M24 36C24.7 29.5 27.4 26 32 26C36.6 26 39.3 29.5 40 36"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-        />
-
-        <circle cx="44" cy="23" r="5" stroke="currentColor" stroke-width="3"/>
-        <path
-            d="M36 38C36.7 31.5 39.4 29 44 29C48.6 29 51.3 31.5 52 38"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-        />
-    </svg>
-</button>
-
-
-<!-- =========================================================
-     ADD SUBJECT MODAL
-========================================================== -->
 
 <div
     class="modal-backdrop"
-    id="subjectModalBackdrop"
+    id="subjectModal"
     aria-hidden="true"
 >
 
@@ -1937,40 +1830,45 @@
         aria-labelledby="subjectModalTitle"
     >
 
-        <h2
-            class="modal-title"
-            id="subjectModalTitle"
+        <button
+            class="modal-close"
+            id="closeSubjectModal"
+            type="button"
+            aria-label="Close"
         >
-            Add a subject
-        </h2>
+            ×
+        </button>
 
-        <p class="modal-text">
-            Give this subject a simple name. It will be remembered on this device.
+        <h3 id="subjectModalTitle">
+            Add a subject
+        </h3>
+
+        <p>
+            Give it a short name. You can choose it from the timer afterward.
         </p>
 
         <input
-            id="subjectInput"
             type="text"
-            placeholder="e.g. Biology"
-            maxlength="60"
+            id="newSubjectInput"
+            placeholder="e.g. English"
             autocomplete="off"
-            aria-label="New subject name"
+            maxlength="40"
         >
 
         <div class="modal-actions">
 
             <button
                 class="button secondary"
+                id="cancelSubjectButton"
                 type="button"
-                onclick="closeSubjectModal()"
             >
                 Cancel
             </button>
 
             <button
                 class="button primary"
+                id="saveSubjectButton"
                 type="button"
-                onclick="confirmAddSubject()"
             >
                 Add subject
             </button>
@@ -1981,2786 +1879,1692 @@
 
 </div>
 
-
-<!-- =========================================================
-     TOAST
-========================================================== -->
-
-<div
-    class="toast"
-    id="toast"
-    role="status"
-    aria-live="polite"
-></div>
-
-
 <script>
 
-
-/* =========================================================
-   FOLDER NAVIGATION
-========================================================= */
-
-function showPage(pageId, button) {
-
-    const pages =
-        document.querySelectorAll(".folder-page");
-
-
-    pages.forEach(function(page) {
-
-        page.classList.remove("active");
-
-    });
-
-
-    const selectedPage =
-        document.getElementById(pageId);
-
-
-    if (selectedPage) {
-
-        selectedPage.classList.add("active");
-
-    }
-
-
-    const tabs =
-        document.querySelectorAll(".folder-tab");
-
-
-    tabs.forEach(function(tab) {
-
-        tab.classList.remove("active");
-
-    });
-
-
-    if (button) {
-
-        button.classList.add("active");
-
-    }
-
-
-    localStorage.setItem(
-        ACTIVE_PAGE_KEY,
-        pageId
-    );
-
-}
-
-
-/* =========================================================
-   STORAGE KEYS
-========================================================= */
-
-const TASKS_KEY = "nisseTasks";
-
-const SUBJECTS_KEY = "nisseSubjects";
-
-const STUDY_KEY = "nisseStudy";
-
-const TIMER_KEY = "nisseTimerState";
-
-const SELECTED_SUBJECT_KEY = "nisseSelectedSubject";
-
-const ACTIVE_PAGE_KEY = "nisseActivePage";
-
-
-/* =========================================================
-   BASIC DATA / SAFE STORAGE READERS
-========================================================= */
-
-function readStorageJSON(key, fallback) {
-
-    const raw =
-        localStorage.getItem(key);
-
-
-    if (!raw) {
-
-        return fallback;
-
-    }
-
-
-    try {
-
-        return JSON.parse(raw);
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Could not read localStorage key:",
-            key,
-            error
-        );
-
-        return fallback;
-
-    }
-
-}
-
-
-let tasks =
-    readStorageJSON(
-        TASKS_KEY,
-        []
-    );
-
-
-if (!Array.isArray(tasks)) {
-
-    tasks = [];
-
-}
-
-
-let subjects =
-    readStorageJSON(
-        SUBJECTS_KEY,
-        [
-            "Math",
-            "Physics",
-            "Chemistry",
-            "English"
-        ]
-    );
-
-
-if (!Array.isArray(subjects)) {
-
-    subjects = [
-        "Math",
-        "Physics",
-        "Chemistry",
-        "English"
-    ];
-
-}
-
-
-/* Remove empty / duplicated subject names while preserving order. */
-
-subjects = subjects
-    .map(function(subject) {
-        return String(subject).trim();
-    })
-    .filter(function(subject) {
-        return subject !== "";
-    })
-    .filter(function(subject, index, array) {
-        return array.indexOf(subject) === index;
-    });
-
-
-if (subjects.length === 0) {
-
-    subjects = ["Math"];
-
-}
-
-
-let rawStudy =
-    readStorageJSON(
-        STUDY_KEY,
-        {}
-    );
-
-
-if (!rawStudy || typeof rawStudy !== "object" || Array.isArray(rawStudy)) {
-
-    rawStudy = {};
-
-}
-
-
-let studyData =
-    migrateStudyData(rawStudy);
-
-
-/* =========================================================
-   TIMER STATE
-========================================================= */
-
-/*
-    timerSeconds
-    = current displayed timer value.
-
-    timerBaseSeconds
-    = timer value when the current running session started.
-
-    timerStartedAt
-    = real timestamp when the current running session started.
-
-    savedTimerSeconds
-    = amount of the current timer already recorded
-      inside Study Time.
-
-    This architecture is deliberately timestamp-based.
-    It means the timer keeps the correct real elapsed time
-    even when the browser throttles an inactive tab.
-
-    Example:
-
-    Start -> 25:30 -> Stop
-    saved Study Time gets 25:30.
-
-    Start again -> 40:10 -> Stop
-    only the additional 14:40 gets saved.
-
-    Reset after saved time does not erase saved Study Time.
-*/
-
-let timerSeconds = 0;
-
-let timerBaseSeconds = 0;
-
-let savedTimerSeconds = 0;
-
-let timerRunning = false;
-
-let timerStartedAt = null;
-
-let timerInterval = null;
-
-
-/* =========================================================
-   SMALL UI STATE
-========================================================= */
-
-let toastTimeout = null;
-
-let subjectModalLastSelected = "";
-
-
-/* =========================================================
-   STUDY DATA MIGRATION
-========================================================= */
-
-function migrateStudyData(data) {
-
-    const result = {};
-
-
-    Object.keys(data).forEach(function(date) {
-
-        const entry = data[date];
-
-
-        /*
-            Old versions stored:
-
-            "2026-09-17": 3600
-
-            New versions store:
-
-            "2026-09-17": {
-                total: 3600,
-                subjects: {
-                    Math: 3600
-                }
-            }
-        */
-
-        if (typeof entry === "number") {
-
-            result[date] = {
-
-                total: Math.max(
-                    0,
-                    Math.floor(entry)
-                ),
-
-                subjects: {
-                    "Other": Math.max(
-                        0,
-                        Math.floor(entry)
-                    )
-                }
-
-            };
-
-            return;
-
-        }
-
-
-        if (!entry || typeof entry !== "object") {
-
-            return;
-
-        }
-
-
-        const total =
-            Number(entry.total);
-
-
-        const cleanSubjects = {};
-
-
-        if (
-            entry.subjects &&
-            typeof entry.subjects === "object"
-        ) {
-
-            Object.keys(entry.subjects).forEach(function(subject) {
-
-                const seconds =
-                    Number(entry.subjects[subject]);
-
-
-                if (Number.isFinite(seconds) && seconds > 0) {
-
-                    cleanSubjects[subject] = Math.floor(seconds);
-
-                }
-
-            });
-
-        }
-
-
-        result[date] = {
-
-            total:
-                Number.isFinite(total) && total > 0
-                    ? Math.floor(total)
-                    : 0,
-
-            subjects: cleanSubjects
-
-        };
-
-    });
-
-
-    return result;
-
-}
-
-
-function saveStudyData() {
-
-    localStorage.setItem(
-        STUDY_KEY,
-        JSON.stringify(studyData)
-    );
-
-}
-
-
-function saveSubjects() {
-
-    localStorage.setItem(
-        SUBJECTS_KEY,
-        JSON.stringify(subjects)
-    );
-
-}
-
-
-/* =========================================================
-   TIMER - REAL TIME CALCULATION
-========================================================= */
-
-function getCurrentTimerSeconds() {
-
-    if (!timerRunning) {
-
-        return Math.max(
-            0,
-            Math.floor(timerSeconds || 0)
-        );
-
-    }
-
-
-    if (!timerStartedAt) {
-
-        return Math.max(
-            0,
-            Math.floor(timerSeconds || 0)
-        );
-
-    }
-
-
-    const elapsed =
-        Math.floor(
-            (Date.now() - timerStartedAt) / 1000
-        );
-
-
-    return Math.max(
-        0,
-        Math.floor(timerBaseSeconds || 0) + Math.max(0, elapsed)
-    );
-
-}
-
-
-/* =========================================================
-   SAVE TIMER STATE
-========================================================= */
-
-function saveTimerState() {
-
-    const state = {
-
-        timerSeconds:
-            Math.max(
-                0,
-                Math.floor(timerSeconds || 0)
-            ),
-
-        timerBaseSeconds:
-            Math.max(
-                0,
-                Math.floor(timerBaseSeconds || 0)
-            ),
-
-        savedTimerSeconds:
-            Math.max(
-                0,
-                Math.floor(savedTimerSeconds || 0)
-            ),
-
-        timerRunning:
-            Boolean(timerRunning),
-
-        timerStartedAt:
-            timerStartedAt || null
-
+    /* =========================================================
+       STORAGE KEYS
+    ========================================================= */
+
+    const STORAGE_KEYS = {
+        subjects: "nisse_subjects",
+        selectedSubject: "nisse_selected_subject",
+        studyData: "nisse_study_data",
+        tasks: "nisse_tasks",
+        timerState: "nisse_timer_state"
     };
 
 
-    localStorage.setItem(
-        TIMER_KEY,
-        JSON.stringify(state)
-    );
+    /* =========================================================
+       DEFAULT DATA
+    ========================================================= */
 
-}
+    const DEFAULT_SUBJECTS = [
+        "Math",
+        "Physics",
+        "Chemistry",
+        "Biology"
+    ];
 
 
-/* =========================================================
-   RESTORE TIMER AFTER RELOAD
-========================================================= */
+    /* =========================================================
+       TIMER STATE
+    ========================================================= */
 
-function restoreTimer() {
+    let timerSeconds = 0;
 
-    const saved =
-        localStorage.getItem(TIMER_KEY);
+    let timerBaseSeconds = 0;
 
+    let savedTimerSeconds = 0;
 
-    if (!saved) {
+    let timerRunning = false;
 
-        timerSeconds = 0;
-        timerBaseSeconds = 0;
-        savedTimerSeconds = 0;
-        timerRunning = false;
-        timerStartedAt = null;
+    let timerStartedAt = null;
 
-        updateTimer();
-        updateTimerButton();
-        updateTimerVisualState();
+    let timerInterval = null;
 
-        return;
 
-    }
+    /* =========================================================
+       GENERAL STATE
+    ========================================================= */
 
+    let subjects = [];
 
-    try {
+    let selectedSubject = "Math";
 
-        const state =
-            JSON.parse(saved);
+    let studyData = {};
 
+    let tasks = [];
 
-        timerSeconds =
-            Math.max(
-                0,
-                Math.floor(Number(state.timerSeconds) || 0)
-            );
 
-
-        timerBaseSeconds =
-            Math.max(
-                0,
-                Math.floor(Number(state.timerBaseSeconds) || 0)
-            );
-
-
-        savedTimerSeconds =
-            Math.max(
-                0,
-                Math.floor(Number(state.savedTimerSeconds) || 0)
-            );
-
-
-        timerRunning =
-            Boolean(state.timerRunning);
-
-
-        timerStartedAt =
-            Number.isFinite(Number(state.timerStartedAt))
-                ? Number(state.timerStartedAt)
-                : null;
-
-
-        if (timerRunning && timerStartedAt) {
-
-            timerSeconds =
-                getCurrentTimerSeconds();
-
-
-            startTimerInterval();
-
-        }
-
-        else {
-
-            timerRunning = false;
-            timerStartedAt = null;
-
-        }
-
-
-        updateTimer();
-        updateTimerButton();
-        updateTimerVisualState();
-        updateSubjectSelectState();
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Could not restore timer:",
-            error
-        );
-
-        timerSeconds = 0;
-        timerBaseSeconds = 0;
-        savedTimerSeconds = 0;
-        timerRunning = false;
-        timerStartedAt = null;
-
-        updateTimer();
-        updateTimerButton();
-        updateTimerVisualState();
-
-    }
-
-}
-
-
-/* =========================================================
-   START TIMER
-========================================================= */
-
-function startTimer() {
-
-    if (timerRunning) {
-
-        /* Start never secretly acts as Stop. */
-        return;
-
-    }
-
-
-    const subject =
-        getSelectedSubject();
-
-
-    if (!subject) {
-
-        showToast(
-            "Please choose a subject first."
-        );
-
-        return;
-
-    }
-
-
-    timerSeconds =
-        Math.max(
-            0,
-            Math.floor(Number(timerSeconds) || 0)
-        );
-
-
-    timerBaseSeconds =
-        timerSeconds;
-
-
-    timerStartedAt =
-        Date.now();
-
-
-    timerRunning = true;
-
-
-    updateTimer();
-    updateTimerButton();
-    updateTimerVisualState();
-    updateSubjectSelectState();
-
-    saveTimerState();
-
-    startTimerInterval();
-
-}
-
-
-/* =========================================================
-   START INTERVAL
-========================================================= */
-
-function startTimerInterval() {
-
-    if (timerInterval !== null) {
-
-        clearInterval(timerInterval);
-
-    }
-
-
-    /*
-        setInterval is only a display/update mechanism.
-        The real clock comes from Date.now().
-    */
-
-    timerInterval =
-        setInterval(function() {
-
-            timerSeconds =
-                getCurrentTimerSeconds();
-
-            updateTimer();
-            updateTimerVisualState();
-
-            saveTimerState();
-
-        }, 1000);
-
-}
-
-
-/* =========================================================
-   STOP TIMER
-========================================================= */
-
-function stopTimer() {
-
-    if (!timerRunning) {
-
-        return;
-
-    }
-
-
-    /* Capture the exact final real-time value before stopping. */
-
-    timerSeconds =
-        getCurrentTimerSeconds();
-
-
-    if (timerInterval !== null) {
-
-        clearInterval(timerInterval);
-        timerInterval = null;
-
-    }
-
-
-    timerRunning = false;
-
-    timerStartedAt = null;
-
-    timerBaseSeconds =
-        timerSeconds;
-
-
-    /* Save only the new unsaved segment. */
-
-    saveStudyTime();
-
-
-    updateTimer();
-    updateTimerButton();
-    updateTimerVisualState();
-    updateSubjectSelectState();
-
-    saveTimerState();
-
-    showToast(
-        "Study time saved."
-    );
-
-}
-
-
-/* =========================================================
-   TIMER BUTTON
-========================================================= */
-
-function updateTimerButton() {
-
-    const button =
-        document.getElementById(
-            "timerButton"
-        );
-
-
-    if (!button) {
-
-        return;
-
-    }
-
-
-    if (timerRunning) {
-
-        button.textContent = "Stop";
-        button.onclick = stopTimer;
-        button.setAttribute("aria-label", "Stop study timer");
-
-    }
-
-    else {
-
-        button.textContent = "Start";
-        button.onclick = startTimer;
-        button.setAttribute("aria-label", "Start study timer");
-
-    }
-
-}
-
-
-/* =========================================================
-   RESET TIMER
-========================================================= */
-
-function resetTimer() {
-
-    /*
-        Reset intentionally does not call saveStudyTime().
-
-        Therefore:
-
-        - already saved Study Time remains saved.
-        - the current unsaved timer segment is discarded.
-        - the timer display becomes zero.
-    */
-
-    if (timerInterval !== null) {
-
-        clearInterval(timerInterval);
-        timerInterval = null;
-
-    }
-
-
-    const hadTime =
-        timerSeconds > 0;
-
-
-    timerRunning = false;
-    timerStartedAt = null;
-    timerSeconds = 0;
-    timerBaseSeconds = 0;
-    savedTimerSeconds = 0;
-
-
-    updateTimer();
-    updateTimerButton();
-    updateTimerVisualState();
-    updateSubjectSelectState();
-
-    saveTimerState();
-
-
-    showToast(
-        hadTime
-            ? "Current timer reset. Saved Study Time was kept."
-            : "Timer reset."
-    );
-
-}
-
-
-/* =========================================================
-   UPDATE TIMER DISPLAY
-========================================================= */
-
-function updateTimer() {
-
-    if (timerRunning) {
-
-        timerSeconds =
-            getCurrentTimerSeconds();
-
-    }
-
-
-    const hours =
-        Math.floor(
-            timerSeconds / 3600
-        );
-
-
-    const minutes =
-        Math.floor(
-            (timerSeconds % 3600) / 60
-        );
-
-
-    const seconds =
-        timerSeconds % 60;
-
+    /* =========================================================
+       ELEMENTS
+    ========================================================= */
 
     const timerElement =
         document.getElementById("timer");
 
-
-    if (timerElement) {
-
-        timerElement.textContent =
-            formatNumber(hours) +
-            ":" +
-            formatNumber(minutes) +
-            ":" +
-            formatNumber(seconds);
-
-    }
-
-}
-
-
-/* =========================================================
-   NUMBER FORMAT
-========================================================= */
-
-function formatNumber(number) {
-
-    const cleanNumber =
-        Math.max(
-            0,
-            Math.floor(Number(number) || 0)
-        );
-
-
-    return cleanNumber < 10
-        ? "0" + cleanNumber
-        : String(cleanNumber);
-
-}
-
-
-/* =========================================================
-   TIMER VISUAL STATE / PERSONALITY TEXT
-========================================================= */
-
-function updateTimerVisualState() {
-
-    const card =
+    const timerCard =
         document.getElementById("timerCard");
 
+    const timerStartButton =
+        document.getElementById("timerStartButton");
 
-    const statusText =
+    const timerResetButton =
+        document.getElementById("timerResetButton");
+
+    const timerStatusText =
         document.getElementById("timerStatusText");
 
-
-    const note =
+    const timerNote =
         document.getElementById("timerNote");
 
+    const selectedSubjectText =
+        document.getElementById("selectedSubjectText");
 
-    const seconds =
-        Math.max(
-            0,
-            Math.floor(timerSeconds || 0)
-        );
+    const subjectGrid =
+        document.getElementById("subjectGrid");
 
+    const manageSubjectsButton =
+        document.getElementById("manageSubjectsButton");
 
-    if (card) {
+    const todayTotal =
+        document.getElementById("todayTotal");
 
-        card.classList.toggle(
-            "running",
-            timerRunning
-        );
+    const todaySubjectsCount =
+        document.getElementById("todaySubjectsCount");
 
-    }
+    const todaySummaryList =
+        document.getElementById("todaySummaryList");
 
+    const todaySummaryLine =
+        document.getElementById("todaySummaryLine");
 
-    if (timerRunning) {
+    const todayMiniDate =
+        document.getElementById("todayMiniDate");
 
-        if (statusText) {
-            statusText.textContent = "Focusing";
-        }
+    const todoInput =
+        document.getElementById("todoInput");
 
-        if (note) {
-            note.textContent = "Focus mode.";
-        }
+    const addTodoButton =
+        document.getElementById("addTodoButton");
 
-        return;
+    const todoList =
+        document.getElementById("todoList");
 
-    }
+    const todoCount =
+        document.getElementById("todoCount");
 
+    const clearCompletedButton =
+        document.getElementById("clearCompletedButton");
 
-    if (statusText) {
-        statusText.textContent =
-            seconds > 0
-                ? "Paused"
-                : "Ready";
-    }
+    const weekTotal =
+        document.getElementById("weekTotal");
 
+    const weekProgressFill =
+        document.getElementById("weekProgressFill");
 
-    if (note) {
+    const weekProgressLabel =
+        document.getElementById("weekProgressLabel");
 
-        if (seconds <= 0) {
-            note.textContent = "Let's begin.";
-        }
-        else if (seconds >= 3600) {
-            note.textContent = "Not bad today.";
-        }
-        else {
-            note.textContent = "You made progress.";
-        }
+    const weekList =
+        document.getElementById("weekList");
 
-    }
+    const onlineButton =
+        document.getElementById("onlineButton");
 
-}
+    const subjectModal =
+        document.getElementById("subjectModal");
 
+    const closeSubjectModal =
+        document.getElementById("closeSubjectModal");
 
-/* =========================================================
-   SAVE STUDY TIME
-========================================================= */
+    const cancelSubjectButton =
+        document.getElementById("cancelSubjectButton");
 
-function saveStudyTime() {
+    const saveSubjectButton =
+        document.getElementById("saveSubjectButton");
 
-    const cleanTimerSeconds =
-        Math.max(
-            0,
-            Math.floor(timerSeconds || 0)
-        );
+    const newSubjectInput =
+        document.getElementById("newSubjectInput");
 
 
-    const cleanSavedSeconds =
-        Math.max(
-            0,
-            Math.floor(savedTimerSeconds || 0)
-        );
+    /* =========================================================
+       PAGE NAVIGATION
+    ========================================================= */
 
+    function showPage(pageId) {
 
-    const unsavedSeconds =
-        cleanTimerSeconds -
-        cleanSavedSeconds;
+        document
+            .querySelectorAll(".folder-page")
+            .forEach((page) => {
 
-
-    if (unsavedSeconds <= 0) {
-
-        return;
-
-    }
-
-
-    const today =
-        getDateKey();
-
-
-    const subject =
-        getSelectedSubject();
-
-
-    if (!subject) {
-
-        return;
-
-    }
-
-
-    if (!studyData[today]) {
-
-        studyData[today] = {
-            total: 0,
-            subjects: {}
-        };
-
-    }
-
-
-    if (!studyData[today].subjects) {
-
-        studyData[today].subjects = {};
-
-    }
-
-
-    if (!Number.isFinite(Number(studyData[today].total))) {
-
-        studyData[today].total = 0;
-
-    }
-
-
-    if (!Number.isFinite(Number(studyData[today].subjects[subject]))) {
-
-        studyData[today].subjects[subject] = 0;
-
-    }
-
-
-    studyData[today].total +=
-        unsavedSeconds;
-
-
-    studyData[today].subjects[subject] +=
-        unsavedSeconds;
-
-
-    /* Mark all current timer seconds as recorded. */
-
-    savedTimerSeconds =
-        cleanTimerSeconds;
-
-
-    saveStudyData();
-
-    updateStats();
-
-    updateTodaySubjects();
-
-    updateWeek();
-
-}
-
-
-/* =========================================================
-   SUBJECTS - READ SELECTED SUBJECT
-========================================================= */
-
-function getSelectedSubject() {
-
-    const select =
-        document.getElementById(
-            "subjectSelect"
-        );
-
-
-    if (!select) {
-
-        return "";
-
-    }
-
-
-    return select.value || "";
-
-}
-
-
-/* =========================================================
-   SAVE SELECTED SUBJECT
-========================================================= */
-
-function saveSelectedSubject() {
-
-    const select =
-        document.getElementById(
-            "subjectSelect"
-        );
-
-
-    if (!select) {
-
-        return;
-
-    }
-
-
-    const subject =
-        select.value;
-
-
-    if (subject) {
-
-        localStorage.setItem(
-            SELECTED_SUBJECT_KEY,
-            subject
-        );
-
-    }
-
-
-    updateSelectedSubjectLabel();
-    renderSubjectGridActiveState();
-
-}
-
-
-/* =========================================================
-   SUBJECT SELECT STATE
-========================================================= */
-
-function updateSubjectSelectState() {
-
-    const select =
-        document.getElementById(
-            "subjectSelect"
-        );
-
-
-    if (select) {
-
-        select.disabled = timerRunning;
-
-    }
-
-
-    const choices =
-        document.querySelectorAll(
-            ".subject-choice[data-subject]"
-        );
-
-
-    choices.forEach(function(choice) {
-
-        choice.disabled = timerRunning;
-
-        choice.setAttribute(
-            "aria-disabled",
-            String(timerRunning)
-        );
-
-    });
-
-
-    const addButton =
-        document.querySelector(
-            ".subject-add"
-        );
-
-
-    if (addButton) {
-
-        addButton.disabled = timerRunning;
-        addButton.setAttribute(
-            "aria-disabled",
-            String(timerRunning)
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   RENDER SUBJECTS
-========================================================= */
-
-function renderSubjects() {
-
-    const select =
-        document.getElementById(
-            "subjectSelect"
-        );
-
-
-    const grid =
-        document.getElementById(
-            "subjectGrid"
-        );
-
-
-    const previousSubject =
-        localStorage.getItem(
-            SELECTED_SUBJECT_KEY
-        );
-
-
-    if (select) {
-
-        select.innerHTML = "";
-
-
-        subjects.forEach(function(subject) {
-
-            const option =
-                document.createElement(
-                    "option"
+                page.classList.toggle(
+                    "active",
+                    page.id === pageId
                 );
 
+            });
 
-            option.value = subject;
-            option.textContent = subject;
+        document
+            .querySelectorAll(".folder-tab")
+            .forEach((button) => {
 
-            select.appendChild(option);
+                button.classList.toggle(
+                    "active",
+                    button.dataset.page === pageId
+                );
 
+            });
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
         });
-
-
-        if (
-            previousSubject &&
-            subjects.includes(previousSubject)
-        ) {
-
-            select.value = previousSubject;
-
-        }
-
-        else if (subjects.length > 0) {
-
-            select.value = subjects[0];
-            saveSelectedSubject();
-
-        }
 
     }
 
 
-    if (grid) {
-
-        grid.innerHTML = "";
-
-
-        subjects.forEach(function(subject) {
-
-            const button =
-                document.createElement("button");
-
-
-            button.type = "button";
-            button.className = "subject-choice";
-            button.dataset.subject = subject;
-
-            button.setAttribute(
-                "aria-label",
-                "Select " + subject
-            );
-
-
-            const mark =
-                document.createElement("span");
-
-            mark.className = "subject-mark";
-
-
-            const label =
-                document.createElement("span");
-
-            label.textContent = subject;
-
-
-            button.appendChild(mark);
-            button.appendChild(label);
-
+    document
+        .querySelectorAll(".folder-tab")
+        .forEach((button) => {
 
             button.addEventListener(
                 "click",
-                function() {
+                () => {
 
-                    selectSubject(subject);
+                    showPage(button.dataset.page);
 
                 }
             );
 
+        });
 
-            grid.appendChild(button);
+
+    /* =========================================================
+       TIME HELPERS
+    ========================================================= */
+
+    function formatTime(totalSeconds) {
+
+        const safeSeconds =
+            Math.max(
+                0,
+                Math.floor(totalSeconds || 0)
+            );
+
+        const hours =
+            Math.floor(safeSeconds / 3600);
+
+        const minutes =
+            Math.floor(
+                (safeSeconds % 3600) / 60
+            );
+
+        const seconds =
+            safeSeconds % 60;
+
+        return [
+            String(hours).padStart(2, "0"),
+            String(minutes).padStart(2, "0"),
+            String(seconds).padStart(2, "0")
+        ].join(":");
+
+    }
+
+
+    function getCurrentTimerSeconds() {
+
+        if (!timerRunning || !timerStartedAt) {
+            return timerSeconds;
+        }
+
+        const elapsed =
+            Math.floor(
+                (Date.now() - timerStartedAt) / 1000
+            );
+
+        return Math.max(
+            0,
+            timerBaseSeconds + elapsed
+        );
+
+    }
+
+
+    function updateTimerDisplay() {
+
+        timerSeconds =
+            getCurrentTimerSeconds();
+
+        timerElement.textContent =
+            formatTime(timerSeconds);
+
+        if (timerRunning) {
+
+            timerStatusText.textContent =
+                "Running";
+
+            timerNote.textContent =
+                "Stay with this one thing.";
+
+            timerStartButton.textContent =
+                "Stop";
+
+            timerCard.classList.add("running");
+
+        } else {
+
+            timerStatusText.textContent =
+                "Ready";
+
+            timerNote.textContent =
+                "One honest session is enough to start.";
+
+            timerStartButton.textContent =
+                "Start";
+
+            timerCard.classList.remove("running");
+
+        }
+
+    }
+
+
+    /* =========================================================
+       TIMER STORAGE
+    ========================================================= */
+
+    function saveTimerState() {
+
+        localStorage.setItem(
+            STORAGE_KEYS.timerState,
+            JSON.stringify({
+                timerSeconds,
+                timerBaseSeconds,
+                savedTimerSeconds,
+                timerRunning,
+                timerStartedAt
+            })
+        );
+
+    }
+
+
+    function restoreTimer() {
+
+        const raw =
+            localStorage.getItem(
+                STORAGE_KEYS.timerState
+            );
+
+        if (!raw) {
+
+            updateTimerDisplay();
+
+            return;
+
+        }
+
+        try {
+
+            const state =
+                JSON.parse(raw);
+
+            timerSeconds =
+                Number(state.timerSeconds) || 0;
+
+            timerBaseSeconds =
+                Number(state.timerBaseSeconds) || 0;
+
+            savedTimerSeconds =
+                Number(state.savedTimerSeconds) || 0;
+
+            timerRunning =
+                Boolean(state.timerRunning);
+
+            timerStartedAt =
+                state.timerStartedAt
+                    ? Number(state.timerStartedAt)
+                    : null;
+
+            if (
+                timerRunning &&
+                timerStartedAt
+            ) {
+
+                saveCurrentStudySegment();
+
+                startTimerInterval();
+
+            }
+
+            updateTimerDisplay();
+
+        } catch (error) {
+
+            timerSeconds = 0;
+            timerBaseSeconds = 0;
+            savedTimerSeconds = 0;
+            timerRunning = false;
+            timerStartedAt = null;
+
+            saveTimerState();
+
+            updateTimerDisplay();
+
+        }
+
+    }
+
+
+    /* =========================================================
+       STUDY DATA
+    ========================================================= */
+
+    function getTodayKey() {
+
+        const now = new Date();
+
+        const year =
+            now.getFullYear();
+
+        const month =
+            String(
+                now.getMonth() + 1
+            ).padStart(2, "0");
+
+        const day =
+            String(
+                now.getDate()
+            ).padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+
+    }
+
+
+    function ensureTodayData() {
+
+        const today =
+            getTodayKey();
+
+        if (!studyData[today]) {
+
+            studyData[today] = {};
+
+        }
+
+        subjects.forEach((subject) => {
+
+            if (
+                typeof studyData[today][subject]
+                !== "number"
+            ) {
+
+                studyData[today][subject] = 0;
+
+            }
 
         });
 
+        return today;
+
+    }
+
+
+    function saveStudyData() {
+
+        localStorage.setItem(
+            STORAGE_KEYS.studyData,
+            JSON.stringify(studyData)
+        );
+
+    }
+
+
+    function saveCurrentStudySegment() {
+
+        const current =
+            getCurrentTimerSeconds();
+
+        const unsaved =
+            Math.max(
+                0,
+                current - savedTimerSeconds
+            );
+
+        if (
+            unsaved <= 0 ||
+            !selectedSubject
+        ) {
+
+            return;
+
+        }
+
+        const today =
+            ensureTodayData();
+
+        studyData[today][selectedSubject] =
+            (
+                Number(
+                    studyData[today][selectedSubject]
+                ) || 0
+            ) + unsaved;
+
+        savedTimerSeconds =
+            current;
+
+        saveStudyData();
+
+        renderToday();
+        renderWeek();
+
+        saveTimerState();
+
+    }
+
+
+    /* =========================================================
+       TIMER INTERVAL
+    ========================================================= */
+
+    function startTimerInterval() {
+
+        if (timerInterval) {
+
+            clearInterval(timerInterval);
+
+        }
+
+        timerInterval =
+            setInterval(
+                () => {
+
+                    updateTimerDisplay();
+
+                    saveTimerState();
+
+                },
+                1000
+            );
+
+    }
+
+
+    function stopTimerInterval() {
+
+        if (timerInterval) {
+
+            clearInterval(timerInterval);
+
+            timerInterval = null;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       TIMER ACTIONS
+    ========================================================= */
+
+    function startTimer() {
+
+        if (timerRunning) {
+
+            return;
+
+        }
+
+        timerSeconds =
+            Number(timerSeconds) || 0;
+
+        timerBaseSeconds =
+            timerSeconds;
+
+        timerStartedAt =
+            Date.now();
+
+        timerRunning = true;
+
+        saveTimerState();
+
+        startTimerInterval();
+
+        updateTimerDisplay();
+
+    }
+
+
+    function stopTimer() {
+
+        if (!timerRunning) {
+
+            return;
+
+        }
+
+        timerSeconds =
+            getCurrentTimerSeconds();
+
+        saveCurrentStudySegment();
+
+        timerRunning = false;
+
+        timerStartedAt = null;
+
+        timerBaseSeconds =
+            timerSeconds;
+
+        stopTimerInterval();
+
+        saveTimerState();
+
+        updateTimerDisplay();
+
+    }
+
+
+    function toggleTimer() {
+
+        if (timerRunning) {
+
+            stopTimer();
+
+        } else {
+
+            startTimer();
+
+        }
+
+    }
+
+
+    function resetTimer() {
+
+        stopTimerInterval();
+
+        timerRunning = false;
+
+        timerStartedAt = null;
+
+        timerSeconds = 0;
+
+        timerBaseSeconds = 0;
+
+        savedTimerSeconds = 0;
+
+        saveTimerState();
+
+        updateTimerDisplay();
+
+    }
+
+
+    timerStartButton.addEventListener(
+        "click",
+        toggleTimer
+    );
+
+
+    timerResetButton.addEventListener(
+        "click",
+        resetTimer
+    );
+
+
+    /* =========================================================
+       SUBJECT STORAGE
+    ========================================================= */
+
+    function loadSubjects() {
+
+        const raw =
+            localStorage.getItem(
+                STORAGE_KEYS.subjects
+            );
+
+        if (!raw) {
+
+            subjects =
+                [...DEFAULT_SUBJECTS];
+
+            saveSubjects();
+
+            return;
+
+        }
+
+        try {
+
+            const parsed =
+                JSON.parse(raw);
+
+            if (
+                Array.isArray(parsed) &&
+                parsed.length
+            ) {
+
+                subjects =
+                    parsed
+                        .filter(
+                            (item) =>
+                                typeof item === "string" &&
+                                item.trim()
+                        )
+                        .map(
+                            (item) =>
+                                item.trim()
+                        );
+
+            } else {
+
+                subjects =
+                    [...DEFAULT_SUBJECTS];
+
+                saveSubjects();
+
+            }
+
+        } catch (error) {
+
+            subjects =
+                [...DEFAULT_SUBJECTS];
+
+            saveSubjects();
+
+        }
+
+    }
+
+
+    function saveSubjects() {
+
+        localStorage.setItem(
+            STORAGE_KEYS.subjects,
+            JSON.stringify(subjects)
+        );
+
+    }
+
+
+    function loadSelectedSubject() {
+
+        const saved =
+            localStorage.getItem(
+                STORAGE_KEYS.selectedSubject
+            );
+
+        if (
+            saved &&
+            subjects.includes(saved)
+        ) {
+
+            selectedSubject =
+                saved;
+
+        } else {
+
+            selectedSubject =
+                subjects[0] || "Math";
+
+        }
+
+        localStorage.setItem(
+            STORAGE_KEYS.selectedSubject,
+            selectedSubject
+        );
+
+    }
+
+
+    function saveSelectedSubject() {
+
+        localStorage.setItem(
+            STORAGE_KEYS.selectedSubject,
+            selectedSubject
+        );
+
+    }
+
+
+    function renderSubjects() {
+
+        subjectGrid.innerHTML = "";
+
+        subjects.forEach((subject) => {
+
+            const button =
+                document.createElement("button");
+
+            button.type = "button";
+
+            button.className =
+                "subject-choice";
+
+            if (subject === selectedSubject) {
+
+                button.classList.add("active");
+
+            }
+
+            button.innerHTML = `
+                <span class="subject-mark"></span>
+                <span>${escapeHtml(subject)}</span>
+            `;
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    if (timerRunning) {
+
+                        return;
+
+                    }
+
+                    selectedSubject =
+                        subject;
+
+                    saveSelectedSubject();
+
+                    renderSubjects();
+                    updateSelectedSubjectText();
+
+                }
+            );
+
+            subjectGrid.appendChild(button);
+
+        });
 
         const addButton =
             document.createElement("button");
 
-
         addButton.type = "button";
-        addButton.className = "subject-choice subject-add";
-        addButton.setAttribute(
-            "aria-label",
-            "Add subject"
-        );
 
-        addButton.innerHTML =
-            '<span class="plus">+</span><span>Add subject</span>';
+        addButton.className =
+            "subject-choice subject-add";
 
+        addButton.innerHTML = `
+            <span class="plus">+</span>
+            <span>Add subject</span>
+        `;
 
         addButton.addEventListener(
             "click",
-            function() {
-                openSubjectModal();
-            }
+            openSubjectModal
         );
 
-
-        grid.appendChild(addButton);
+        subjectGrid.appendChild(addButton);
 
     }
 
 
-    updateSelectedSubjectLabel();
-    renderSubjectGridActiveState();
-    updateSubjectSelectState();
+    function updateSelectedSubjectText() {
 
-}
-
-
-/* =========================================================
-   SELECT SUBJECT
-========================================================= */
-
-function selectSubject(subject) {
-
-    if (timerRunning) {
-
-        showToast(
-            "Stop the timer before changing subject."
-        );
-
-        return;
+        selectedSubjectText.textContent =
+            selectedSubject;
 
     }
 
 
-    if (!subjects.includes(subject)) {
+    /* =========================================================
+       SUBJECT MODAL
+    ========================================================= */
 
-        return;
+    function openSubjectModal() {
 
-    }
+        subjectModal.classList.add("open");
 
-
-    const select =
-        document.getElementById(
-            "subjectSelect"
+        subjectModal.setAttribute(
+            "aria-hidden",
+            "false"
         );
 
-
-    if (select) {
-
-        select.value = subject;
-
-    }
-
-
-    saveSelectedSubject();
-
-    showToast(
-        "Subject: " + subject
-    );
-
-}
-
-
-/* =========================================================
-   UPDATE SELECTED SUBJECT LABEL
-========================================================= */
-
-function updateSelectedSubjectLabel() {
-
-    const label =
-        document.getElementById(
-            "selectedSubjectLabel"
+        document.body.classList.add(
+            "modal-open"
         );
 
-
-    if (!label) {
-
-        return;
-
-    }
-
-
-    label.textContent =
-        getSelectedSubject() ||
-        "Choose a subject";
-
-}
-
-
-/* =========================================================
-   SUBJECT ACTIVE STYLING
-========================================================= */
-
-function renderSubjectGridActiveState() {
-
-    const selected =
-        getSelectedSubject();
-
-
-    document
-        .querySelectorAll(
-            ".subject-choice[data-subject]"
-        )
-        .forEach(function(button) {
-
-            const active =
-                button.dataset.subject === selected;
-
-
-            button.classList.toggle(
-                "active",
-                active
-            );
-
-            button.setAttribute(
-                "aria-pressed",
-                String(active)
-            );
-
-        });
-
-}
-
-
-/* =========================================================
-   SUBJECT MODAL
-========================================================= */
-
-function openSubjectModal() {
-
-    if (timerRunning) {
-
-        showToast(
-            "Stop the timer before adding a subject."
-        );
-
-        return;
-
-    }
-
-
-    const backdrop =
-        document.getElementById(
-            "subjectModalBackdrop"
-        );
-
-
-    const input =
-        document.getElementById(
-            "subjectInput"
-        );
-
-
-    if (!backdrop || !input) {
-
-        return;
-
-    }
-
-
-    subjectModalLastSelected =
-        getSelectedSubject();
-
-
-    input.value = "";
-
-    backdrop.classList.add("open");
-    backdrop.setAttribute("aria-hidden", "false");
-    document.body.classList.add("modal-open");
-
-
-    setTimeout(function() {
-
-        input.focus();
-
-    }, 20);
-
-}
-
-
-function closeSubjectModal() {
-
-    const backdrop =
-        document.getElementById(
-            "subjectModalBackdrop"
-        );
-
-
-    if (!backdrop) {
-
-        return;
-
-    }
-
-
-    backdrop.classList.remove("open");
-    backdrop.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("modal-open");
-
-}
-
-
-function confirmAddSubject() {
-
-    if (timerRunning) {
-
-        closeSubjectModal();
-
-        showToast(
-            "Stop the timer before adding a subject."
-        );
-
-        return;
-
-    }
-
-
-    const input =
-        document.getElementById(
-            "subjectInput"
-        );
-
-
-    if (!input) {
-
-        return;
-
-    }
-
-
-    const name =
-        input.value.trim();
-
-
-    if (name === "") {
-
-        showToast(
-            "Write a subject name first."
-        );
-
-        input.focus();
-        return;
-
-    }
-
-
-    const existing =
-        subjects.find(function(subject) {
-
-            return subject.toLowerCase() === name.toLowerCase();
-
-        });
-
-
-    if (existing) {
-
-        closeSubjectModal();
-        selectSubject(existing);
-
-        showToast(
-            "That subject already exists."
-        );
-
-        return;
-
-    }
-
-
-    subjects.push(name);
-
-    saveSubjects();
-
-    renderSubjects();
-
-
-    const select =
-        document.getElementById(
-            "subjectSelect"
-        );
-
-
-    if (select) {
-
-        select.value = name;
-
-    }
-
-
-    saveSelectedSubject();
-
-    closeSubjectModal();
-
-    showToast(
-        "Added subject: " + name
-    );
-
-}
-
-
-/* Keep the old function name available for compatibility. */
-
-function addSubject() {
-
-    openSubjectModal();
-
-}
-
-
-/* =========================================================
-   REMOVE SELECTED SUBJECT
-========================================================= */
-
-function removeSelectedSubject() {
-
-    if (timerRunning) {
-
-        showToast(
-            "Stop the timer before removing a subject."
-        );
-
-        return;
-
-    }
-
-
-    const selected =
-        getSelectedSubject();
-
-
-    if (!selected) {
-
-        return;
-
-    }
-
-
-    if (subjects.length <= 1) {
-
-        showToast(
-            "Keep at least one subject."
-        );
-
-        return;
-
-    }
-
-
-    const confirmed =
-        window.confirm(
-            'Remove "' + selected + '" from your subjects?'
-        );
-
-
-    if (!confirmed) {
-
-        return;
-
-    }
-
-
-    subjects =
-        subjects.filter(function(subject) {
-
-            return subject !== selected;
-
-        });
-
-
-    saveSubjects();
-
-    renderSubjects();
-
-    saveSelectedSubject();
-
-
-    showToast(
-        "Removed subject: " + selected
-    );
-
-}
-
-
-/* =========================================================
-   TASKS
-========================================================= */
-
-function normalizeTasks() {
-
-    tasks = tasks.map(function(task) {
-
-        if (!task || typeof task !== "object") {
-
-            return null;
-
-        }
-
-
-        return {
-
-            text:
-                String(task.text || "").trim(),
-
-            completed:
-                Boolean(task.completed),
-
-            createdAt:
-                Number(task.createdAt) || Date.now()
-
-        };
-
-    }).filter(function(task) {
-
-        return task && task.text !== "";
-
-    });
-
-}
-
-
-normalizeTasks();
-
-saveTasks();
-
-
-function saveTasks() {
-
-    localStorage.setItem(
-        TASKS_KEY,
-        JSON.stringify(tasks)
-    );
-
-}
-
-
-/* =========================================================
-   ADD TASK
-========================================================= */
-
-function addTask() {
-
-    const input =
-        document.getElementById(
-            "taskInput"
-        );
-
-
-    if (!input) {
-
-        return;
-
-    }
-
-
-    const text =
-        input.value.trim();
-
-
-    if (text === "") {
-
-        input.focus();
-        return;
-
-    }
-
-
-    tasks.push({
-
-        text: text,
-
-        completed: false,
-
-        createdAt: Date.now()
-
-    });
-
-
-    input.value = "";
-
-
-    saveTasks();
-
-    renderTasks();
-
-    updateStats();
-
-    showToast(
-        "Task added."
-    );
-
-    input.focus();
-
-}
-
-
-/* =========================================================
-   RENDER TASKS
-========================================================= */
-
-function renderTasks() {
-
-    const list =
-        document.getElementById(
-            "taskList"
-        );
-
-
-    if (!list) {
-
-        return;
-
-    }
-
-
-    list.innerHTML = "";
-
-
-    if (tasks.length === 0) {
-
-        const empty =
-            document.createElement("li");
-
-        empty.className = "empty-note";
-        empty.textContent =
-            "Nothing here yet. Start with one small thing.";
-
-        list.appendChild(empty);
-
-        updateTodoCount();
-        return;
-
-    }
-
-
-    tasks.forEach(function(task, index) {
-
-        const item =
-            document.createElement("li");
-
-
-        item.className = "todo-item";
-
-
-        if (task.completed) {
-
-            item.classList.add("completed");
-
-        }
-
-
-        const checkbox =
-            document.createElement("input");
-
-        checkbox.type = "checkbox";
-        checkbox.className = "todo-check";
-        checkbox.checked = task.completed;
-        checkbox.setAttribute(
-            "aria-label",
-            "Mark task complete"
-        );
-
-
-        checkbox.addEventListener(
-            "change",
-            function() {
-
-                tasks[index].completed =
-                    checkbox.checked;
-
-                saveTasks();
-                renderTasks();
-                updateStats();
-
-                showToast(
-                    checkbox.checked
-                        ? "Task completed."
-                        : "Task reopened."
-                );
-
-            }
-        );
-
-
-        const text =
-            document.createElement("span");
-
-        text.className = "todo-text";
-        text.textContent = task.text;
-
-
-        const deleteButton =
-            document.createElement("button");
-
-        deleteButton.type = "button";
-        deleteButton.className = "todo-delete";
-        deleteButton.textContent = "Delete";
-        deleteButton.setAttribute(
-            "aria-label",
-            "Delete task: " + task.text
-        );
-
-
-        deleteButton.addEventListener(
-            "click",
-            function() {
-
-                tasks.splice(index, 1);
-
-                saveTasks();
-                renderTasks();
-                updateStats();
-
-                showToast(
-                    "Task deleted."
-                );
-
-            }
-        );
-
-
-        item.appendChild(checkbox);
-        item.appendChild(text);
-        item.appendChild(deleteButton);
-
-        list.appendChild(item);
-
-    });
-
-
-    updateTodoCount();
-
-}
-
-
-/* =========================================================
-   TODO COUNT
-========================================================= */
-
-function updateTodoCount() {
-
-    const label =
-        document.getElementById(
-            "todoCountLabel"
-        );
-
-
-    if (!label) {
-
-        return;
-
-    }
-
-
-    const total =
-        tasks.length;
-
-
-    const completed =
-        tasks.filter(function(task) {
-            return task.completed;
-        }).length;
-
-
-    label.textContent =
-        total +
-        (total === 1 ? " task" : " tasks") +
-        " · " +
-        completed +
-        " done";
-
-}
-
-
-/* =========================================================
-   DATES
-========================================================= */
-
-function getDateKey(date = new Date()) {
-
-    const year =
-        date.getFullYear();
-
-
-    const month =
-        String(
-            date.getMonth() + 1
-        ).padStart(2, "0");
-
-
-    const day =
-        String(
-            date.getDate()
-        ).padStart(2, "0");
-
-
-    return (
-        year +
-        "-" +
-        month +
-        "-" +
-        day
-    );
-
-}
-
-
-function getMondayOfCurrentWeek(date = new Date()) {
-
-    const result =
-        new Date(date);
-
-
-    const dayOfWeek =
-        result.getDay();
-
-
-    const mondayOffset =
-        dayOfWeek === 0
-            ? -6
-            : 1 - dayOfWeek;
-
-
-    result.setDate(
-        result.getDate() + mondayOffset
-    );
-
-
-    result.setHours(0, 0, 0, 0);
-
-
-    return result;
-
-}
-
-
-function formatLongDate(date = new Date()) {
-
-    return date.toLocaleDateString(
-        "en-US",
-        {
-            weekday: "long",
-            month: "long",
-            day: "numeric"
-        }
-    );
-
-}
-
-
-/* =========================================================
-   STUDY TIME FORMAT
-========================================================= */
-
-function formatStudyTime(seconds) {
-
-    const cleanSeconds =
-        Math.max(
-            0,
-            Math.floor(Number(seconds) || 0)
-        );
-
-
-    const hours =
-        Math.floor(
-            cleanSeconds / 3600
-        );
-
-
-    const minutes =
-        Math.floor(
-            (cleanSeconds % 3600) / 60
-        );
-
-
-    if (hours > 0) {
-
-        return (
-            hours +
-            "h " +
-            minutes +
-            "m"
+        newSubjectInput.value = "";
+
+        setTimeout(
+            () => newSubjectInput.focus(),
+            30
         );
 
     }
 
 
-    return minutes + "m";
+    function closeSubjectModalNow() {
 
-}
+        subjectModal.classList.remove("open");
 
-
-function formatStudyTimePrecise(seconds) {
-
-    const cleanSeconds =
-        Math.max(
-            0,
-            Math.floor(Number(seconds) || 0)
+        subjectModal.setAttribute(
+            "aria-hidden",
+            "true"
         );
 
-
-    const hours =
-        Math.floor(
-            cleanSeconds / 3600
+        document.body.classList.remove(
+            "modal-open"
         );
-
-
-    const minutes =
-        Math.floor(
-            (cleanSeconds % 3600) / 60
-        );
-
-
-    const secondsLeft =
-        cleanSeconds % 60;
-
-
-    return (
-        formatNumber(hours) +
-        ":" +
-        formatNumber(minutes) +
-        ":" +
-        formatNumber(secondsLeft)
-    );
-
-}
-
-
-/* =========================================================
-   TODAY STATS
-========================================================= */
-
-function updateStats() {
-
-    const today =
-        getDateKey();
-
-
-    const todayData =
-        studyData[today] ||
-        {
-            total: 0,
-            subjects: {}
-        };
-
-
-    const todayTime =
-        document.getElementById(
-            "todayTime"
-        );
-
-
-    if (todayTime) {
-
-        todayTime.textContent =
-            formatStudyTime(
-                todayData.total
-            );
 
     }
 
 
-    const completed =
-        tasks.filter(function(task) {
-
-            return task.completed;
-
-        }).length;
-
-
-    const tasksDone =
-        document.getElementById(
-            "tasksDone"
-        );
-
-
-    if (tasksDone) {
-
-        tasksDone.textContent =
-            completed;
-
-    }
-
-
-    updateTodayDateText();
-    updateTodaySubjects();
-    updateTodayMood();
-
-}
-
-
-/* =========================================================
-   TODAY DATE TEXT
-========================================================= */
-
-function updateTodayDateText() {
-
-    const line =
-        document.getElementById(
-            "todayDateLine"
-        );
-
-
-    if (line) {
-
-        line.textContent =
-            formatLongDate();
-
-    }
-
-
-    const caption =
-        document.getElementById(
-            "studyCaption"
-        );
-
-
-    if (caption) {
-
-        caption.textContent =
-            getDateKey() +
-            " · another small page in the notebook.";
-
-    }
-
-}
-
-
-/* =========================================================
-   TODAY'S SUBJECTS
-========================================================= */
-
-function updateTodaySubjects() {
-
-    const container =
-        document.getElementById(
-            "todaySubjects"
-        );
-
-
-    if (!container) {
-
-        return;
-
-    }
-
-
-    container.innerHTML = "";
-
-
-    const today =
-        getDateKey();
-
-
-    const data =
-        studyData[today];
-
-
-    if (!data || !data.subjects) {
-
-        const empty =
-            document.createElement("div");
-
-        empty.className = "empty-note";
-        empty.textContent =
-            "No study time yet. Your first session can be small.";
-
-        container.appendChild(empty);
-        updateTodaySummaryLine(0, 0);
-        return;
-
-    }
-
-
-    const entries =
-        Object.keys(data.subjects)
-            .map(function(subject) {
-
-                return {
-                    subject: subject,
-                    seconds:
-                        Number(data.subjects[subject]) || 0
-                };
-
-            })
-            .filter(function(item) {
-                return item.seconds > 0;
-            })
-            .sort(function(a, b) {
-                return b.seconds - a.seconds;
-            });
-
-
-    if (entries.length === 0) {
-
-        const empty =
-            document.createElement("div");
-
-        empty.className = "empty-note";
-        empty.textContent =
-            "No study time yet. Your first session can be small.";
-
-        container.appendChild(empty);
-        updateTodaySummaryLine(0, 0);
-        return;
-
-    }
-
-
-    entries.forEach(function(item) {
-
-        const row =
-            document.createElement("div");
-
-        row.className = "study-summary-row";
-
+    function addSubject() {
 
         const name =
-            document.createElement("span");
+            newSubjectInput.value.trim();
 
-        name.className = "study-summary-name";
-        name.textContent = item.subject;
+        if (!name) {
+
+            newSubjectInput.focus();
+
+            return;
+
+        }
+
+        const exists =
+            subjects.some(
+                (subject) =>
+                    subject.toLowerCase() ===
+                    name.toLowerCase()
+            );
+
+        if (exists) {
+
+            selectedSubject =
+                subjects.find(
+                    (subject) =>
+                        subject.toLowerCase() ===
+                        name.toLowerCase()
+                );
+
+            saveSelectedSubject();
+
+            renderSubjects();
+            updateSelectedSubjectText();
+
+            closeSubjectModalNow();
+
+            return;
+
+        }
+
+        subjects.push(name);
+
+        saveSubjects();
+
+        selectedSubject =
+            name;
+
+        saveSelectedSubject();
+
+        ensureTodayData();
+        saveStudyData();
+
+        renderSubjects();
+        updateSelectedSubjectText();
+        renderToday();
+
+        closeSubjectModalNow();
+
+    }
 
 
-        const time =
-            document.createElement("span");
-
-        time.className = "study-summary-time";
-        time.textContent = formatStudyTime(item.seconds);
-
-
-        row.appendChild(name);
-        row.appendChild(time);
-
-        container.appendChild(row);
-
-    });
-
-
-    updateTodaySummaryLine(
-        entries.length,
-        Number(data.total) || 0
+    manageSubjectsButton.addEventListener(
+        "click",
+        openSubjectModal
     );
 
-}
+
+    closeSubjectModal.addEventListener(
+        "click",
+        closeSubjectModalNow
+    );
 
 
-/* =========================================================
-   TODAY SUMMARY SENTENCE
-========================================================= */
-
-function updateTodaySummaryLine(subjectCount, totalSeconds) {
-
-    const line =
-        document.getElementById(
-            "todaySummaryLine"
-        );
+    cancelSubjectButton.addEventListener(
+        "click",
+        closeSubjectModalNow
+    );
 
 
-    if (!line) {
-
-        return;
-
-    }
-
-
-    if (totalSeconds <= 0) {
-
-        line.textContent =
-            "Start with one page.";
-        return;
-
-    }
+    saveSubjectButton.addEventListener(
+        "click",
+        addSubject
+    );
 
 
-    if (totalSeconds < 30 * 60) {
+    newSubjectInput.addEventListener(
+        "keydown",
+        (event) => {
 
-        line.textContent =
-            "A little progress is still progress.";
-        return;
+            if (event.key === "Enter") {
 
-    }
+                addSubject();
 
+            }
 
-    if (totalSeconds < 2 * 3600) {
+            if (event.key === "Escape") {
 
-        line.textContent =
-            subjectCount +
-            (subjectCount === 1 ? " subject" : " subjects") +
-            " · keep the rhythm gentle.";
-        return;
+                closeSubjectModalNow();
 
-    }
+            }
 
-
-    line.textContent =
-        "You gave today a real piece of your time.";
-
-}
+        }
+    );
 
 
-/* =========================================================
-   TODAY MOOD NOTE
-========================================================= */
+    subjectModal.addEventListener(
+        "click",
+        (event) => {
 
-function updateTodayMood() {
+            if (
+                event.target === subjectModal
+            ) {
 
-    const note =
-        document.getElementById(
-            "todayMoodNote"
-        );
+                closeSubjectModalNow();
 
+            }
 
-    const todayData =
-        studyData[getDateKey()];
-
-
-    const total =
-        todayData
-            ? Number(todayData.total) || 0
-            : 0;
+        }
+    );
 
 
-    if (!note) {
+    /* =========================================================
+       STUDY DATA LOADING
+    ========================================================= */
 
-        return;
+    function loadStudyData() {
 
-    }
+        const raw =
+            localStorage.getItem(
+                STORAGE_KEYS.studyData
+            );
 
+        if (!raw) {
 
-    if (total <= 0) {
-        note.textContent = "start small.";
-    }
-    else if (total < 60 * 60) {
-        note.textContent = "nice start.";
-    }
-    else if (total < 3 * 60 * 60) {
-        note.textContent = "not bad today.";
-    }
-    else {
-        note.textContent = "you showed up.";
-    }
+            studyData = {};
 
-}
+            ensureTodayData();
 
+            saveStudyData();
 
-/* =========================================================
-   WEEK
-========================================================= */
+            return;
 
-function updateWeek() {
+        }
 
-    const container =
-        document.getElementById(
-            "weekStats"
-        );
+        try {
 
+            const parsed =
+                JSON.parse(raw);
 
-    if (!container) {
+            if (
+                parsed &&
+                typeof parsed === "object"
+            ) {
 
-        return;
+                studyData =
+                    parsed;
+
+            } else {
+
+                studyData = {};
+
+            }
+
+        } catch (error) {
+
+            studyData = {};
+
+        }
+
+        ensureTodayData();
 
     }
 
 
-    container.innerHTML = "";
+    /* =========================================================
+       STUDY TIME FORMAT
+    ========================================================= */
 
+    function formatStudyTime(seconds) {
 
-    const today =
-        new Date();
-
-    const monday =
-        getMondayOfCurrentWeek(today);
-
-
-    const dayNames = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-    ];
-
-
-    let total = 0;
-
-    let activeDays = 0;
-
-
-    for (
-        let i = 0;
-        i < 7;
-        i++
-    ) {
-
-        const date =
-            new Date(monday);
-
-
-        date.setDate(
-            monday.getDate() + i
-        );
-
-
-        const key =
-            getDateKey(date);
-
-
-        const data =
-            studyData[key] ||
-            {
-                total: 0,
-                subjects: {}
-            };
-
-
-        const dayTotal =
+        const safe =
             Math.max(
                 0,
-                Number(data.total) || 0
+                Math.floor(
+                    Number(seconds) || 0
+                )
             );
 
+        if (safe < 60) {
 
-        total += dayTotal;
-
-
-        if (dayTotal > 0) {
-            activeDays += 1;
-        }
-
-
-        const day =
-            document.createElement("section");
-
-        day.className = "day";
-
-
-        if (key === getDateKey(today)) {
-            day.classList.add("today");
-        }
-
-
-        const title =
-            document.createElement("div");
-
-        title.className = "day-title";
-
-
-        const name =
-            document.createElement("span");
-
-        name.className = "day-title-name";
-        name.textContent =
-            dayNames[i] + " :";
-
-
-        const totalTime =
-            document.createElement("span");
-
-        totalTime.className = "day-total";
-        totalTime.textContent =
-            formatStudyTime(dayTotal);
-
-
-        title.appendChild(name);
-        title.appendChild(totalTime);
-        day.appendChild(title);
-
-
-        const content =
-            document.createElement("div");
-
-        content.className = "week-day-content";
-
-
-        if (
-            data.subjects &&
-            Object.keys(data.subjects).length > 0
-        ) {
-
-            const entries =
-                Object.keys(data.subjects)
-                    .map(function(subject) {
-
-                        return {
-                            subject: subject,
-                            seconds:
-                                Number(data.subjects[subject]) || 0
-                        };
-
-                    })
-                    .filter(function(item) {
-                        return item.seconds > 0;
-                    })
-                    .sort(function(a, b) {
-                        return b.seconds - a.seconds;
-                    });
-
-
-            entries.forEach(function(item) {
-
-                const row =
-                    document.createElement("div");
-
-                row.className = "study-row";
-
-
-                const subjectName =
-                    document.createElement("span");
-
-                subjectName.className = "study-row-name";
-                subjectName.textContent =
-                    item.subject;
-
-
-                const time =
-                    document.createElement("span");
-
-                time.className = "study-row-time";
-                time.textContent =
-                    formatStudyTime(item.seconds);
-
-
-                row.appendChild(subjectName);
-                row.appendChild(time);
-                content.appendChild(row);
-
-            });
+            return `${safe}s`;
 
         }
 
+        const minutes =
+            Math.floor(safe / 60);
 
-        if (!content.children.length) {
+        const hours =
+            Math.floor(minutes / 60);
 
-            const empty =
-                document.createElement("div");
+        const remainingMinutes =
+            minutes % 60;
 
-            empty.className = "week-empty";
-            empty.textContent =
-                "nothing recorded yet";
+        if (hours > 0) {
 
-            content.appendChild(empty);
+            if (remainingMinutes === 0) {
+
+                return `${hours}h`;
+
+            }
+
+            return `${hours}h ${remainingMinutes}m`;
 
         }
 
-
-        day.appendChild(content);
-        container.appendChild(day);
+        return `${minutes}m`;
 
     }
 
 
-    const weekTotal =
-        document.getElementById(
-            "weekTotal"
+    /* =========================================================
+       TODAY RENDER
+    ========================================================= */
+
+    function renderToday() {
+
+        const today =
+            ensureTodayData();
+
+        const todayData =
+            studyData[today] || {};
+
+        let total = 0;
+
+        let count = 0;
+
+        const entries = [];
+
+        subjects.forEach((subject) => {
+
+            const seconds =
+                Number(
+                    todayData[subject]
+                ) || 0;
+
+            if (seconds > 0) {
+
+                total += seconds;
+
+                count += 1;
+
+                entries.push({
+                    subject,
+                    seconds
+                });
+
+            }
+
+        });
+
+        todayTotal.textContent =
+            formatStudyTime(total);
+
+        todaySubjectsCount.textContent =
+            String(count);
+
+        todayMiniDate.textContent =
+            formatDisplayDate(
+                new Date()
+            );
+
+        todaySummaryList.innerHTML = "";
+
+        entries.sort(
+            (a, b) =>
+                b.seconds - a.seconds
         );
 
+        if (!entries.length) {
 
-    if (weekTotal) {
+            todaySummaryList.innerHTML = `
+                <div class="empty-note">
+                    No study time saved yet.
+                </div>
+            `;
+
+        } else {
+
+            entries.forEach(
+                ({ subject, seconds }) => {
+
+                    const row =
+                        document.createElement("div");
+
+                    row.className =
+                        "study-summary-row";
+
+                    row.innerHTML = `
+                        <div class="study-summary-name">
+                            ${escapeHtml(subject)}
+                        </div>
+                        <div class="study-summary-time">
+                            ${formatStudyTime(seconds)}
+                        </div>
+                    `;
+
+                    todaySummaryList.appendChild(row);
+
+                }
+            );
+
+        }
+
+        if (total > 0) {
+
+            todaySummaryLine.textContent =
+                `You showed up for ${formatStudyTime(total)} today.`;
+
+        } else {
+
+            todaySummaryLine.textContent =
+                "Nothing logged yet. That's okay.";
+
+        }
+
+    }
+
+
+    function formatDisplayDate(date) {
+
+        return date.toLocaleDateString(
+            "en-US",
+            {
+                weekday: "short",
+                month: "short",
+                day: "numeric"
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       WEEK HELPERS
+    ========================================================= */
+
+    function startOfWeek(date) {
+
+        const result =
+            new Date(date);
+
+        const day =
+            result.getDay();
+
+        const diff =
+            day === 0
+                ? -6
+                : 1 - day;
+
+        result.setDate(
+            result.getDate() + diff
+        );
+
+        result.setHours(
+            0,
+            0,
+            0,
+            0
+        );
+
+        return result;
+
+    }
+
+
+    function getDateKey(date) {
+
+        const year =
+            date.getFullYear();
+
+        const month =
+            String(
+                date.getMonth() + 1
+            ).padStart(2, "0");
+
+        const day =
+            String(
+                date.getDate()
+            ).padStart(2, "0");
+
+        return `${year}-${month}-${day}`;
+
+    }
+
+
+    function renderWeek() {
+
+        const weekStart =
+            startOfWeek(
+                new Date()
+            );
+
+        let total =
+            0;
+
+        weekList.innerHTML = "";
+
+        for (
+            let i = 0;
+            i < 7;
+            i++
+        ) {
+
+            const date =
+                new Date(weekStart);
+
+            date.setDate(
+                weekStart.getDate() + i
+            );
+
+            const key =
+                getDateKey(date);
+
+            const dayData =
+                studyData[key] || {};
+
+            const entries = [];
+
+            let dayTotal = 0;
+
+            subjects.forEach(
+                (subject) => {
+
+                    const seconds =
+                        Number(
+                            dayData[subject]
+                        ) || 0;
+
+                    if (seconds > 0) {
+
+                        dayTotal += seconds;
+
+                        entries.push({
+                            subject,
+                            seconds
+                        });
+
+                    }
+
+                }
+            );
+
+            total += dayTotal;
+
+            const dayElement =
+                document.createElement("div");
+
+            dayElement.className =
+                "day";
+
+            const heading =
+                document.createElement("div");
+
+            heading.className =
+                "day-heading";
+
+            heading.textContent =
+                `${date.toLocaleDateString(
+                    "en-US",
+                    { weekday: "long" }
+                )} :`;
+
+            dayElement.appendChild(
+                heading
+            );
+
+            if (!entries.length) {
+
+                const empty =
+                    document.createElement("div");
+
+                empty.className =
+                    "day-empty";
+
+                empty.textContent =
+                    "Nothing logged";
+
+                dayElement.appendChild(
+                    empty
+                );
+
+            } else {
+
+                entries.sort(
+                    (a, b) =>
+                        b.seconds - a.seconds
+                );
+
+                entries.forEach(
+                    ({ subject, seconds }) => {
+
+                        const entry =
+                            document.createElement("div");
+
+                        entry.className =
+                            "day-entry";
+
+                        entry.innerHTML = `
+                            <span>
+                                ${escapeHtml(subject)}
+                            </span>
+                            <span class="day-entry-time">
+                                ${formatStudyTime(seconds)}
+                            </span>
+                        `;
+
+                        dayElement.appendChild(
+                            entry
+                        );
+
+                    }
+                );
+
+            }
+
+            weekList.appendChild(
+                dayElement
+            );
+
+        }
 
         weekTotal.textContent =
             formatStudyTime(total);
 
+        const targetSeconds =
+            20 * 60 * 60;
+
+        const progress =
+            Math.min(
+                100,
+                (total / targetSeconds) * 100
+            );
+
+        weekProgressFill.style.width =
+            `${progress}%`;
+
+        weekProgressLabel.textContent =
+            `${formatStudyTime(total)} / 20h`;
+
     }
 
 
-    const progressFill =
-        document.getElementById(
-            "weekProgressFill"
+    /* =========================================================
+       TODO STORAGE
+    ========================================================= */
+
+    function loadTasks() {
+
+        const raw =
+            localStorage.getItem(
+                STORAGE_KEYS.tasks
+            );
+
+        if (!raw) {
+
+            tasks = [];
+
+            saveTasks();
+
+            return;
+
+        }
+
+        try {
+
+            const parsed =
+                JSON.parse(raw);
+
+            tasks =
+                Array.isArray(parsed)
+                    ? parsed
+                    : [];
+
+        } catch (error) {
+
+            tasks = [];
+
+        }
+
+    }
+
+
+    function saveTasks() {
+
+        localStorage.setItem(
+            STORAGE_KEYS.tasks,
+            JSON.stringify(tasks)
         );
 
+    }
 
-    if (progressFill) {
 
-        progressFill.style.width =
-            ((activeDays / 7) * 100) + "%";
+    function addTask() {
+
+        const text =
+            todoInput.value.trim();
+
+        if (!text) {
+
+            todoInput.focus();
+
+            return;
+
+        }
+
+        tasks.push({
+            id:
+                `${Date.now()}-${Math.random()
+                    .toString(36)
+                    .slice(2, 8)}`,
+            text,
+            completed: false,
+            createdAt: Date.now()
+        });
+
+        saveTasks();
+
+        todoInput.value = "";
+
+        renderTasks();
+
+        todoInput.focus();
 
     }
 
 
-    const progressLabel =
-        document.getElementById(
-            "weekProgressLabel"
+    function toggleTask(id) {
+
+        const task =
+            tasks.find(
+                (item) =>
+                    item.id === id
+            );
+
+        if (!task) {
+
+            return;
+
+        }
+
+        task.completed =
+            !task.completed;
+
+        saveTasks();
+
+        renderTasks();
+
+    }
+
+
+    function deleteTask(id) {
+
+        tasks =
+            tasks.filter(
+                (item) =>
+                    item.id !== id
+            );
+
+        saveTasks();
+
+        renderTasks();
+
+    }
+
+
+    function clearCompletedTasks() {
+
+        tasks =
+            tasks.filter(
+                (task) =>
+                    !task.completed
+            );
+
+        saveTasks();
+
+        renderTasks();
+
+    }
+
+
+    function renderTasks() {
+
+        todoList.innerHTML = "";
+
+        const remaining =
+            tasks.filter(
+                (task) =>
+                    !task.completed
+            ).length;
+
+        todoCount.textContent =
+            `${remaining} left`;
+
+        if (!tasks.length) {
+
+            todoList.innerHTML = `
+                <li class="empty-note">
+                    Your list is empty.
+                </li>
+            `;
+
+            return;
+
+        }
+
+        tasks.forEach(
+            (task) => {
+
+                const item =
+                    document.createElement("li");
+
+                item.className =
+                    "todo-item";
+
+                if (task.completed) {
+
+                    item.classList.add(
+                        "completed"
+                    );
+
+                }
+
+                const checkbox =
+                    document.createElement("input");
+
+                checkbox.type = "checkbox";
+
+                checkbox.className =
+                    "todo-check";
+
+                checkbox.checked =
+                    Boolean(
+                        task.completed
+                    );
+
+                checkbox.addEventListener(
+                    "change",
+                    () =>
+                        toggleTask(task.id)
+                );
+
+                const text =
+                    document.createElement("div");
+
+                text.className =
+                    "todo-text";
+
+                text.textContent =
+                    task.text;
+
+                const deleteButton =
+                    document.createElement("button");
+
+                deleteButton.type =
+                    "button";
+
+                deleteButton.className =
+                    "todo-delete";
+
+                deleteButton.textContent =
+                    "Delete";
+
+                deleteButton.addEventListener(
+                    "click",
+                    () =>
+                        deleteTask(task.id)
+                );
+
+                item.appendChild(
+                    checkbox
+                );
+
+                item.appendChild(
+                    text
+                );
+
+                item.appendChild(
+                    deleteButton
+                );
+
+                todoList.appendChild(
+                    item
+                );
+
+            }
         );
 
-
-    if (progressLabel) {
-
-        progressLabel.textContent =
-            activeDays +
-            " / 7 days";
-
-    }
-
-}
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-function showToast(message) {
-
-    const toast =
-        document.getElementById(
-            "toast"
-        );
-
-
-    if (!toast) {
-
-        return;
-
     }
 
 
-    toast.textContent =
-        message;
-
-
-    toast.classList.add("show");
-
-
-    if (toastTimeout) {
-
-        clearTimeout(toastTimeout);
-
-    }
-
-
-    toastTimeout =
-        setTimeout(function() {
-
-            toast.classList.remove("show");
-
-        }, 2200);
-
-}
-
-
-/* =========================================================
-   ONLINE ROOM - PLACEHOLDER
-========================================================= */
-
-function openOnlineRoom() {
-
-    showToast(
-        "Online Study Room is the next stage of the project."
+    addTodoButton.addEventListener(
+        "click",
+        addTask
     );
 
-}
 
-
-/* =========================================================
-   ENTER KEY - TASK
-========================================================= */
-
-document
-    .getElementById("taskInput")
-    .addEventListener(
+    todoInput.addEventListener(
         "keydown",
-        function(event) {
+        (event) => {
 
             if (event.key === "Enter") {
 
-                event.preventDefault();
                 addTask();
 
             }
@@ -4769,205 +3573,87 @@ document
     );
 
 
-/* =========================================================
-   ENTER KEY - SUBJECT MODAL
-========================================================= */
-
-document
-    .getElementById("subjectInput")
-    .addEventListener(
-        "keydown",
-        function(event) {
-
-            if (event.key === "Enter") {
-
-                event.preventDefault();
-                confirmAddSubject();
-
-            }
-
-            if (event.key === "Escape") {
-
-                event.preventDefault();
-                closeSubjectModal();
-
-            }
-
-        }
-    );
-
-
-/* =========================================================
-   MODAL BACKDROP CLICK
-========================================================= */
-
-document
-    .getElementById("subjectModalBackdrop")
-    .addEventListener(
+    clearCompletedButton.addEventListener(
         "click",
-        function(event) {
-
-            if (event.target === this) {
-
-                closeSubjectModal();
-
-            }
-
-        }
+        clearCompletedTasks
     );
 
 
-/* =========================================================
-   ACTIVE FOLDER RESTORE
-========================================================= */
+    /* =========================================================
+       UTILITIES
+    ========================================================= */
 
-function restoreActivePage() {
+    function escapeHtml(value) {
 
-    const savedPage =
-        localStorage.getItem(
-            ACTIVE_PAGE_KEY
-        );
-
-
-    if (!savedPage) {
-
-        return;
+        return String(value)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
 
     }
 
 
-    const button =
-        document.querySelector(
-            '.folder-tab[data-page="' +
-            savedPage +
-            '"]'
-        );
+    /* =========================================================
+       ONLINE ROOM PLACEHOLDER
+    ========================================================= */
 
+    function openOnlineRoom() {
 
-    if (button) {
-
-        showPage(
-            savedPage,
-            button
+        alert(
+            "Online study room will be added here."
         );
 
     }
 
-}
+
+    onlineButton.addEventListener(
+        "click",
+        openOnlineRoom
+    );
 
 
-/* =========================================================
-   REAL-TIME SAFETY EVENTS
-========================================================= */
+    /* =========================================================
+       INITIALIZATION
+    ========================================================= */
 
-/*
-    When the tab becomes visible again, refresh from Date.now().
-    This avoids relying on browser timer accuracy while hidden.
-*/
+    loadSubjects();
 
-document.addEventListener(
-    "visibilitychange",
-    function() {
+    loadSelectedSubject();
 
-        if (document.visibilityState === "visible") {
+    loadStudyData();
+
+    loadTasks();
+
+    renderSubjects();
+
+    updateSelectedSubjectText();
+
+    renderToday();
+
+    renderWeek();
+
+    renderTasks();
+
+    restoreTimer();
+
+    window.addEventListener(
+        "beforeunload",
+        () => {
 
             if (timerRunning) {
 
-                timerSeconds =
-                    getCurrentTimerSeconds();
-
-                updateTimer();
-                updateTimerVisualState();
-                saveTimerState();
-
-            }
-
-            updateStats();
-            updateWeek();
-
-        }
-
-        else {
-
-            if (timerRunning) {
-
-                timerSeconds =
-                    getCurrentTimerSeconds();
+                saveCurrentStudySegment();
 
             }
 
             saveTimerState();
 
         }
-
-    }
-);
-
-
-/* Save immediately before leaving/reloading the page. */
-
-window.addEventListener(
-    "beforeunload",
-    function() {
-
-        if (timerRunning) {
-
-            timerSeconds =
-                getCurrentTimerSeconds();
-
-        }
-
-        saveTimerState();
-
-    }
-);
-
-
-/* =========================================================
-   STARTUP
-========================================================= */
-
-renderSubjects();
-
-renderTasks();
-
-updateTimer();
-
-updateTimerButton();
-
-updateTimerVisualState();
-
-updateStats();
-
-updateTodaySubjects();
-
-updateWeek();
-
-restoreActivePage();
-
-restoreTimer();
-
-updateSelectedSubjectLabel();
-
-renderSubjectGridActiveState();
-
-updateSubjectSelectState();
-
-
-/*
-    A final save keeps migrated data in the newest structure,
-    without changing the user's actual study totals.
-*/
-
-saveSubjects();
-saveStudyData();
-saveTasks();
-
+    );
 
 </script>
 
-</div>
-
 </body>
-
-</html>
+                                </html>
