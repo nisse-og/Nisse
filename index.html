@@ -4,360 +4,1059 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f5f0e7">
+    <meta name="description" content="Nisse Study — a calm notebook-style study tracker.">
 
     <title>Nisse Study</title>
 
     <style>
 
+        /* =========================================================
+           RESET / GLOBAL
+        ========================================================= */
+
         * {
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             margin: 0;
             min-height: 100vh;
             font-family: Arial, sans-serif;
-            background: #f3f3f3;
-            padding: 25px 15px;
+            color: #242321;
+            background:
+                radial-gradient(circle at 18% 8%, rgba(70, 57, 43, 0.035), transparent 24%),
+                radial-gradient(circle at 82% 21%, rgba(34, 47, 69, 0.035), transparent 25%),
+                #f4f0e8;
+            padding: 20px 14px 92px;
+            overflow-x: hidden;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible {
+            outline: 2px solid #5a6780;
+            outline-offset: 2px;
         }
 
         .container {
             width: 100%;
-            max-width: 550px;
-            margin: auto;
+            max-width: 620px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* =========================================================
+           PAPER / DUST LAYER
+        ========================================================= */
+
+        .paper-grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.28;
+            background-image:
+                radial-gradient(circle, rgba(48, 42, 35, 0.07) 0.55px, transparent 0.7px),
+                radial-gradient(circle, rgba(49, 61, 77, 0.045) 0.45px, transparent 0.65px);
+            background-position: 0 0, 13px 9px;
+            background-size: 17px 17px, 23px 23px;
+        }
+
+        .app-shell {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* =========================================================
+           HEADER / MASCOT
+        ========================================================= */
+
+        .site-header {
+            position: relative;
+            padding: 8px 8px 17px;
+            margin-bottom: 2px;
+        }
+
+        .header-copy {
+            padding-right: 96px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 5px;
+            color: #7b756d;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
         }
 
         h1 {
-            text-align: center;
-            margin-bottom: 25px;
+            margin: 0;
+            color: #233047;
+            font-size: clamp(30px, 8vw, 43px);
+            line-height: 1;
+            letter-spacing: -0.045em;
         }
 
-        h2 {
-            margin-top: 0;
-        }
-
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 18px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        }
-
-        /* ---------------- TIMER ---------------- */
-
-        .timer {
-            text-align: center;
-        }
-
-        .timer-title {
-            font-size: 18px;
-            margin-bottom: 12px;
-        }
-
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 9px;
-            font-size: 16px;
-            background: white;
-            margin-bottom: 12px;
-        }
-
-        #timer {
-            font-size: 48px;
-            font-weight: bold;
-            margin: 15px 0;
-            letter-spacing: 2px;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        button {
-            border: none;
-            border-radius: 9px;
-            padding: 11px 16px;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .start {
-            background: #222;
-            color: white;
-        }
-
-        .reset {
-            background: #ddd;
-        }
-
-        /* ---------------- STATS ---------------- */
-
-        .stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .stat {
-            background: #f2f2f2;
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .stat-title {
-            font-size: 14px;
-            opacity: 0.7;
-        }
-
-        .stat-value {
-            font-size: 25px;
-            font-weight: bold;
-            margin-top: 5px;
-        }
-
-        /* ---------------- STUDY ROWS ---------------- */
-
-        .study-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .study-row:last-child {
-            border-bottom: none;
-        }
-
-        /* ---------------- INPUTS ---------------- */
-
-        .input-area {
-            display: flex;
-            gap: 8px;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 9px;
-            font-size: 16px;
-        }
-
-        .add {
-            background: #222;
-            color: white;
-        }
-
-        /* ---------------- TASKS ---------------- */
-
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 18px 0 0;
-        }
-
-        li {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            margin-bottom: 9px;
-            background: #f2f2f2;
-            border-radius: 10px;
-        }
-
-        li span {
-            flex: 1;
-        }
-
-        .completed span {
-            text-decoration: line-through;
-            opacity: 0.5;
-        }
-
-        .delete {
-            background: #ddd;
-        }
-
-        /* ---------------- WEEK ---------------- */
-
-        .day {
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .day:last-child {
-            border-bottom: none;
-        }
-
-        .day-title {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
-
-        .week-total {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        /* ---------------- SUBJECT SETTINGS ---------------- */
-
-        .subject-settings {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .small-button {
-            background: #ddd;
-        }
-
-        /* ---------------- ONLINE ---------------- */
-
-        .online-card {
-            text-align: center;
-        }
-
-        .online-description {
-            opacity: 0.7;
+        .header-note {
+            margin: 9px 0 0;
+            color: #716c65;
+            font-size: 13px;
             line-height: 1.5;
+            max-width: 390px;
         }
 
-        .online-button {
-            background: #222;
-            color: white;
-            margin-top: 8px;
+        .mascot-wrap {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 88px;
+            height: 88px;
+            transform: rotate(2deg);
         }
 
-        /* ---------------- MOBILE ---------------- */
-
-        @media (max-width: 400px) {
-
-            #timer {
-                font-size: 40px;
-            }
-
-            .input-area {
-                flex-direction: column;
-            }
-
-            .add {
-                width: 100%;
-            }
-
-            .subject-settings {
-                flex-direction: column;
-            }
-
+        .mascot-shadow {
+            position: absolute;
+            left: 19px;
+            bottom: 7px;
+            width: 56px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(36, 35, 33, 0.09);
+            transform: rotate(-2deg);
         }
 
-        /* ---------------- FOLDER NAVIGATION ---------------- */
+        .mascot {
+            position: absolute;
+            inset: 1px;
+        }
+
+        .mascot svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .header-doodle {
+            position: absolute;
+            left: -2px;
+            bottom: 3px;
+            width: 32px;
+            height: 32px;
+            opacity: 0.62;
+            transform: rotate(-9deg);
+        }
+
+        /* =========================================================
+           FOLDER NAVIGATION
+        ========================================================= */
 
         .folder-nav {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 18px;
-            background: #e7e7e7;
+            gap: 6px;
+            margin: 0 0 18px;
             padding: 5px;
-            border-radius: 13px;
             position: sticky;
-            top: 10px;
-            z-index: 20;
+            top: 9px;
+            z-index: 30;
+            border: 1px solid #d6d0c7;
+            border-radius: 15px;
+            background: rgba(235, 230, 221, 0.92);
+            box-shadow: 0 8px 25px rgba(39, 35, 29, 0.07);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .folder-tab {
-            border: none;
+            border: 1px solid transparent;
             background: transparent;
-            color: #666;
-            border-radius: 10px;
-            padding: 11px 8px;
-            font-weight: 600;
-            transition: background 0.15s, color 0.15s;
+            color: #77736c;
+            border-radius: 11px;
+            padding: 11px 8px 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition:
+                background 0.16s ease,
+                color 0.16s ease,
+                transform 0.16s ease,
+                box-shadow 0.16s ease;
+        }
+
+        .folder-tab:hover {
+            color: #30343d;
+            background: rgba(255, 255, 255, 0.45);
+        }
+
+        .folder-tab:active {
+            transform: translateY(1px);
         }
 
         .folder-tab.active {
-            background: white;
-            color: #222;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            color: #233047;
+            background: #fffdf9;
+            border-color: #ded8cf;
+            box-shadow: 0 3px 12px rgba(41, 37, 31, 0.09);
         }
 
         .folder-page {
             display: none;
+            animation: pageIn 0.2s ease-out;
         }
 
         .folder-page.active {
             display: block;
         }
 
-        .page-title {
-            margin: 0 0 18px;
-            font-size: 28px;
+        @keyframes pageIn {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* Add-subject item inside the native subject list */
-        #subjectSelect option.add-subject-option {
-            font-weight: 600;
-        }
-
-        /* Week day headings: darker than entries, but still soft */
-        .day-title {
-            color: #777;
-        }
-
-        .day-title > span:first-child {
+        .page-title-row {
             display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 14px;
+            margin: 4px 7px 15px;
+        }
+
+        .page-title {
+            margin: 0;
+            color: #2b3038;
+            font-size: 26px;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+
+        .page-caption {
+            margin: 5px 0 0;
+            color: #827c73;
+            font-size: 12px;
+        }
+
+        .page-doodle {
+            flex: 0 0 auto;
+            color: #76716a;
+            transform: rotate(-5deg);
+        }
+
+        /* =========================================================
+           CARDS / NOTEBOOK SURFACE
+        ========================================================= */
+
+        .card {
+            position: relative;
+            margin-bottom: 15px;
+            padding: 20px;
+            border: 1px solid #dcd5cb;
+            border-radius: 18px;
+            background: rgba(255, 253, 249, 0.94);
+            box-shadow:
+                0 6px 22px rgba(49, 44, 38, 0.065),
+                0 1px 1px rgba(49, 44, 38, 0.035);
+            overflow: hidden;
+        }
+
+        .card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 18px;
+            right: 18px;
+            height: 1px;
+            background: rgba(75, 72, 67, 0.09);
+            transform: rotate(-0.15deg);
+            transform-origin: center;
+        }
+
+        .card h2 {
+            margin: 0;
+            color: #2b3038;
+            font-size: 18px;
+            letter-spacing: -0.02em;
+        }
+
+        .section-heading-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .tiny-note {
+            color: #918a81;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .hand-note {
+            color: #5f5b56;
+            font-family: "Comic Sans MS", "Bradley Hand", cursive;
+            font-size: 13px;
+            letter-spacing: 0.01em;
+        }
+
+        .empty-note {
+            color: #9a938a;
+            text-align: center;
+            padding: 14px 4px 5px;
+            font-size: 13px;
+        }
+
+        /* =========================================================
+           TIMER HERO
+        ========================================================= */
+
+        .timer-card {
+            padding: 21px 20px 18px;
+            text-align: center;
+            border-color: #cfc9bf;
+        }
+
+        .timer-topline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 13px;
+            text-align: left;
+        }
+
+        .timer-label {
+            color: #77726a;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .timer-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #77726a;
+            font-size: 11px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #aaa49b;
+        }
+
+        .timer-card.running .status-dot {
+            background: #48566b;
+            box-shadow: 0 0 0 4px rgba(72, 86, 107, 0.08);
+            animation: softPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes softPulse {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.65;
+            }
+            50% {
+                transform: scale(1.25);
+                opacity: 1;
+            }
+        }
+
+        .timer-note {
+            min-height: 19px;
+            margin: 0 0 6px;
+            color: #7a756d;
+            font-family: "Comic Sans MS", "Bradley Hand", cursive;
+            font-size: 12px;
+        }
+
+        #timer {
+            margin: 7px 0 13px;
+            color: #233047;
+            font-size: clamp(46px, 13vw, 68px);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: 0.035em;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .selected-subject-line {
+            margin: 0 0 14px;
+            color: #595650;
+            font-size: 13px;
+        }
+
+        .selected-subject-line strong {
+            color: #2f3742;
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            min-height: 42px;
+            border: 1px solid #d5cfc6;
+            border-radius: 11px;
+            padding: 10px 16px;
+            cursor: pointer;
+            transition:
+                transform 0.12s ease,
+                box-shadow 0.12s ease,
+                background 0.12s ease;
+        }
+
+        .button:active {
+            transform: translateY(1px) scale(0.99);
+        }
+
+        .button.primary {
+            border-color: #26344a;
+            background: #26344a;
+            color: white;
+            box-shadow: 0 4px 12px rgba(38, 52, 74, 0.17);
+        }
+
+        .button.secondary {
+            background: #eeebe4;
+            color: #393733;
+        }
+
+        .button.subtle {
+            min-height: 34px;
+            padding: 7px 11px;
+            font-size: 12px;
+            background: #f3f0e9;
+        }
+
+        .timer-reset-note {
+            margin: 10px 0 0;
+            color: #aaa299;
+            font-size: 10px;
+        }
+
+        /* =========================================================
+           SUBJECT CARDS
+        ========================================================= */
+
+        .subject-picker {
+            margin-top: 17px;
+            padding-top: 15px;
+            border-top: 1px dashed #d8d1c7;
+        }
+
+        .subject-picker-title {
+            margin-bottom: 10px;
+            text-align: left;
+            color: #757067;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.11em;
+            text-transform: uppercase;
+        }
+
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            text-align: left;
+        }
+
+        .subject-choice {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            width: 100%;
+            min-height: 44px;
+            padding: 9px 10px;
+            border: 1px solid #ddd6cc;
+            border-radius: 12px;
+            background: #faf7f1;
+            color: #46433f;
+            cursor: pointer;
+            text-align: left;
+            transition:
+                background 0.14s ease,
+                border-color 0.14s ease,
+                transform 0.14s ease;
+        }
+
+        .subject-choice:hover {
+            background: #f5f1e9;
+        }
+
+        .subject-choice:active {
+            transform: translateY(1px);
+        }
+
+        .subject-choice.active {
+            border-color: #778196;
+            background: #edf0f3;
+            color: #26344a;
+        }
+
+        .subject-mark {
+            flex: 0 0 auto;
+            width: 9px;
+            height: 9px;
+            border: 1.5px solid currentColor;
+            border-radius: 50%;
+            opacity: 0.72;
+        }
+
+        .subject-choice.active .subject-mark {
+            background: currentColor;
+        }
+
+        .subject-choice span:last-child {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .subject-add {
+            justify-content: center;
+            border-style: dashed;
+            color: #69645c;
+            font-family: "Comic Sans MS", "Bradley Hand", cursive;
+            font-weight: 700;
+        }
+
+        .subject-add .plus {
+            font-family: Arial, sans-serif;
+            font-size: 17px;
+            line-height: 1;
+        }
+
+        .subject-select-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .subject-management-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        /* =========================================================
+           TODAY DASHBOARD
+        ========================================================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+        }
+
+        .stat {
+            position: relative;
+            min-height: 84px;
+            padding: 14px;
+            border: 1px solid #e0dad1;
+            border-radius: 14px;
+            background: #f5f1e9;
+            overflow: hidden;
+        }
+
+        .stat::before {
+            content: "";
+            position: absolute;
+            right: -10px;
+            bottom: -17px;
+            width: 52px;
+            height: 52px;
+            border: 1px solid rgba(85, 81, 75, 0.08);
+            border-radius: 50%;
+        }
+
+        .stat-title {
+            color: #817a71;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            margin-top: 7px;
+            color: #26344a;
+            font-size: 25px;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .today-date-line {
+            margin: 0 0 12px;
+            color: #8b847c;
+            font-size: 11px;
+        }
+
+        .study-summary-list {
+            margin-top: 14px;
+        }
+
+        .study-summary-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 12px;
+            padding: 9px 1px;
+            border-bottom: 1px solid #eee9e2;
+        }
+
+        .study-summary-row:last-child {
+            border-bottom: none;
+        }
+
+        .study-summary-name {
+            overflow: hidden;
+            color: #45413c;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        .study-summary-time {
+            color: #2f3742;
+            font-size: 12px;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .summary-line {
+            margin-top: 12px;
+            color: #747067;
+            font-family: "Comic Sans MS", "Bradley Hand", cursive;
+            font-size: 12px;
+        }
+
+        /* =========================================================
+           TO-DO NOTEBOOK
+        ========================================================= */
+
+        .todo-paper {
+            background:
+                repeating-linear-gradient(
+                    to bottom,
+                    rgba(98, 111, 130, 0.0) 0,
+                    rgba(98, 111, 130, 0.0) 30px,
+                    rgba(98, 111, 130, 0.11) 31px,
+                    rgba(98, 111, 130, 0.11) 32px
+                ),
+                #fffdf9;
+        }
+
+        .input-area {
+            display: flex;
+            align-items: stretch;
+            gap: 8px;
+        }
+
+        input[type="text"] {
+            min-width: 0;
+            flex: 1;
+            height: 42px;
+            padding: 10px 12px;
+            border: 1px solid #d5cec4;
+            border-radius: 11px;
+            background: rgba(255, 255, 255, 0.72);
+            color: #2e2d2a;
+            font-size: 14px;
+        }
+
+        input[type="text"]::placeholder {
+            color: #aaa39a;
+        }
+
+        .add-button {
+            height: 42px;
+            min-width: 70px;
+            border: 1px solid #26344a;
+            border-radius: 11px;
+            background: #26344a;
+            color: white;
+            cursor: pointer;
+        }
+
+        .todo-list {
+            margin: 15px 0 0;
+            padding: 0 0 0 2px;
+            list-style: none;
+        }
+
+        .todo-item {
+            display: grid;
+            grid-template-columns: 24px minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 9px;
+            min-height: 48px;
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(73, 84, 100, 0.09);
+        }
+
+        .todo-check {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 17px;
+            height: 17px;
+            margin: 0;
+            border: 1.5px solid #7c7b78;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .todo-check:checked {
+            border-color: #26344a;
+            background: #26344a;
+        }
+
+        .todo-check:checked::after {
+            content: "";
+            position: absolute;
+            left: 4px;
+            top: 1px;
+            width: 5px;
+            height: 9px;
+            border-right: 1.6px solid white;
+            border-bottom: 1.6px solid white;
+            transform: rotate(40deg);
+        }
+
+        .todo-text {
+            min-width: 0;
+            color: #3e3b37;
+            font-size: 14px;
+            line-height: 1.4;
+            overflow-wrap: anywhere;
+        }
+
+        .todo-item.completed .todo-text {
+            color: #989188;
+            text-decoration: line-through;
+            text-decoration-thickness: 1px;
+            text-decoration-color: rgba(83, 82, 78, 0.6);
+        }
+
+        .todo-delete {
+            border: none;
+            background: transparent;
+            color: #a29c94;
+            padding: 6px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .todo-delete:hover {
+            color: #53565b;
+        }
+
+        .todo-footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 14px;
+            color: #8b847b;
+            font-size: 11px;
+        }
+
+        /* =========================================================
+           WEEK NOTEBOOK
+        ========================================================= */
+
+        .week-overview {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 15px;
+            padding-bottom: 14px;
+            border-bottom: 1px dashed #d9d2c8;
+        }
+
+        .week-total-big {
+            color: #26344a;
+            font-size: 28px;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .week-total-label {
+            margin-top: 2px;
+            color: #8a847b;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .week-progress-illustration {
+            width: 120px;
+            flex: 0 0 120px;
+        }
+
+        .week-progress-track {
+            height: 8px;
+            border-radius: 10px;
+            background: #e8e3db;
+            overflow: hidden;
+        }
+
+        .week-progress-fill {
+            width: 0%;
+            height: 100%;
+            border-radius: inherit;
+            background: #5f6e84;
+            transition: width 0.25s ease;
+        }
+
+        .week-progress-label {
+            margin-top: 5px;
+            color: #8e887f;
+            font-size: 10px;
+            text-align: right;
+        }
+
+        .week-list {
+            display: block;
+        }
+
+        .day {
+            position: relative;
+            padding: 13px 0 12px;
+            border-bottom: 1px solid #eee9e2;
+        }
+
+        .day:last-child {
+            border-bottom: none;
+            padding-bottom: 3px;
+        }
+
+        .day-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 5px;
+            color: #7d7770;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.015em;
+        }
+
+        .day-title-name {
+            display: inline-flex;
             align-items: center;
             gap: 8px;
         }
 
-        .day-title > span:first-child::before {
+        .day-title-name::before {
             content: "";
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
+            border: 1px solid #7c807f;
             border-radius: 50%;
-            background: #888;
-            display: inline-block;
-            flex: 0 0 7px;
+            background: transparent;
+            flex: 0 0 6px;
         }
 
-        .week-day-content .study-row {
-            padding-left: 15px;
-            color: #222;
+        .day.today .day-title-name::before {
+            background: #26344a;
+            border-color: #26344a;
         }
 
-        /* Floating online button */
+        .day.today .day-title {
+            color: #5c6674;
+        }
+
+        .day-total {
+            color: #868077;
+            font-size: 11px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .week-day-content {
+            padding-left: 14px;
+        }
+
+        .study-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            min-height: 30px;
+            padding: 4px 0;
+            color: #45423e;
+            font-size: 12px;
+        }
+
+        .study-row-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .study-row-time {
+            color: #555e6b;
+            font-variant-numeric: tabular-nums;
+            font-weight: 700;
+        }
+
+        .week-empty {
+            padding: 3px 0 3px;
+            color: #aaa39b;
+            font-family: "Comic Sans MS", "Bradley Hand", cursive;
+            font-size: 11px;
+        }
+
+        /* =========================================================
+           POSITIVE NOTE / MASCOT MESSAGE
+        ========================================================= */
+
+        .better-days-card {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 82px;
+            align-items: center;
+            gap: 14px;
+            min-height: 106px;
+            background: #f8f3ea;
+        }
+
+        .better-days-copy {
+            padding-right: 5px;
+        }
+
+        .better-days-title {
+            margin: 0 0 5px;
+            color: #27354b;
+            font-family: "Comic Sans MS", "Bradley Hand", cursive;
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .better-days-text {
+            margin: 0;
+            color: #7b756d;
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        .sleepy-mascot {
+            width: 82px;
+            height: 82px;
+            transform: rotate(-2deg);
+        }
+
+        .sleepy-mascot svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* =========================================================
+           SUBJECT MANAGEMENT / SETTINGS
+        ========================================================= */
+
+        .subject-settings {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .small-button {
+            border: 1px solid #d4cec5;
+            border-radius: 10px;
+            padding: 8px 10px;
+            background: #eeebe4;
+            color: #595650;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .online-description {
+            margin: 0;
+            color: #827c74;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* =========================================================
+           FLOATING ONLINE BUTTON
+        ========================================================= */
+
         .online-float {
             position: fixed;
             right: 18px;
             bottom: 18px;
-            width: 58px;
-            height: 58px;
+            width: 57px;
+            height: 57px;
+            border: 1px solid #d0c9bf;
             border-radius: 50%;
             padding: 0;
-            background: white;
-            color: #222;
-            border: 1px solid #d5d5d5;
-            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.14);
+            background: #fffdf9;
+            color: #26344a;
+            box-shadow: 0 8px 22px rgba(44, 40, 34, 0.14);
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 50;
+            cursor: pointer;
+            z-index: 60;
+            transition: transform 0.12s ease, box-shadow 0.12s ease;
+        }
+
+        .online-float:hover {
+            box-shadow: 0 10px 27px rgba(44, 40, 34, 0.17);
+        }
+
+        .online-float:active {
+            transform: scale(0.95);
         }
 
         .online-float svg {
@@ -365,26 +1064,257 @@
             height: 34px;
         }
 
-        .online-float:active {
-            transform: scale(0.96);
+        /* =========================================================
+           TOAST
+        ========================================================= */
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 84px;
+            z-index: 80;
+            width: min(420px, calc(100vw - 28px));
+            padding: 10px 13px;
+            border: 1px solid #d7d0c6;
+            border-radius: 12px;
+            background: rgba(255, 253, 249, 0.96);
+            color: #4d4a45;
+            box-shadow: 0 8px 26px rgba(40, 35, 29, 0.13);
+            text-align: center;
+            font-size: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, 8px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
-        @media (max-width: 400px) {
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        /* =========================================================
+           MODAL
+        ========================================================= */
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 90;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            background: rgba(42, 39, 35, 0.28);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.18s ease;
+        }
+
+        .modal-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal {
+            width: min(430px, 100%);
+            border: 1px solid #d5cec4;
+            border-radius: 17px;
+            padding: 19px;
+            background: #fffdf9;
+            box-shadow: 0 15px 45px rgba(29, 26, 22, 0.2);
+            transform: translateY(7px) rotate(-0.2deg);
+            transition: transform 0.18s ease;
+        }
+
+        .modal-backdrop.open .modal {
+            transform: translateY(0) rotate(-0.2deg);
+        }
+
+        .modal-title {
+            margin: 0;
+            color: #26344a;
+            font-size: 18px;
+        }
+
+        .modal-text {
+            margin: 6px 0 13px;
+            color: #7f7971;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .modal-actions .button {
+            min-height: 38px;
+            padding: 8px 13px;
+        }
+
+        /* =========================================================
+           DECORATIVE DOODLES
+        ========================================================= */
+
+        .doodle-star {
+            position: absolute;
+            width: 27px;
+            height: 27px;
+            opacity: 0.38;
+            transform: rotate(-8deg);
+            pointer-events: none;
+        }
+
+        .doodle-star.one {
+            right: 13px;
+            top: 12px;
+        }
+
+        .doodle-star.two {
+            left: 9px;
+            bottom: 11px;
+            width: 21px;
+            height: 21px;
+            transform: rotate(8deg);
+            opacity: 0.24;
+        }
+
+        .doodle-note {
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+            width: 42px;
+            height: 54px;
+            opacity: 0.13;
+            transform: rotate(6deg);
+            pointer-events: none;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 15px 11px 88px;
+            }
+
+            .site-header {
+                padding-left: 5px;
+                padding-right: 4px;
+                margin-bottom: 1px;
+            }
+
+            .header-copy {
+                padding-right: 80px;
+            }
+
+            .mascot-wrap {
+                width: 74px;
+                height: 74px;
+                right: -1px;
+                top: 2px;
+            }
+
             .folder-nav {
-                gap: 5px;
+                gap: 4px;
+                padding: 4px;
             }
 
             .folder-tab {
-                padding: 10px 5px;
-                font-size: 13px;
+                padding: 10px 4px;
+                font-size: 12px;
+            }
+
+            .card {
+                padding: 17px;
+                border-radius: 16px;
+            }
+
+            #timer {
+                font-size: 45px;
+                letter-spacing: 0.02em;
+            }
+
+            .subject-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .better-days-card {
+                grid-template-columns: minmax(0, 1fr) 68px;
+            }
+
+            .sleepy-mascot {
+                width: 68px;
+                height: 68px;
             }
 
             .online-float {
-                right: 14px;
-                bottom: 14px;
-                width: 54px;
-                height: 54px;
+                right: 12px;
+                bottom: 12px;
+                width: 53px;
+                height: 53px;
             }
+
+        }
+
+        @media (max-width: 360px) {
+
+            .header-copy {
+                padding-right: 70px;
+            }
+
+            .mascot-wrap {
+                width: 65px;
+                height: 65px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .subject-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .input-area {
+                flex-direction: column;
+            }
+
+            .add-button {
+                width: 100%;
+            }
+
+            .timer-controls {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .timer-controls .primary {
+                grid-column: 1 / -1;
+            }
+
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
         }
 
     </style>
@@ -394,17 +1324,89 @@
 
 <body>
 
+<div class="paper-grain" aria-hidden="true"></div>
+
+<div class="app-shell">
+
 <div class="container">
 
-    <h1>Nisse Study</h1>
+    <!-- =========================================================
+         HEADER
+    ========================================================== -->
 
-    <!-- ================= FOLDERS ================= -->
+    <header class="site-header">
+
+        <div class="header-copy">
+
+            <div class="eyebrow">
+                Nisse Study
+            </div>
+
+            <h1>
+                Study a little.
+                <br>
+                Keep going.
+            </h1>
+
+            <p class="header-note" id="headerNote">
+                A quiet little place for study time, tasks, and better days ahead.
+            </p>
+
+        </div>
+
+        <div class="mascot-wrap" aria-hidden="true">
+
+            <div class="mascot-shadow"></div>
+
+            <div class="mascot">
+                <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- loose pencil-circle behind the character -->
+                    <path d="M16 39C16 19 31 8 50 8C72 8 84 21 82 40" stroke="#80766A" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="2 4" opacity=".6"/>
+                    <!-- hair -->
+                    <path d="M28 34C25 24 31 15 41 13C49 8 65 11 71 18C78 23 76 34 70 39L30 40C26 38 27 36 28 34Z" fill="#4A4036" stroke="#302C28" stroke-width="1.5"/>
+                    <path d="M32 28C36 21 40 20 46 16L43 29L50 19L53 30L60 17L62 30L69 21L70 34" stroke="#2D2925" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <!-- face -->
+                    <path d="M33 32C34 44 41 51 51 51C62 51 70 43 69 32C66 29 61 27 51 27C42 27 36 29 33 32Z" fill="#EBD7C5" stroke="#3A3430" stroke-width="1.3"/>
+                    <!-- eyes -->
+                    <path d="M42 37C44 34 47 34 49 37C47 40 44 40 42 37Z" fill="#37434C"/>
+                    <path d="M56 37C58 34 61 34 63 37C61 40 58 40 56 37Z" fill="#37434C"/>
+                    <!-- tiny nose / cheek -->
+                    <path d="M52 39L50.8 42" stroke="#9D8070" stroke-width="1" stroke-linecap="round"/>
+                    <path d="M39 41C42 43 43 43 45 43" stroke="#C58F86" stroke-width="1" stroke-linecap="round" opacity=".55"/>
+                    <!-- collar -->
+                    <path d="M42 49L50 57L58 49L69 54L67 78L32 78L33 54L42 49Z" fill="#E7E1D6" stroke="#3D4147" stroke-width="1.4"/>
+                    <path d="M42 49L50 57L58 49L56 60H44L42 49Z" fill="#F7F2E9" stroke="#3D4147" stroke-width="1.1"/>
+                    <!-- navy sweater -->
+                    <path d="M33 53C24 57 20 68 19 79H81C79 67 75 57 67 53L58 61H42L33 53Z" fill="#33425A" stroke="#2D3543" stroke-width="1.5"/>
+                    <!-- pencil texture -->
+                    <path d="M24 70L38 62M28 75L43 67M48 74L64 65M55 77L72 69M67 76L77 71" stroke="#697389" stroke-width="1" stroke-linecap="round" opacity=".55"/>
+                    <!-- book -->
+                    <path d="M18 75L29 73L32 85L21 87L18 75Z" fill="#6E6C63" stroke="#3A3935" stroke-width="1.2"/>
+                    <path d="M21 76L29 74L31 83L23 85L21 76Z" fill="#E8E2D8" stroke="#A8A29A" stroke-width=".9"/>
+                    <!-- backpack strap -->
+                    <path d="M28 56C25 60 23 64 22 69" stroke="#554C43" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+        </div>
+
+        <svg class="header-doodle" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M4 18L10 15L12 8L14 15L22 17L15 20L14 27L10 21L4 18Z" stroke="#665F56" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
+
+    </header>
+
+
+    <!-- =========================================================
+         FOLDERS
+    ========================================================== -->
 
     <nav class="folder-nav" aria-label="Main sections">
 
         <button
             class="folder-tab active"
             data-page="studyPage"
+            type="button"
             onclick="showPage('studyPage', this)"
         >
             Study
@@ -413,6 +1415,7 @@
         <button
             class="folder-tab"
             data-page="todoPage"
+            type="button"
             onclick="showPage('todoPage', this)"
         >
             To-Do
@@ -421,6 +1424,7 @@
         <button
             class="folder-tab"
             data-page="weekPage"
+            type="button"
             onclick="showPage('weekPage', this)"
         >
             This Week
@@ -429,38 +1433,92 @@
     </nav>
 
 
-    <!-- ================= STUDY ================= -->
+    <!-- =========================================================
+         STUDY PAGE
+    ========================================================== -->
 
     <main id="studyPage" class="folder-page active">
 
-        <h2 class="page-title">Study</h2>
+        <div class="page-title-row">
 
-        <!-- ================= TIMER ================= -->
-
-        <div class="card timer">
-
-            <div class="timer-title">
-                Study Timer
+            <div>
+                <h2 class="page-title">
+                    Study
+                </h2>
+                <p class="page-caption" id="studyCaption">
+                    Today is another small page in the notebook.
+                </p>
             </div>
 
-            <select id="subjectSelect" aria-label="Study subject"></select>
+            <div class="page-doodle" aria-hidden="true">
+                <svg width="54" height="32" viewBox="0 0 54 32" fill="none">
+                    <path d="M4 25C12 21 16 12 18 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    <path d="M16 6L19 3L20 8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M30 7C34 10 39 10 45 7" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                    <path d="M41 14L45 10L47 15" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+                </svg>
+            </div>
 
-            <div id="timer">
+        </div>
+
+
+        <!-- =====================================================
+             TIMER
+        ====================================================== -->
+
+        <section class="card timer-card" id="timerCard">
+
+            <div class="timer-topline">
+
+                <div class="timer-label">
+                    Study Timer
+                </div>
+
+                <div class="timer-status" id="timerStatus" aria-live="polite">
+                    <span class="status-dot"></span>
+                    <span id="timerStatusText">Ready</span>
+                </div>
+
+            </div>
+
+            <p class="timer-note" id="timerNote">
+                Let's begin.
+            </p>
+
+            <div id="timer" aria-live="off">
                 00:00:00
             </div>
 
-            <div class="buttons">
+            <p class="selected-subject-line">
+                Studying:
+                <strong id="selectedSubjectLabel">
+                    Math
+                </strong>
+            </p>
+
+            <!-- Hidden compatibility select: data is still stored exactly as before. -->
+            <select
+                id="subjectSelect"
+                class="subject-select-hidden"
+                aria-label="Study subject"
+                tabindex="-1"
+            ></select>
+
+            <div class="timer-controls">
 
                 <button
                     id="timerButton"
-                    class="start"
+                    class="button primary"
+                    type="button"
                     onclick="startTimer()"
                 >
                     Start
                 </button>
 
                 <button
-                    class="reset"
+                    id="resetButton"
+                    class="button secondary"
+                    type="button"
                     onclick="resetTimer()"
                 >
                     Reset
@@ -468,99 +1526,188 @@
 
             </div>
 
-        </div>
+            <p class="timer-reset-note">
+                Reset clears only the current timer. Saved Study Time stays safe.
+            </p>
+
+            <!-- =================================================
+                 SUBJECT PICKER
+            ================================================== -->
+
+            <div class="subject-picker">
+
+                <div class="subject-picker-title">
+                    Choose subject
+                </div>
+
+                <div
+                    class="subject-grid"
+                    id="subjectGrid"
+                    aria-label="Subjects"
+                ></div>
+
+                <div class="subject-management-row">
+
+                    <span class="tiny-note">
+                        Subject changes are locked while the timer is running.
+                    </span>
+
+                    <button
+                        class="small-button"
+                        type="button"
+                        onclick="removeSelectedSubject()"
+                    >
+                        Remove
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
 
 
-        <!-- ================= TODAY ================= -->
+        <!-- =====================================================
+             TODAY
+        ====================================================== -->
 
-        <div class="card">
+        <section class="card">
 
-            <h2>Today</h2>
+            <div class="section-heading-row">
+
+                <div>
+                    <h2>
+                        Today
+                    </h2>
+                    <div class="today-date-line" id="todayDateLine">
+                        —
+                    </div>
+                </div>
+
+                <span class="hand-note" id="todayMoodNote">
+                    keep going.
+                </span>
+
+            </div>
 
             <div class="stats">
 
                 <div class="stat">
-
                     <div class="stat-title">
                         Total Study
                     </div>
-
                     <div
                         class="stat-value"
                         id="todayTime"
                     >
                         0m
                     </div>
-
                 </div>
 
-
                 <div class="stat">
-
                     <div class="stat-title">
                         Tasks Done
                     </div>
-
                     <div
                         class="stat-value"
                         id="tasksDone"
                     >
                         0
                     </div>
-
                 </div>
 
             </div>
 
-        </div>
+            <div class="study-summary-list" id="todaySubjects"></div>
 
-
-        <!-- ================= TODAY'S SUBJECTS ================= -->
-
-        <div class="card">
-
-            <h2>Today's Subjects</h2>
-
-            <div id="todaySubjects"></div>
-
-        </div>
-
-
-        <!-- ================= SUBJECT MANAGEMENT ================= -->
-
-        <div class="card">
-
-            <h2>Subjects</h2>
-
-            <p class="online-description">
-                Choose <strong>＋ Add subject</strong> from the subject list above to create a new subject.
-            </p>
-
-            <div class="subject-settings">
-
-                <button
-                    class="small-button"
-                    onclick="removeSelectedSubject()"
-                >
-                    Remove Selected Subject
-                </button>
-
+            <div class="summary-line" id="todaySummaryLine">
+                Start with one page.
             </div>
 
-        </div>
+        </section>
+
+
+        <!-- =====================================================
+             BETTER DAYS AHEAD
+        ====================================================== -->
+
+        <section class="card better-days-card">
+
+            <svg class="doodle-star one" viewBox="0 0 27 27" fill="none" aria-hidden="true">
+                <path d="M13.5 2L15.6 11.4L24.5 13.5L15.6 15.7L13.5 25L11.5 15.7L2.5 13.5L11.5 11.4L13.5 2Z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+            </svg>
+
+            <div class="better-days-copy">
+                <h2 class="better-days-title">
+                    Better days ahead.
+                </h2>
+                <p class="better-days-text" id="betterDaysText">
+                    You do not need a perfect day. One honest study session is enough to move the page forward.
+                </p>
+            </div>
+
+            <div class="sleepy-mascot" aria-hidden="true">
+                <svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- sleeping / tired notebook mascot, kept intentionally simple -->
+                    <path d="M13 63C20 48 26 40 43 39C57 38 67 45 76 62" stroke="#3C3935" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M22 42C22 30 31 22 45 22C59 22 67 31 65 43C61 49 55 52 45 52C34 52 27 49 22 42Z" fill="#EBD8C6" stroke="#393632" stroke-width="1.4"/>
+                    <path d="M24 37C25 27 33 21 42 20C54 17 64 22 68 31L63 38L59 31L54 36L48 29L43 36L37 30L33 37L28 32L24 37Z" fill="#4A4137" stroke="#302E2B" stroke-width="1.4" stroke-linejoin="round"/>
+                    <path d="M34 41C37 44 40 44 43 41" stroke="#3D3D3A" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M49 41C52 44 55 44 58 41" stroke="#3D3D3A" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M24 56L17 72H73L66 56L57 61H34L24 56Z" fill="#33425A" stroke="#2E3642" stroke-width="1.5"/>
+                    <path d="M39 60L45 67L51 60" stroke="#ECE7DE" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M65 14C70 11 74 14 72 18C78 16 80 20 76 23" stroke="#6E655C" stroke-width="1.2" stroke-linecap="round"/>
+                    <path d="M79 29L82 28" stroke="#6E655C" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <svg class="doodle-star two" viewBox="0 0 21 21" fill="none" aria-hidden="true">
+                <path d="M10.5 2L11.8 8.8L18.8 10.5L11.8 12.2L10.5 19L9.2 12.2L2.2 10.5L9.2 8.8L10.5 2Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+            </svg>
+
+        </section>
 
     </main>
 
 
-    <!-- ================= TO-DO ================= -->
+    <!-- =========================================================
+         TO-DO PAGE
+    ========================================================== -->
 
     <main id="todoPage" class="folder-page">
 
-        <h2 class="page-title">To-Do</h2>
+        <div class="page-title-row">
 
-        <div class="card">
+            <div>
+                <h2 class="page-title">
+                    To-Do
+                </h2>
+                <p class="page-caption">
+                    A small notebook for the next thing that needs doing.
+                </p>
+            </div>
 
-            <h2>Tasks</h2>
+            <div class="page-doodle" aria-hidden="true">
+                <svg width="55" height="34" viewBox="0 0 55 34" fill="none">
+                    <path d="M6 7H37V28H6V7Z" stroke="currentColor" stroke-width="1.1"/>
+                    <path d="M10 12H31M10 17H27M10 22H22" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                    <path d="M39 9L46 2L50 6L43 13L39 9Z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+        </div>
+
+
+        <section class="card todo-paper">
+
+            <div class="section-heading-row">
+                <h2>
+                    Tasks
+                </h2>
+                <span class="hand-note" id="todoHandNote">
+                    one thing at a time.
+                </span>
+            </div>
 
             <div class="input-area">
 
@@ -569,10 +1716,13 @@
                     type="text"
                     placeholder="Write a task..."
                     autocomplete="off"
+                    maxlength="180"
+                    aria-label="New task"
                 >
 
                 <button
-                    class="add"
+                    class="add-button"
+                    type="button"
                     onclick="addTask()"
                 >
                     Add
@@ -580,43 +1730,146 @@
 
             </div>
 
-            <ul id="taskList"></ul>
+            <ul
+                class="todo-list"
+                id="taskList"
+                aria-live="polite"
+            ></ul>
 
-        </div>
+            <div class="todo-footer">
+                <span id="todoCountLabel">
+                    0 tasks
+                </span>
+                <span>
+                    checked tasks stay saved.
+                </span>
+            </div>
+
+            <svg class="doodle-note" viewBox="0 0 42 54" fill="none" aria-hidden="true">
+                <path d="M5 6L37 3L39 45L7 49L5 6Z" stroke="#26344A" stroke-width="1.1"/>
+                <path d="M11 16L30 14M12 22L32 20M13 28L27 27M14 35L31 33" stroke="#26344A" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+
+        </section>
+
+
+        <section class="card">
+
+            <div class="section-heading-row">
+                <h2>
+                    A tiny rule
+                </h2>
+                <span class="tiny-note">
+                    for difficult days
+                </span>
+            </div>
+
+            <p class="hand-note" style="margin: 0; line-height: 1.65;">
+                Make the next step smaller until it feels possible.
+            </p>
+
+        </section>
 
     </main>
 
 
-    <!-- ================= THIS WEEK ================= -->
+    <!-- =========================================================
+         THIS WEEK PAGE
+    ========================================================== -->
 
     <main id="weekPage" class="folder-page">
 
-        <h2 class="page-title">This Week</h2>
+        <div class="page-title-row">
 
-        <div class="card">
+            <div>
+                <h2 class="page-title">
+                    This Week
+                </h2>
+                <p class="page-caption">
+                    Seven small pages, all in one place.
+                </p>
+            </div>
 
-            <div id="weekStats"></div>
-
-            <div class="week-total">
-
-                Total:
-                <span id="weekTotal">0m</span>
-
+            <div class="page-doodle" aria-hidden="true">
+                <svg width="54" height="32" viewBox="0 0 54 32" fill="none">
+                    <path d="M5 24L14 8L24 20L32 11L49 24" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="14" cy="8" r="2" stroke="currentColor" stroke-width="1"/>
+                    <circle cx="32" cy="11" r="2" stroke="currentColor" stroke-width="1"/>
+                </svg>
             </div>
 
         </div>
+
+
+        <section class="card">
+
+            <div class="week-overview">
+
+                <div>
+                    <div class="week-total-big" id="weekTotal">
+                        0m
+                    </div>
+                    <div class="week-total-label">
+                        weekly study
+                    </div>
+                </div>
+
+                <div class="week-progress-illustration">
+                    <div class="week-progress-track">
+                        <div
+                            class="week-progress-fill"
+                            id="weekProgressFill"
+                        ></div>
+                    </div>
+                    <div
+                        class="week-progress-label"
+                        id="weekProgressLabel"
+                    >
+                        0 / 7 days
+                    </div>
+                </div>
+
+            </div>
+
+            <div
+                class="week-list"
+                id="weekStats"
+            ></div>
+
+        </section>
+
+
+        <section class="card">
+
+            <div class="section-heading-row">
+                <h2>
+                    Week note
+                </h2>
+                <span class="hand-note">
+                    not a competition.
+                </span>
+            </div>
+
+            <p class="online-description" style="margin: 0;">
+                The week view only records the study time you actually save. Nothing here needs to be perfect.
+            </p>
+
+        </section>
 
     </main>
 
 </div>
 
 
-<!-- ================= ONLINE PLACEHOLDER ================= -->
+<!-- =========================================================
+     ONLINE FLOATING BUTTON
+========================================================== -->
 
 <button
     class="online-float"
     aria-label="Online Study Room"
     title="Online Study Room"
+    type="button"
     onclick="openOnlineRoom()"
 >
     <svg
@@ -667,6 +1920,80 @@
 </button>
 
 
+<!-- =========================================================
+     ADD SUBJECT MODAL
+========================================================== -->
+
+<div
+    class="modal-backdrop"
+    id="subjectModalBackdrop"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="subjectModalTitle"
+    >
+
+        <h2
+            class="modal-title"
+            id="subjectModalTitle"
+        >
+            Add a subject
+        </h2>
+
+        <p class="modal-text">
+            Give this subject a simple name. It will be remembered on this device.
+        </p>
+
+        <input
+            id="subjectInput"
+            type="text"
+            placeholder="e.g. Biology"
+            maxlength="60"
+            autocomplete="off"
+            aria-label="New subject name"
+        >
+
+        <div class="modal-actions">
+
+            <button
+                class="button secondary"
+                type="button"
+                onclick="closeSubjectModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="button primary"
+                type="button"
+                onclick="confirmAddSubject()"
+            >
+                Add subject
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================== -->
+
+<div
+    class="toast"
+    id="toast"
+    role="status"
+    aria-live="polite"
+></div>
+
+
 <script>
 
 
@@ -679,6 +2006,7 @@ function showPage(pageId, button) {
     const pages =
         document.querySelectorAll(".folder-page");
 
+
     pages.forEach(function(page) {
 
         page.classList.remove("active");
@@ -689,6 +2017,7 @@ function showPage(pageId, button) {
     const selectedPage =
         document.getElementById(pageId);
 
+
     if (selectedPage) {
 
         selectedPage.classList.add("active");
@@ -698,6 +2027,7 @@ function showPage(pageId, button) {
 
     const tabs =
         document.querySelectorAll(".folder-tab");
+
 
     tabs.forEach(function(tab) {
 
@@ -711,6 +2041,12 @@ function showPage(pageId, button) {
         button.classList.add("active");
 
     }
+
+
+    localStorage.setItem(
+        ACTIVE_PAGE_KEY,
+        pageId
+    );
 
 }
 
@@ -729,33 +2065,118 @@ const TIMER_KEY = "nisseTimerState";
 
 const SELECTED_SUBJECT_KEY = "nisseSelectedSubject";
 
+const ACTIVE_PAGE_KEY = "nisseActivePage";
+
 
 /* =========================================================
-   BASIC DATA
+   BASIC DATA / SAFE STORAGE READERS
 ========================================================= */
 
+function readStorageJSON(key, fallback) {
+
+    const raw =
+        localStorage.getItem(key);
+
+
+    if (!raw) {
+
+        return fallback;
+
+    }
+
+
+    try {
+
+        return JSON.parse(raw);
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Could not read localStorage key:",
+            key,
+            error
+        );
+
+        return fallback;
+
+    }
+
+}
+
+
 let tasks =
-    JSON.parse(
-        localStorage.getItem(TASKS_KEY)
-    ) || [];
+    readStorageJSON(
+        TASKS_KEY,
+        []
+    );
+
+
+if (!Array.isArray(tasks)) {
+
+    tasks = [];
+
+}
 
 
 let subjects =
-    JSON.parse(
-        localStorage.getItem(SUBJECTS_KEY)
-    ) ||
-    [
+    readStorageJSON(
+        SUBJECTS_KEY,
+        [
+            "Math",
+            "Physics",
+            "Chemistry",
+            "English"
+        ]
+    );
+
+
+if (!Array.isArray(subjects)) {
+
+    subjects = [
         "Math",
         "Physics",
         "Chemistry",
         "English"
     ];
 
+}
+
+
+/* Remove empty / duplicated subject names while preserving order. */
+
+subjects = subjects
+    .map(function(subject) {
+        return String(subject).trim();
+    })
+    .filter(function(subject) {
+        return subject !== "";
+    })
+    .filter(function(subject, index, array) {
+        return array.indexOf(subject) === index;
+    });
+
+
+if (subjects.length === 0) {
+
+    subjects = ["Math"];
+
+}
+
 
 let rawStudy =
-    JSON.parse(
-        localStorage.getItem(STUDY_KEY)
-    ) || {};
+    readStorageJSON(
+        STUDY_KEY,
+        {}
+    );
+
+
+if (!rawStudy || typeof rawStudy !== "object" || Array.isArray(rawStudy)) {
+
+    rawStudy = {};
+
+}
 
 
 let studyData =
@@ -768,27 +2189,31 @@ let studyData =
 
 /*
     timerSeconds
-    = current displayed timer value
+    = current displayed timer value.
 
     timerBaseSeconds
-    = timer value at the moment the current
-      running session started
+    = timer value when the current running session started.
 
     timerStartedAt
-    = real timestamp when the current session started
+    = real timestamp when the current running session started.
 
     savedTimerSeconds
-    = amount of the current timer already
-      recorded inside Study Time
+    = amount of the current timer already recorded
+      inside Study Time.
 
-    This design means:
+    This architecture is deliberately timestamp-based.
+    It means the timer keeps the correct real elapsed time
+    even when the browser throttles an inactive tab.
 
-    displayed time =
-    timerBaseSeconds +
-    real elapsed time since timerStartedAt
+    Example:
 
-    Therefore Reload does NOT create fake
-    extra seconds.
+    Start -> 25:30 -> Stop
+    saved Study Time gets 25:30.
+
+    Start again -> 40:10 -> Stop
+    only the additional 14:40 gets saved.
+
+    Reset after saved time does not erase saved Study Time.
 */
 
 let timerSeconds = 0;
@@ -805,50 +2230,115 @@ let timerInterval = null;
 
 
 /* =========================================================
-   STUDY DATA
+   SMALL UI STATE
+========================================================= */
+
+let toastTimeout = null;
+
+let subjectModalLastSelected = "";
+
+
+/* =========================================================
+   STUDY DATA MIGRATION
 ========================================================= */
 
 function migrateStudyData(data) {
 
-    let result = {};
+    const result = {};
+
 
     Object.keys(data).forEach(function(date) {
 
-        if (typeof data[date] === "number") {
+        const entry = data[date];
+
+
+        /*
+            Old versions stored:
+
+            "2026-09-17": 3600
+
+            New versions store:
+
+            "2026-09-17": {
+                total: 3600,
+                subjects: {
+                    Math: 3600
+                }
+            }
+        */
+
+        if (typeof entry === "number") {
 
             result[date] = {
 
-                total: data[date],
+                total: Math.max(
+                    0,
+                    Math.floor(entry)
+                ),
 
                 subjects: {
-                    "Other": data[date]
+                    "Other": Math.max(
+                        0,
+                        Math.floor(entry)
+                    )
                 }
 
             };
 
-        } else {
-
-            result[date] = data[date];
-
-            if (
-                typeof result[date].total !== "number"
-            ) {
-
-                result[date].total = 0;
-
-            }
-
-            if (
-                !result[date].subjects
-            ) {
-
-                result[date].subjects = {};
-
-            }
+            return;
 
         }
 
+
+        if (!entry || typeof entry !== "object") {
+
+            return;
+
+        }
+
+
+        const total =
+            Number(entry.total);
+
+
+        const cleanSubjects = {};
+
+
+        if (
+            entry.subjects &&
+            typeof entry.subjects === "object"
+        ) {
+
+            Object.keys(entry.subjects).forEach(function(subject) {
+
+                const seconds =
+                    Number(entry.subjects[subject]);
+
+
+                if (Number.isFinite(seconds) && seconds > 0) {
+
+                    cleanSubjects[subject] = Math.floor(seconds);
+
+                }
+
+            });
+
+        }
+
+
+        result[date] = {
+
+            total:
+                Number.isFinite(total) && total > 0
+                    ? Math.floor(total)
+                    : 0,
+
+            subjects: cleanSubjects
+
+        };
+
     });
+
 
     return result;
 
@@ -883,14 +2373,20 @@ function getCurrentTimerSeconds() {
 
     if (!timerRunning) {
 
-        return timerSeconds;
+        return Math.max(
+            0,
+            Math.floor(timerSeconds || 0)
+        );
 
     }
 
 
     if (!timerStartedAt) {
 
-        return timerSeconds;
+        return Math.max(
+            0,
+            Math.floor(timerSeconds || 0)
+        );
 
     }
 
@@ -901,7 +2397,10 @@ function getCurrentTimerSeconds() {
         );
 
 
-    return timerBaseSeconds + elapsed;
+    return Math.max(
+        0,
+        Math.floor(timerBaseSeconds || 0) + Math.max(0, elapsed)
+    );
 
 }
 
@@ -914,15 +2413,29 @@ function saveTimerState() {
 
     const state = {
 
-        timerSeconds: timerSeconds,
+        timerSeconds:
+            Math.max(
+                0,
+                Math.floor(timerSeconds || 0)
+            ),
 
-        timerBaseSeconds: timerBaseSeconds,
+        timerBaseSeconds:
+            Math.max(
+                0,
+                Math.floor(timerBaseSeconds || 0)
+            ),
 
-        savedTimerSeconds: savedTimerSeconds,
+        savedTimerSeconds:
+            Math.max(
+                0,
+                Math.floor(savedTimerSeconds || 0)
+            ),
 
-        timerRunning: timerRunning,
+        timerRunning:
+            Boolean(timerRunning),
 
-        timerStartedAt: timerStartedAt
+        timerStartedAt:
+            timerStartedAt || null
 
     };
 
@@ -947,9 +2460,15 @@ function restoreTimer() {
 
     if (!saved) {
 
-        updateTimer();
+        timerSeconds = 0;
+        timerBaseSeconds = 0;
+        savedTimerSeconds = 0;
+        timerRunning = false;
+        timerStartedAt = null;
 
+        updateTimer();
         updateTimerButton();
+        updateTimerVisualState();
 
         return;
 
@@ -963,15 +2482,24 @@ function restoreTimer() {
 
 
         timerSeconds =
-            Number(state.timerSeconds) || 0;
+            Math.max(
+                0,
+                Math.floor(Number(state.timerSeconds) || 0)
+            );
 
 
         timerBaseSeconds =
-            Number(state.timerBaseSeconds) || 0;
+            Math.max(
+                0,
+                Math.floor(Number(state.timerBaseSeconds) || 0)
+            );
 
 
         savedTimerSeconds =
-            Number(state.savedTimerSeconds) || 0;
+            Math.max(
+                0,
+                Math.floor(Number(state.savedTimerSeconds) || 0)
+            );
 
 
         timerRunning =
@@ -979,19 +2507,10 @@ function restoreTimer() {
 
 
         timerStartedAt =
-            state.timerStartedAt || null;
+            Number.isFinite(Number(state.timerStartedAt))
+                ? Number(state.timerStartedAt)
+                : null;
 
-
-        /*
-            If timer was running before Reload,
-            do NOT add elapsed time directly to
-            timerSeconds.
-
-            Instead getCurrentTimerSeconds()
-            calculates:
-
-            base + real elapsed time
-        */
 
         if (timerRunning && timerStartedAt) {
 
@@ -1001,18 +2520,20 @@ function restoreTimer() {
 
             startTimerInterval();
 
-        } else {
+        }
+
+        else {
 
             timerRunning = false;
-
             timerStartedAt = null;
 
         }
 
 
         updateTimer();
-
         updateTimerButton();
+        updateTimerVisualState();
+        updateSubjectSelectState();
 
     }
 
@@ -1024,14 +2545,14 @@ function restoreTimer() {
         );
 
         timerSeconds = 0;
-
         timerBaseSeconds = 0;
-
         savedTimerSeconds = 0;
-
         timerRunning = false;
-
         timerStartedAt = null;
+
+        updateTimer();
+        updateTimerButton();
+        updateTimerVisualState();
 
     }
 
@@ -1046,6 +2567,7 @@ function startTimer() {
 
     if (timerRunning) {
 
+        /* Start never secretly acts as Stop. */
         return;
 
     }
@@ -1057,8 +2579,8 @@ function startTimer() {
 
     if (!subject) {
 
-        alert(
-            "Please select a subject."
+        showToast(
+            "Please choose a subject first."
         );
 
         return;
@@ -1066,13 +2588,11 @@ function startTimer() {
     }
 
 
-    /*
-        The current timer value becomes
-        the base for the new running session.
-    */
-
     timerSeconds =
-        Number(timerSeconds) || 0;
+        Math.max(
+            0,
+            Math.floor(Number(timerSeconds) || 0)
+        );
 
 
     timerBaseSeconds =
@@ -1086,8 +2606,9 @@ function startTimer() {
     timerRunning = true;
 
 
+    updateTimer();
     updateTimerButton();
-
+    updateTimerVisualState();
     updateSubjectSelectState();
 
     saveTimerState();
@@ -1110,25 +2631,19 @@ function startTimerInterval() {
     }
 
 
+    /*
+        setInterval is only a display/update mechanism.
+        The real clock comes from Date.now().
+    */
+
     timerInterval =
         setInterval(function() {
 
             timerSeconds =
                 getCurrentTimerSeconds();
 
-
             updateTimer();
-
-            /*
-                We save the state regularly.
-
-                Important:
-                timerBaseSeconds and timerStartedAt
-                remain unchanged while running.
-
-                So saving every second does NOT
-                cause double counting after Reload.
-            */
+            updateTimerVisualState();
 
             saveTimerState();
 
@@ -1150,10 +2665,7 @@ function stopTimer() {
     }
 
 
-    /*
-        First calculate the exact real elapsed
-        time before stopping.
-    */
+    /* Capture the exact final real-time value before stopping. */
 
     timerSeconds =
         getCurrentTimerSeconds();
@@ -1162,7 +2674,6 @@ function stopTimer() {
     if (timerInterval !== null) {
 
         clearInterval(timerInterval);
-
         timerInterval = null;
 
     }
@@ -1172,24 +2683,25 @@ function stopTimer() {
 
     timerStartedAt = null;
 
-    timerBaseSeconds = timerSeconds;
+    timerBaseSeconds =
+        timerSeconds;
 
 
-    /*
-        Save only the new part that has not
-        already been recorded.
-    */
+    /* Save only the new unsaved segment. */
 
     saveStudyTime();
 
 
     updateTimer();
-
     updateTimerButton();
-
+    updateTimerVisualState();
     updateSubjectSelectState();
 
     saveTimerState();
+
+    showToast(
+        "Study time saved."
+    );
 
 }
 
@@ -1206,17 +2718,26 @@ function updateTimerButton() {
         );
 
 
+    if (!button) {
+
+        return;
+
+    }
+
+
     if (timerRunning) {
 
         button.textContent = "Stop";
-
         button.onclick = stopTimer;
+        button.setAttribute("aria-label", "Stop study timer");
 
-    } else {
+    }
+
+    else {
 
         button.textContent = "Start";
-
         button.onclick = startTimer;
+        button.setAttribute("aria-label", "Start study timer");
 
     }
 
@@ -1230,45 +2751,47 @@ function updateTimerButton() {
 function resetTimer() {
 
     /*
-        Reset intentionally does NOT call
-        saveStudyTime().
+        Reset intentionally does not call saveStudyTime().
 
-        This means:
+        Therefore:
 
-        already saved Study Time
-        stays untouched.
-
-        Any currently unsaved timer segment
-        is discarded.
+        - already saved Study Time remains saved.
+        - the current unsaved timer segment is discarded.
+        - the timer display becomes zero.
     */
 
     if (timerInterval !== null) {
 
         clearInterval(timerInterval);
-
         timerInterval = null;
 
     }
 
 
+    const hadTime =
+        timerSeconds > 0;
+
+
     timerRunning = false;
-
     timerStartedAt = null;
-
     timerSeconds = 0;
-
     timerBaseSeconds = 0;
-
     savedTimerSeconds = 0;
 
 
     updateTimer();
-
     updateTimerButton();
-
+    updateTimerVisualState();
     updateSubjectSelectState();
 
     saveTimerState();
+
+
+    showToast(
+        hadTime
+            ? "Current timer reset. Saved Study Time was kept."
+            : "Timer reset."
+    );
 
 }
 
@@ -1278,10 +2801,6 @@ function resetTimer() {
 ========================================================= */
 
 function updateTimer() {
-
-    /*
-        If running, get the real current value.
-    */
 
     if (timerRunning) {
 
@@ -1307,17 +2826,20 @@ function updateTimer() {
         timerSeconds % 60;
 
 
-    document.getElementById(
-        "timer"
-    ).textContent =
+    const timerElement =
+        document.getElementById("timer");
 
-        formatNumber(hours) +
-        ":" +
 
-        formatNumber(minutes) +
-        ":" +
+    if (timerElement) {
 
-        formatNumber(seconds);
+        timerElement.textContent =
+            formatNumber(hours) +
+            ":" +
+            formatNumber(minutes) +
+            ":" +
+            formatNumber(seconds);
+
+    }
 
 }
 
@@ -1328,9 +2850,91 @@ function updateTimer() {
 
 function formatNumber(number) {
 
-    return number < 10
-        ? "0" + number
-        : number;
+    const cleanNumber =
+        Math.max(
+            0,
+            Math.floor(Number(number) || 0)
+        );
+
+
+    return cleanNumber < 10
+        ? "0" + cleanNumber
+        : String(cleanNumber);
+
+}
+
+
+/* =========================================================
+   TIMER VISUAL STATE / PERSONALITY TEXT
+========================================================= */
+
+function updateTimerVisualState() {
+
+    const card =
+        document.getElementById("timerCard");
+
+
+    const statusText =
+        document.getElementById("timerStatusText");
+
+
+    const note =
+        document.getElementById("timerNote");
+
+
+    const seconds =
+        Math.max(
+            0,
+            Math.floor(timerSeconds || 0)
+        );
+
+
+    if (card) {
+
+        card.classList.toggle(
+            "running",
+            timerRunning
+        );
+
+    }
+
+
+    if (timerRunning) {
+
+        if (statusText) {
+            statusText.textContent = "Focusing";
+        }
+
+        if (note) {
+            note.textContent = "Focus mode.";
+        }
+
+        return;
+
+    }
+
+
+    if (statusText) {
+        statusText.textContent =
+            seconds > 0
+                ? "Paused"
+                : "Ready";
+    }
+
+
+    if (note) {
+
+        if (seconds <= 0) {
+            note.textContent = "Let's begin.";
+        }
+        else if (seconds >= 3600) {
+            note.textContent = "Not bad today.";
+        }
+        else {
+            note.textContent = "You made progress.";
+        }
+
+    }
 
 }
 
@@ -1341,28 +2945,23 @@ function formatNumber(number) {
 
 function saveStudyTime() {
 
-    /*
-        Example:
+    const cleanTimerSeconds =
+        Math.max(
+            0,
+            Math.floor(timerSeconds || 0)
+        );
 
-        First session:
-        timer = 25:30
-        saved = 0
 
-        unsaved = 25:30
+    const cleanSavedSeconds =
+        Math.max(
+            0,
+            Math.floor(savedTimerSeconds || 0)
+        );
 
-        Next session:
-        timer = 40:10
-        saved = 25:30
-
-        unsaved = 14:40
-
-        So the same time is never
-        counted twice.
-    */
 
     const unsavedSeconds =
-        timerSeconds -
-        savedTimerSeconds;
+        cleanTimerSeconds -
+        cleanSavedSeconds;
 
 
     if (unsavedSeconds <= 0) {
@@ -1390,28 +2989,28 @@ function saveStudyTime() {
     if (!studyData[today]) {
 
         studyData[today] = {
-
             total: 0,
-
             subjects: {}
-
         };
 
     }
 
 
-    if (
-        !studyData[today].subjects
-    ) {
+    if (!studyData[today].subjects) {
 
         studyData[today].subjects = {};
 
     }
 
 
-    if (
-        !studyData[today].subjects[subject]
-    ) {
+    if (!Number.isFinite(Number(studyData[today].total))) {
+
+        studyData[today].total = 0;
+
+    }
+
+
+    if (!Number.isFinite(Number(studyData[today].subjects[subject]))) {
 
         studyData[today].subjects[subject] = 0;
 
@@ -1426,30 +3025,43 @@ function saveStudyTime() {
         unsavedSeconds;
 
 
-    /*
-        Mark this part as already saved.
-    */
+    /* Mark all current timer seconds as recorded. */
 
     savedTimerSeconds =
-        timerSeconds;
+        cleanTimerSeconds;
 
 
     saveStudyData();
 
     updateStats();
 
+    updateTodaySubjects();
+
+    updateWeek();
+
 }
 
 
 /* =========================================================
-   SUBJECTS
+   SUBJECTS - READ SELECTED SUBJECT
 ========================================================= */
 
 function getSelectedSubject() {
 
-    return document.getElementById(
-        "subjectSelect"
-    ).value;
+    const select =
+        document.getElementById(
+            "subjectSelect"
+        );
+
+
+    if (!select) {
+
+        return "";
+
+    }
+
+
+    return select.value || "";
 
 }
 
@@ -1466,6 +3078,13 @@ function saveSelectedSubject() {
         );
 
 
+    if (!select) {
+
+        return;
+
+    }
+
+
     const subject =
         select.value;
 
@@ -1478,6 +3097,10 @@ function saveSelectedSubject() {
         );
 
     }
+
+
+    updateSelectedSubjectLabel();
+    renderSubjectGridActiveState();
 
 }
 
@@ -1494,16 +3117,46 @@ function updateSubjectSelectState() {
         );
 
 
-    /*
-        Do not allow changing subject
-        in the middle of a running timer.
+    if (select) {
 
-        This prevents 20 minutes of Math
-        accidentally being saved as Physics.
-    */
+        select.disabled = timerRunning;
 
-    select.disabled =
-        timerRunning;
+    }
+
+
+    const choices =
+        document.querySelectorAll(
+            ".subject-choice[data-subject]"
+        );
+
+
+    choices.forEach(function(choice) {
+
+        choice.disabled = timerRunning;
+
+        choice.setAttribute(
+            "aria-disabled",
+            String(timerRunning)
+        );
+
+    });
+
+
+    const addButton =
+        document.querySelector(
+            ".subject-add"
+        );
+
+
+    if (addButton) {
+
+        addButton.disabled = timerRunning;
+        addButton.setAttribute(
+            "aria-disabled",
+            String(timerRunning)
+        );
+
+    }
 
 }
 
@@ -1520,118 +3173,261 @@ function renderSubjects() {
         );
 
 
+    const grid =
+        document.getElementById(
+            "subjectGrid"
+        );
+
+
     const previousSubject =
         localStorage.getItem(
             SELECTED_SUBJECT_KEY
         );
 
 
-    select.innerHTML = "";
+    if (select) {
+
+        select.innerHTML = "";
 
 
-    subjects.forEach(function(subject) {
+        subjects.forEach(function(subject) {
 
-        const option =
-            document.createElement(
-                "option"
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value = subject;
+            option.textContent = subject;
+
+            select.appendChild(option);
+
+        });
+
+
+        if (
+            previousSubject &&
+            subjects.includes(previousSubject)
+        ) {
+
+            select.value = previousSubject;
+
+        }
+
+        else if (subjects.length > 0) {
+
+            select.value = subjects[0];
+            saveSelectedSubject();
+
+        }
+
+    }
+
+
+    if (grid) {
+
+        grid.innerHTML = "";
+
+
+        subjects.forEach(function(subject) {
+
+            const button =
+                document.createElement("button");
+
+
+            button.type = "button";
+            button.className = "subject-choice";
+            button.dataset.subject = subject;
+
+            button.setAttribute(
+                "aria-label",
+                "Select " + subject
             );
 
 
-        option.value = subject;
+            const mark =
+                document.createElement("span");
 
-        option.textContent = subject;
-
-
-        select.appendChild(option);
-
-    });
+            mark.className = "subject-mark";
 
 
-    /* Add-subject action stays inside the subject list. */
+            const label =
+                document.createElement("span");
 
-    const addOption =
-        document.createElement("option");
-
-    addOption.value = "__ADD_SUBJECT__";
-
-    addOption.textContent = "＋ Add subject";
-
-    addOption.classList.add("add-subject-option");
-
-    select.appendChild(addOption);
+            label.textContent = subject;
 
 
-    /*
-        Restore the previous subject
-        if it still exists.
-    */
+            button.appendChild(mark);
+            button.appendChild(label);
 
-    if (
-        previousSubject &&
-        subjects.includes(previousSubject)
-    ) {
 
-        select.value =
-            previousSubject;
+            button.addEventListener(
+                "click",
+                function() {
+
+                    selectSubject(subject);
+
+                }
+            );
+
+
+            grid.appendChild(button);
+
+        });
+
+
+        const addButton =
+            document.createElement("button");
+
+
+        addButton.type = "button";
+        addButton.className = "subject-choice subject-add";
+        addButton.setAttribute(
+            "aria-label",
+            "Add subject"
+        );
+
+        addButton.innerHTML =
+            '<span class="plus">+</span><span>Add subject</span>';
+
+
+        addButton.addEventListener(
+            "click",
+            function() {
+                openSubjectModal();
+            }
+        );
+
+
+        grid.appendChild(addButton);
 
     }
 
-    else if (subjects.length > 0) {
 
-        select.value =
-            subjects[0];
-
-        saveSelectedSubject();
-
-    }
-
-
+    updateSelectedSubjectLabel();
+    renderSubjectGridActiveState();
     updateSubjectSelectState();
 
 }
 
 
-
 /* =========================================================
-   SUBJECT CHANGE
+   SELECT SUBJECT
 ========================================================= */
 
-document
-    .getElementById("subjectSelect")
-    .addEventListener(
-        "change",
-        function() {
-
-            if (this.value === "__ADD_SUBJECT__") {
-
-                this.value =
-                    localStorage.getItem(
-                        SELECTED_SUBJECT_KEY
-                    ) || subjects[0] || "";
-
-                addSubject();
-
-                return;
-
-            }
-
-
-            saveSelectedSubject();
-
-        }
-    );
-
-
-
-/* =========================================================
-   ADD SUBJECT
-========================================================= */
-
-function addSubject() {
+function selectSubject(subject) {
 
     if (timerRunning) {
 
-        alert(
+        showToast(
+            "Stop the timer before changing subject."
+        );
+
+        return;
+
+    }
+
+
+    if (!subjects.includes(subject)) {
+
+        return;
+
+    }
+
+
+    const select =
+        document.getElementById(
+            "subjectSelect"
+        );
+
+
+    if (select) {
+
+        select.value = subject;
+
+    }
+
+
+    saveSelectedSubject();
+
+    showToast(
+        "Subject: " + subject
+    );
+
+}
+
+
+/* =========================================================
+   UPDATE SELECTED SUBJECT LABEL
+========================================================= */
+
+function updateSelectedSubjectLabel() {
+
+    const label =
+        document.getElementById(
+            "selectedSubjectLabel"
+        );
+
+
+    if (!label) {
+
+        return;
+
+    }
+
+
+    label.textContent =
+        getSelectedSubject() ||
+        "Choose a subject";
+
+}
+
+
+/* =========================================================
+   SUBJECT ACTIVE STYLING
+========================================================= */
+
+function renderSubjectGridActiveState() {
+
+    const selected =
+        getSelectedSubject();
+
+
+    document
+        .querySelectorAll(
+            ".subject-choice[data-subject]"
+        )
+        .forEach(function(button) {
+
+            const active =
+                button.dataset.subject === selected;
+
+
+            button.classList.toggle(
+                "active",
+                active
+            );
+
+            button.setAttribute(
+                "aria-pressed",
+                String(active)
+            );
+
+        });
+
+}
+
+
+/* =========================================================
+   SUBJECT MODAL
+========================================================= */
+
+function openSubjectModal() {
+
+    if (timerRunning) {
+
+        showToast(
             "Stop the timer before adding a subject."
         );
 
@@ -1640,64 +3436,139 @@ function addSubject() {
     }
 
 
-    const name =
-        prompt("Enter the new subject name:");
-
-
-    if (name === null) {
-
-        renderSubjects();
-
-        return;
-
-    }
-
-
-    const trimmedName =
-        name.trim();
-
-
-    if (trimmedName === "") {
-
-        renderSubjects();
-
-        return;
-
-    }
-
-
-    if (subjects.includes(trimmedName)) {
-
-        alert(
-            "This subject already exists."
+    const backdrop =
+        document.getElementById(
+            "subjectModalBackdrop"
         );
 
-        renderSubjects();
 
-        const existingSelect =
-            document.getElementById(
-                "subjectSelect"
-            );
+    const input =
+        document.getElementById(
+            "subjectInput"
+        );
 
-        existingSelect.value =
-            trimmedName;
 
-        saveSelectedSubject();
+    if (!backdrop || !input) {
 
         return;
 
     }
 
 
-    subjects.push(trimmedName);
+    subjectModalLastSelected =
+        getSelectedSubject();
 
+
+    input.value = "";
+
+    backdrop.classList.add("open");
+    backdrop.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+
+
+    setTimeout(function() {
+
+        input.focus();
+
+    }, 20);
+
+}
+
+
+function closeSubjectModal() {
+
+    const backdrop =
+        document.getElementById(
+            "subjectModalBackdrop"
+        );
+
+
+    if (!backdrop) {
+
+        return;
+
+    }
+
+
+    backdrop.classList.remove("open");
+    backdrop.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+
+}
+
+
+function confirmAddSubject() {
+
+    if (timerRunning) {
+
+        closeSubjectModal();
+
+        showToast(
+            "Stop the timer before adding a subject."
+        );
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "subjectInput"
+        );
+
+
+    if (!input) {
+
+        return;
+
+    }
+
+
+    const name =
+        input.value.trim();
+
+
+    if (name === "") {
+
+        showToast(
+            "Write a subject name first."
+        );
+
+        input.focus();
+        return;
+
+    }
+
+
+    const existing =
+        subjects.find(function(subject) {
+
+            return subject.toLowerCase() === name.toLowerCase();
+
+        });
+
+
+    if (existing) {
+
+        closeSubjectModal();
+        selectSubject(existing);
+
+        showToast(
+            "That subject already exists."
+        );
+
+        return;
+
+    }
+
+
+    subjects.push(name);
 
     saveSubjects();
 
     renderSubjects();
 
-
-    /* Select the newly added subject. */
 
     const select =
         document.getElementById(
@@ -1705,23 +3576,42 @@ function addSubject() {
         );
 
 
-    select.value = trimmedName;
+    if (select) {
+
+        select.value = name;
+
+    }
+
 
     saveSelectedSubject();
+
+    closeSubjectModal();
+
+    showToast(
+        "Added subject: " + name
+    );
 
 }
 
 
+/* Keep the old function name available for compatibility. */
+
+function addSubject() {
+
+    openSubjectModal();
+
+}
+
 
 /* =========================================================
-   REMOVE SUBJECT
+   REMOVE SELECTED SUBJECT
 ========================================================= */
 
 function removeSelectedSubject() {
 
     if (timerRunning) {
 
-        alert(
+        showToast(
             "Stop the timer before removing a subject."
         );
 
@@ -1743,8 +3633,8 @@ function removeSelectedSubject() {
 
     if (subjects.length <= 1) {
 
-        alert(
-            "You need at least one subject."
+        showToast(
+            "Keep at least one subject."
         );
 
         return;
@@ -1752,26 +3642,37 @@ function removeSelectedSubject() {
     }
 
 
-    subjects =
-        subjects.filter(
-            function(subject) {
-
-                return subject !== selected;
-
-            }
+    const confirmed =
+        window.confirm(
+            'Remove "' + selected + '" from your subjects?'
         );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    subjects =
+        subjects.filter(function(subject) {
+
+            return subject !== selected;
+
+        });
 
 
     saveSubjects();
 
     renderSubjects();
 
-
-    /*
-        Save the new selected subject.
-    */
-
     saveSelectedSubject();
+
+
+    showToast(
+        "Removed subject: " + selected
+    );
 
 }
 
@@ -1779,6 +3680,44 @@ function removeSelectedSubject() {
 /* =========================================================
    TASKS
 ========================================================= */
+
+function normalizeTasks() {
+
+    tasks = tasks.map(function(task) {
+
+        if (!task || typeof task !== "object") {
+
+            return null;
+
+        }
+
+
+        return {
+
+            text:
+                String(task.text || "").trim(),
+
+            completed:
+                Boolean(task.completed),
+
+            createdAt:
+                Number(task.createdAt) || Date.now()
+
+        };
+
+    }).filter(function(task) {
+
+        return task && task.text !== "";
+
+    });
+
+}
+
+
+normalizeTasks();
+
+saveTasks();
+
 
 function saveTasks() {
 
@@ -1802,12 +3741,20 @@ function addTask() {
         );
 
 
+    if (!input) {
+
+        return;
+
+    }
+
+
     const text =
         input.value.trim();
 
 
     if (text === "") {
 
+        input.focus();
         return;
 
     }
@@ -1817,7 +3764,9 @@ function addTask() {
 
         text: text,
 
-        completed: false
+        completed: false,
+
+        createdAt: Date.now()
 
     });
 
@@ -1830,6 +3779,12 @@ function addTask() {
     renderTasks();
 
     updateStats();
+
+    showToast(
+        "Task added."
+    );
+
+    input.focus();
 
 }
 
@@ -1846,123 +3801,168 @@ function renderTasks() {
         );
 
 
+    if (!list) {
+
+        return;
+
+    }
+
+
     list.innerHTML = "";
 
 
-    tasks.forEach(
-        function(task, index) {
+    if (tasks.length === 0) {
 
-            const li =
-                document.createElement(
-                    "li"
-                );
+        const empty =
+            document.createElement("li");
+
+        empty.className = "empty-note";
+        empty.textContent =
+            "Nothing here yet. Start with one small thing.";
+
+        list.appendChild(empty);
+
+        updateTodoCount();
+        return;
+
+    }
 
 
-            if (task.completed) {
+    tasks.forEach(function(task, index) {
 
-                li.classList.add(
-                    "completed"
+        const item =
+            document.createElement("li");
+
+
+        item.className = "todo-item";
+
+
+        if (task.completed) {
+
+            item.classList.add("completed");
+
+        }
+
+
+        const checkbox =
+            document.createElement("input");
+
+        checkbox.type = "checkbox";
+        checkbox.className = "todo-check";
+        checkbox.checked = task.completed;
+        checkbox.setAttribute(
+            "aria-label",
+            "Mark task complete"
+        );
+
+
+        checkbox.addEventListener(
+            "change",
+            function() {
+
+                tasks[index].completed =
+                    checkbox.checked;
+
+                saveTasks();
+                renderTasks();
+                updateStats();
+
+                showToast(
+                    checkbox.checked
+                        ? "Task completed."
+                        : "Task reopened."
                 );
 
             }
+        );
 
 
-            const checkbox =
-                document.createElement(
-                    "input"
+        const text =
+            document.createElement("span");
+
+        text.className = "todo-text";
+        text.textContent = task.text;
+
+
+        const deleteButton =
+            document.createElement("button");
+
+        deleteButton.type = "button";
+        deleteButton.className = "todo-delete";
+        deleteButton.textContent = "Delete";
+        deleteButton.setAttribute(
+            "aria-label",
+            "Delete task: " + task.text
+        );
+
+
+        deleteButton.addEventListener(
+            "click",
+            function() {
+
+                tasks.splice(index, 1);
+
+                saveTasks();
+                renderTasks();
+                updateStats();
+
+                showToast(
+                    "Task deleted."
                 );
 
-
-            checkbox.type =
-                "checkbox";
-
-
-            checkbox.checked =
-                task.completed;
+            }
+        );
 
 
-            checkbox.addEventListener(
-                "change",
-                function() {
+        item.appendChild(checkbox);
+        item.appendChild(text);
+        item.appendChild(deleteButton);
 
-                    tasks[index].completed =
-                        checkbox.checked;
+        list.appendChild(item);
 
-
-                    saveTasks();
-
-                    renderTasks();
-
-                    updateStats();
-
-                }
-            );
+    });
 
 
-            const span =
-                document.createElement(
-                    "span"
-                );
+    updateTodoCount();
+
+}
 
 
-            span.textContent =
-                task.text;
+/* =========================================================
+   TODO COUNT
+========================================================= */
+
+function updateTodoCount() {
+
+    const label =
+        document.getElementById(
+            "todoCountLabel"
+        );
 
 
-            const deleteButton =
-                document.createElement(
-                    "button"
-                );
+    if (!label) {
+
+        return;
+
+    }
 
 
-            deleteButton.textContent =
-                "Delete";
+    const total =
+        tasks.length;
 
 
-            deleteButton.classList.add(
-                "delete"
-            );
+    const completed =
+        tasks.filter(function(task) {
+            return task.completed;
+        }).length;
 
 
-            deleteButton.onclick =
-                function() {
-
-                    tasks.splice(
-                        index,
-                        1
-                    );
-
-
-                    saveTasks();
-
-                    renderTasks();
-
-                    updateStats();
-
-                };
-
-
-            li.appendChild(
-                checkbox
-            );
-
-
-            li.appendChild(
-                span
-            );
-
-
-            li.appendChild(
-                deleteButton
-            );
-
-
-            list.appendChild(
-                li
-            );
-
-        }
-    );
+    label.textContent =
+        total +
+        (total === 1 ? " task" : " tasks") +
+        " · " +
+        completed +
+        " done";
 
 }
 
@@ -1971,9 +3971,7 @@ function renderTasks() {
    DATES
 ========================================================= */
 
-function getDateKey(
-    date = new Date()
-) {
+function getDateKey(date = new Date()) {
 
     const year =
         date.getFullYear();
@@ -2002,21 +4000,71 @@ function getDateKey(
 }
 
 
+function getMondayOfCurrentWeek(date = new Date()) {
+
+    const result =
+        new Date(date);
+
+
+    const dayOfWeek =
+        result.getDay();
+
+
+    const mondayOffset =
+        dayOfWeek === 0
+            ? -6
+            : 1 - dayOfWeek;
+
+
+    result.setDate(
+        result.getDate() + mondayOffset
+    );
+
+
+    result.setHours(0, 0, 0, 0);
+
+
+    return result;
+
+}
+
+
+function formatLongDate(date = new Date()) {
+
+    return date.toLocaleDateString(
+        "en-US",
+        {
+            weekday: "long",
+            month: "long",
+            day: "numeric"
+        }
+    );
+
+}
+
+
 /* =========================================================
    STUDY TIME FORMAT
 ========================================================= */
 
 function formatStudyTime(seconds) {
 
+    const cleanSeconds =
+        Math.max(
+            0,
+            Math.floor(Number(seconds) || 0)
+        );
+
+
     const hours =
         Math.floor(
-            seconds / 3600
+            cleanSeconds / 3600
         );
 
 
     const minutes =
         Math.floor(
-            (seconds % 3600) / 60
+            (cleanSeconds % 3600) / 60
         );
 
 
@@ -2033,6 +4081,42 @@ function formatStudyTime(seconds) {
 
 
     return minutes + "m";
+
+}
+
+
+function formatStudyTimePrecise(seconds) {
+
+    const cleanSeconds =
+        Math.max(
+            0,
+            Math.floor(Number(seconds) || 0)
+        );
+
+
+    const hours =
+        Math.floor(
+            cleanSeconds / 3600
+        );
+
+
+    const minutes =
+        Math.floor(
+            (cleanSeconds % 3600) / 60
+        );
+
+
+    const secondsLeft =
+        cleanSeconds % 60;
+
+
+    return (
+        formatNumber(hours) +
+        ":" +
+        formatNumber(minutes) +
+        ":" +
+        formatNumber(secondsLeft)
+    );
 
 }
 
@@ -2055,34 +4139,84 @@ function updateStats() {
         };
 
 
-    document.getElementById(
-        "todayTime"
-    ).textContent =
-
-        formatStudyTime(
-            todayData.total
+    const todayTime =
+        document.getElementById(
+            "todayTime"
         );
 
 
+    if (todayTime) {
+
+        todayTime.textContent =
+            formatStudyTime(
+                todayData.total
+            );
+
+    }
+
+
     const completed =
-        tasks.filter(
-            function(task) {
+        tasks.filter(function(task) {
 
-                return task.completed;
+            return task.completed;
 
-            }
-        ).length;
+        }).length;
 
 
-    document.getElementById(
-        "tasksDone"
-    ).textContent =
-        completed;
+    const tasksDone =
+        document.getElementById(
+            "tasksDone"
+        );
 
 
+    if (tasksDone) {
+
+        tasksDone.textContent =
+            completed;
+
+    }
+
+
+    updateTodayDateText();
     updateTodaySubjects();
+    updateTodayMood();
 
-    updateWeek();
+}
+
+
+/* =========================================================
+   TODAY DATE TEXT
+========================================================= */
+
+function updateTodayDateText() {
+
+    const line =
+        document.getElementById(
+            "todayDateLine"
+        );
+
+
+    if (line) {
+
+        line.textContent =
+            formatLongDate();
+
+    }
+
+
+    const caption =
+        document.getElementById(
+            "studyCaption"
+        );
+
+
+    if (caption) {
+
+        caption.textContent =
+            getDateKey() +
+            " · another small page in the notebook.";
+
+    }
 
 }
 
@@ -2099,6 +4233,13 @@ function updateTodaySubjects() {
         );
 
 
+    if (!container) {
+
+        return;
+
+    }
+
+
     container.innerHTML = "";
 
 
@@ -2110,141 +4251,189 @@ function updateTodaySubjects() {
         studyData[today];
 
 
-    if (
-        !data ||
-        !data.subjects
-    ) {
+    if (!data || !data.subjects) {
 
-        container.textContent =
-            "No study time yet.";
+        const empty =
+            document.createElement("div");
+
+        empty.className = "empty-note";
+        empty.textContent =
+            "No study time yet. Your first session can be small.";
+
+        container.appendChild(empty);
+        updateTodaySummaryLine(0, 0);
+        return;
+
+    }
+
+
+    const entries =
+        Object.keys(data.subjects)
+            .map(function(subject) {
+
+                return {
+                    subject: subject,
+                    seconds:
+                        Number(data.subjects[subject]) || 0
+                };
+
+            })
+            .filter(function(item) {
+                return item.seconds > 0;
+            })
+            .sort(function(a, b) {
+                return b.seconds - a.seconds;
+            });
+
+
+    if (entries.length === 0) {
+
+        const empty =
+            document.createElement("div");
+
+        empty.className = "empty-note";
+        empty.textContent =
+            "No study time yet. Your first session can be small.";
+
+        container.appendChild(empty);
+        updateTodaySummaryLine(0, 0);
+        return;
+
+    }
+
+
+    entries.forEach(function(item) {
+
+        const row =
+            document.createElement("div");
+
+        row.className = "study-summary-row";
+
+
+        const name =
+            document.createElement("span");
+
+        name.className = "study-summary-name";
+        name.textContent = item.subject;
+
+
+        const time =
+            document.createElement("span");
+
+        time.className = "study-summary-time";
+        time.textContent = formatStudyTime(item.seconds);
+
+
+        row.appendChild(name);
+        row.appendChild(time);
+
+        container.appendChild(row);
+
+    });
+
+
+    updateTodaySummaryLine(
+        entries.length,
+        Number(data.total) || 0
+    );
+
+}
+
+
+/* =========================================================
+   TODAY SUMMARY SENTENCE
+========================================================= */
+
+function updateTodaySummaryLine(subjectCount, totalSeconds) {
+
+    const line =
+        document.getElementById(
+            "todaySummaryLine"
+        );
+
+
+    if (!line) {
 
         return;
 
     }
 
 
-    let hasStudy =
-        false;
+    if (totalSeconds <= 0) {
 
-
-    subjects.forEach(
-        function(subject) {
-
-            const seconds =
-                data.subjects[subject] || 0;
-
-
-            if (seconds <= 0) {
-
-                return;
-
-            }
-
-
-            hasStudy = true;
-
-
-            const row =
-                document.createElement(
-                    "div"
-                );
-
-
-            row.classList.add(
-                "study-row"
-            );
-
-
-            const name =
-                document.createElement(
-                    "span"
-                );
-
-
-            name.textContent =
-                subject;
-
-
-            const time =
-                document.createElement(
-                    "span"
-                );
-
-
-            time.textContent =
-                formatStudyTime(
-                    seconds
-                );
-
-
-            row.appendChild(name);
-
-            row.appendChild(time);
-
-            container.appendChild(row);
-
-        }
-    );
-
-
-    /*
-        Keep old "Other" data visible.
-    */
-
-    if (
-        data.subjects["Other"] > 0
-    ) {
-
-        hasStudy = true;
-
-
-        const row =
-            document.createElement(
-                "div"
-            );
-
-
-        row.classList.add(
-            "study-row"
-        );
-
-
-        const name =
-            document.createElement(
-                "span"
-            );
-
-
-        name.textContent =
-            "Other";
-
-
-        const time =
-            document.createElement(
-                "span"
-            );
-
-
-        time.textContent =
-            formatStudyTime(
-                data.subjects["Other"]
-            );
-
-
-        row.appendChild(name);
-
-        row.appendChild(time);
-
-        container.appendChild(row);
+        line.textContent =
+            "Start with one page.";
+        return;
 
     }
 
 
-    if (!hasStudy) {
+    if (totalSeconds < 30 * 60) {
 
-        container.textContent =
-            "No study time yet.";
+        line.textContent =
+            "A little progress is still progress.";
+        return;
 
+    }
+
+
+    if (totalSeconds < 2 * 3600) {
+
+        line.textContent =
+            subjectCount +
+            (subjectCount === 1 ? " subject" : " subjects") +
+            " · keep the rhythm gentle.";
+        return;
+
+    }
+
+
+    line.textContent =
+        "You gave today a real piece of your time.";
+
+}
+
+
+/* =========================================================
+   TODAY MOOD NOTE
+========================================================= */
+
+function updateTodayMood() {
+
+    const note =
+        document.getElementById(
+            "todayMoodNote"
+        );
+
+
+    const todayData =
+        studyData[getDateKey()];
+
+
+    const total =
+        todayData
+            ? Number(todayData.total) || 0
+            : 0;
+
+
+    if (!note) {
+
+        return;
+
+    }
+
+
+    if (total <= 0) {
+        note.textContent = "start small.";
+    }
+    else if (total < 60 * 60) {
+        note.textContent = "nice start.";
+    }
+    else if (total < 3 * 60 * 60) {
+        note.textContent = "not bad today.";
+    }
+    else {
+        note.textContent = "you showed up.";
     }
 
 }
@@ -2262,43 +4451,37 @@ function updateWeek() {
         );
 
 
+    if (!container) {
+
+        return;
+
+    }
+
+
     container.innerHTML = "";
 
 
     const today =
         new Date();
 
-
-    const dayOfWeek =
-        today.getDay();
-
-
-    const mondayOffset =
-        dayOfWeek === 0
-            ? -6
-            : 1 - dayOfWeek;
+    const monday =
+        getMondayOfCurrentWeek(today);
 
 
     const dayNames = [
-
         "Monday",
-
         "Tuesday",
-
         "Wednesday",
-
         "Thursday",
-
         "Friday",
-
         "Saturday",
-
         "Sunday"
-
     ];
 
 
     let total = 0;
+
+    let activeDays = 0;
 
 
     for (
@@ -2308,13 +4491,11 @@ function updateWeek() {
     ) {
 
         const date =
-            new Date(today);
+            new Date(monday);
 
 
         date.setDate(
-            today.getDate() +
-            mondayOffset +
-            i
+            monday.getDate() + i
         );
 
 
@@ -2330,142 +4511,239 @@ function updateWeek() {
             };
 
 
-        total +=
-            data.total;
+        const dayTotal =
+            Math.max(
+                0,
+                Number(data.total) || 0
+            );
+
+
+        total += dayTotal;
+
+
+        if (dayTotal > 0) {
+            activeDays += 1;
+        }
 
 
         const day =
-            document.createElement(
-                "div"
-            );
+            document.createElement("section");
+
+        day.className = "day";
 
 
-        day.classList.add(
-            "day",
-            "week-day-content"
-        );
+        if (key === getDateKey(today)) {
+            day.classList.add("today");
+        }
 
 
         const title =
-            document.createElement(
-                "div"
-            );
+            document.createElement("div");
 
-
-        title.classList.add(
-            "day-title"
-        );
+        title.className = "day-title";
 
 
         const name =
-            document.createElement(
-                "span"
-            );
+            document.createElement("span");
 
-
+        name.className = "day-title-name";
         name.textContent =
-            dayNames[i];
+            dayNames[i] + " :";
 
 
         const totalTime =
-            document.createElement(
-                "span"
-            );
+            document.createElement("span");
 
-
+        totalTime.className = "day-total";
         totalTime.textContent =
-            formatStudyTime(
-                data.total
-            );
+            formatStudyTime(dayTotal);
 
 
         title.appendChild(name);
-
         title.appendChild(totalTime);
-
         day.appendChild(title);
 
 
-        if (data.subjects) {
+        const content =
+            document.createElement("div");
 
-            Object.keys(
-                data.subjects
-            ).forEach(
-                function(subject) {
-
-                    const seconds =
-                        data.subjects[subject];
+        content.className = "week-day-content";
 
 
-                    if (seconds <= 0) {
+        if (
+            data.subjects &&
+            Object.keys(data.subjects).length > 0
+        ) {
 
-                        return;
+            const entries =
+                Object.keys(data.subjects)
+                    .map(function(subject) {
 
-                    }
+                        return {
+                            subject: subject,
+                            seconds:
+                                Number(data.subjects[subject]) || 0
+                        };
 
-
-                    const row =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    row.classList.add(
-                        "study-row"
-                    );
-
-
-                    const subjectName =
-                        document.createElement(
-                            "span"
-                        );
-
-
-                    subjectName.textContent =
-                        subject;
+                    })
+                    .filter(function(item) {
+                        return item.seconds > 0;
+                    })
+                    .sort(function(a, b) {
+                        return b.seconds - a.seconds;
+                    });
 
 
-                    const time =
-                        document.createElement(
-                            "span"
-                        );
+            entries.forEach(function(item) {
+
+                const row =
+                    document.createElement("div");
+
+                row.className = "study-row";
 
 
-                    time.textContent =
-                        formatStudyTime(
-                            seconds
-                        );
+                const subjectName =
+                    document.createElement("span");
+
+                subjectName.className = "study-row-name";
+                subjectName.textContent =
+                    item.subject;
 
 
-                    row.appendChild(
-                        subjectName
-                    );
+                const time =
+                    document.createElement("span");
+
+                time.className = "study-row-time";
+                time.textContent =
+                    formatStudyTime(item.seconds);
 
 
-                    row.appendChild(
-                        time
-                    );
+                row.appendChild(subjectName);
+                row.appendChild(time);
+                content.appendChild(row);
 
-
-                    day.appendChild(
-                        row
-                    );
-
-                }
-            );
+            });
 
         }
 
 
+        if (!content.children.length) {
+
+            const empty =
+                document.createElement("div");
+
+            empty.className = "week-empty";
+            empty.textContent =
+                "nothing recorded yet";
+
+            content.appendChild(empty);
+
+        }
+
+
+        day.appendChild(content);
         container.appendChild(day);
 
     }
 
 
-    document.getElementById(
-        "weekTotal"
-    ).textContent =
-        formatStudyTime(total);
+    const weekTotal =
+        document.getElementById(
+            "weekTotal"
+        );
+
+
+    if (weekTotal) {
+
+        weekTotal.textContent =
+            formatStudyTime(total);
+
+    }
+
+
+    const progressFill =
+        document.getElementById(
+            "weekProgressFill"
+        );
+
+
+    if (progressFill) {
+
+        progressFill.style.width =
+            ((activeDays / 7) * 100) + "%";
+
+    }
+
+
+    const progressLabel =
+        document.getElementById(
+            "weekProgressLabel"
+        );
+
+
+    if (progressLabel) {
+
+        progressLabel.textContent =
+            activeDays +
+            " / 7 days";
+
+    }
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    if (!toast) {
+
+        return;
+
+    }
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add("show");
+
+
+    if (toastTimeout) {
+
+        clearTimeout(toastTimeout);
+
+    }
+
+
+    toastTimeout =
+        setTimeout(function() {
+
+            toast.classList.remove("show");
+
+        }, 2200);
+
+}
+
+
+/* =========================================================
+   ONLINE ROOM - PLACEHOLDER
+========================================================= */
+
+function openOnlineRoom() {
+
+    showToast(
+        "Online Study Room is the next stage of the project."
+    );
 
 }
 
@@ -2480,10 +4758,9 @@ document
         "keydown",
         function(event) {
 
-            if (
-                event.key === "Enter"
-            ) {
+            if (event.key === "Enter") {
 
+                event.preventDefault();
                 addTask();
 
             }
@@ -2493,35 +4770,161 @@ document
 
 
 /* =========================================================
-   ENTER KEY - SUBJECT
+   ENTER KEY - SUBJECT MODAL
 ========================================================= */
 
-/*
-    There is no visible subject text input in this version.
-    Adding a subject is intentionally handled by the
-    "＋ Add subject" option inside #subjectSelect.
+document
+    .getElementById("subjectInput")
+    .addEventListener(
+        "keydown",
+        function(event) {
 
-    The old code tried to attach a keydown listener to
-    #subjectInput, which does not exist and caused a
-    JavaScript error during page startup.
-*/
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+                confirmAddSubject();
+
+            }
+
+            if (event.key === "Escape") {
+
+                event.preventDefault();
+                closeSubjectModal();
+
+            }
+
+        }
+    );
 
 
 /* =========================================================
-   ONLINE ROOM - PLACEHOLDER
+   MODAL BACKDROP CLICK
 ========================================================= */
 
-function openOnlineRoom() {
+document
+    .getElementById("subjectModalBackdrop")
+    .addEventListener(
+        "click",
+        function(event) {
 
-    alert(
-        "Online Study Room is the next stage of the project."
+            if (event.target === this) {
+
+                closeSubjectModal();
+
+            }
+
+        }
     );
+
+
+/* =========================================================
+   ACTIVE FOLDER RESTORE
+========================================================= */
+
+function restoreActivePage() {
+
+    const savedPage =
+        localStorage.getItem(
+            ACTIVE_PAGE_KEY
+        );
+
+
+    if (!savedPage) {
+
+        return;
+
+    }
+
+
+    const button =
+        document.querySelector(
+            '.folder-tab[data-page="' +
+            savedPage +
+            '"]'
+        );
+
+
+    if (button) {
+
+        showPage(
+            savedPage,
+            button
+        );
+
+    }
 
 }
 
 
 /* =========================================================
-   PAGE START
+   REAL-TIME SAFETY EVENTS
+========================================================= */
+
+/*
+    When the tab becomes visible again, refresh from Date.now().
+    This avoids relying on browser timer accuracy while hidden.
+*/
+
+document.addEventListener(
+    "visibilitychange",
+    function() {
+
+        if (document.visibilityState === "visible") {
+
+            if (timerRunning) {
+
+                timerSeconds =
+                    getCurrentTimerSeconds();
+
+                updateTimer();
+                updateTimerVisualState();
+                saveTimerState();
+
+            }
+
+            updateStats();
+            updateWeek();
+
+        }
+
+        else {
+
+            if (timerRunning) {
+
+                timerSeconds =
+                    getCurrentTimerSeconds();
+
+            }
+
+            saveTimerState();
+
+        }
+
+    }
+);
+
+
+/* Save immediately before leaving/reloading the page. */
+
+window.addEventListener(
+    "beforeunload",
+    function() {
+
+        if (timerRunning) {
+
+            timerSeconds =
+                getCurrentTimerSeconds();
+
+        }
+
+        saveTimerState();
+
+    }
+);
+
+
+/* =========================================================
+   STARTUP
 ========================================================= */
 
 renderSubjects();
@@ -2530,17 +4933,41 @@ renderTasks();
 
 updateTimer();
 
+updateTimerButton();
+
+updateTimerVisualState();
+
 updateStats();
+
+updateTodaySubjects();
+
+updateWeek();
+
+restoreActivePage();
 
 restoreTimer();
 
-updateTimerButton();
+updateSelectedSubjectLabel();
+
+renderSubjectGridActiveState();
 
 updateSubjectSelectState();
 
 
+/*
+    A final save keeps migrated data in the newest structure,
+    without changing the user's actual study totals.
+*/
+
+saveSubjects();
+saveStudyData();
+saveTasks();
+
+
 </script>
+
+</div>
 
 </body>
 
-    </html>
+</html>
