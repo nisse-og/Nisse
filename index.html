@@ -266,6 +266,127 @@
 
         }
 
+        /* ---------------- FOLDER NAVIGATION ---------------- */
+
+        .folder-nav {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+            background: #e7e7e7;
+            padding: 5px;
+            border-radius: 13px;
+            position: sticky;
+            top: 10px;
+            z-index: 20;
+        }
+
+        .folder-tab {
+            border: none;
+            background: transparent;
+            color: #666;
+            border-radius: 10px;
+            padding: 11px 8px;
+            font-weight: 600;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .folder-tab.active {
+            background: white;
+            color: #222;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .folder-page {
+            display: none;
+        }
+
+        .folder-page.active {
+            display: block;
+        }
+
+        .page-title {
+            margin: 0 0 18px;
+            font-size: 28px;
+        }
+
+        /* Add-subject item inside the native subject list */
+        #subjectSelect option.add-subject-option {
+            font-weight: 600;
+        }
+
+        /* Week day headings: darker than entries, but still soft */
+        .day-title {
+            color: #777;
+        }
+
+        .day-title > span:first-child {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .day-title > span:first-child::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #888;
+            display: inline-block;
+            flex: 0 0 7px;
+        }
+
+        .week-day-content .study-row {
+            padding-left: 15px;
+            color: #222;
+        }
+
+        /* Floating online button */
+        .online-float {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            padding: 0;
+            background: white;
+            color: #222;
+            border: 1px solid #d5d5d5;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.14);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+
+        .online-float svg {
+            width: 34px;
+            height: 34px;
+        }
+
+        .online-float:active {
+            transform: scale(0.96);
+        }
+
+        @media (max-width: 400px) {
+            .folder-nav {
+                gap: 5px;
+            }
+
+            .folder-tab {
+                padding: 10px 5px;
+                font-size: 13px;
+            }
+
+            .online-float {
+                right: 14px;
+                bottom: 14px;
+                width: 54px;
+                height: 54px;
+            }
+        }
+
     </style>
 
 </head>
@@ -277,205 +398,321 @@
 
     <h1>Nisse Study</h1>
 
+    <!-- ================= FOLDERS ================= -->
 
-    <!-- ================= TIMER ================= -->
+    <nav class="folder-nav" aria-label="Main sections">
 
-    <div class="card timer">
+        <button
+            class="folder-tab active"
+            data-page="studyPage"
+            onclick="showPage('studyPage', this)"
+        >
+            Study
+        </button>
 
-        <div class="timer-title">
-            Study Timer
-        </div>
+        <button
+            class="folder-tab"
+            data-page="todoPage"
+            onclick="showPage('todoPage', this)"
+        >
+            To-Do
+        </button>
 
-        <select id="subjectSelect"></select>
+        <button
+            class="folder-tab"
+            data-page="weekPage"
+            onclick="showPage('weekPage', this)"
+        >
+            This Week
+        </button>
 
-        <div id="timer">
-            00:00:00
-        </div>
-
-        <div class="buttons">
-
-            <button
-                id="timerButton"
-                class="start"
-                onclick="startTimer()"
-            >
-                Start
-            </button>
-
-            <button
-                class="reset"
-                onclick="resetTimer()"
-            >
-                Reset
-            </button>
-
-        </div>
-
-    </div>
+    </nav>
 
 
-    <!-- ================= TODAY ================= -->
+    <!-- ================= STUDY ================= -->
 
-    <div class="card">
+    <main id="studyPage" class="folder-page active">
 
-        <h2>Today</h2>
+        <h2 class="page-title">Study</h2>
 
-        <div class="stats">
+        <!-- ================= TIMER ================= -->
 
-            <div class="stat">
+        <div class="card timer">
 
-                <div class="stat-title">
-                    Total Study
-                </div>
-
-                <div
-                    class="stat-value"
-                    id="todayTime"
-                >
-                    0m
-                </div>
-
+            <div class="timer-title">
+                Study Timer
             </div>
 
+            <select id="subjectSelect" aria-label="Study subject"></select>
 
-            <div class="stat">
+            <div id="timer">
+                00:00:00
+            </div>
 
-                <div class="stat-title">
-                    Tasks Done
-                </div>
+            <div class="buttons">
 
-                <div
-                    class="stat-value"
-                    id="tasksDone"
+                <button
+                    id="timerButton"
+                    class="start"
+                    onclick="startTimer()"
                 >
-                    0
-                </div>
+                    Start
+                </button>
+
+                <button
+                    class="reset"
+                    onclick="resetTimer()"
+                >
+                    Reset
+                </button>
 
             </div>
 
         </div>
 
-    </div>
+
+        <!-- ================= TODAY ================= -->
+
+        <div class="card">
+
+            <h2>Today</h2>
+
+            <div class="stats">
+
+                <div class="stat">
+
+                    <div class="stat-title">
+                        Total Study
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="todayTime"
+                    >
+                        0m
+                    </div>
+
+                </div>
 
 
-    <!-- ================= TODAY'S SUBJECTS ================= -->
+                <div class="stat">
 
-    <div class="card">
+                    <div class="stat-title">
+                        Tasks Done
+                    </div>
 
-        <h2>Today's Subjects</h2>
+                    <div
+                        class="stat-value"
+                        id="tasksDone"
+                    >
+                        0
+                    </div>
 
-        <div id="todaySubjects"></div>
+                </div>
 
-    </div>
-
-
-    <!-- ================= TASKS ================= -->
-
-    <div class="card">
-
-        <h2>Tasks</h2>
-
-        <div class="input-area">
-
-            <input
-                id="taskInput"
-                type="text"
-                placeholder="Write a task..."
-            >
-
-            <button
-                class="add"
-                onclick="addTask()"
-            >
-                Add
-            </button>
-
-        </div>
-
-        <ul id="taskList"></ul>
-
-    </div>
-
-
-    <!-- ================= SUBJECTS ================= -->
-
-    <div class="card">
-
-        <h2>Subjects</h2>
-
-        <div class="input-area">
-
-            <input
-                id="subjectInput"
-                type="text"
-                placeholder="Add a subject..."
-            >
-
-            <button
-                class="add"
-                onclick="addSubject()"
-            >
-                Add
-            </button>
+            </div>
 
         </div>
 
-        <div class="subject-settings">
 
-            <button
-                class="small-button"
-                onclick="removeSelectedSubject()"
-            >
-                Remove Selected Subject
-            </button>
+        <!-- ================= TODAY'S SUBJECTS ================= -->
+
+        <div class="card">
+
+            <h2>Today's Subjects</h2>
+
+            <div id="todaySubjects"></div>
 
         </div>
 
-    </div>
+
+        <!-- ================= SUBJECT MANAGEMENT ================= -->
+
+        <div class="card">
+
+            <h2>Subjects</h2>
+
+            <p class="online-description">
+                Choose <strong>＋ Add subject</strong> from the subject list above to create a new subject.
+            </p>
+
+            <div class="subject-settings">
+
+                <button
+                    class="small-button"
+                    onclick="removeSelectedSubject()"
+                >
+                    Remove Selected Subject
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= TO-DO ================= -->
+
+    <main id="todoPage" class="folder-page">
+
+        <h2 class="page-title">To-Do</h2>
+
+        <div class="card">
+
+            <h2>Tasks</h2>
+
+            <div class="input-area">
+
+                <input
+                    id="taskInput"
+                    type="text"
+                    placeholder="Write a task..."
+                    autocomplete="off"
+                >
+
+                <button
+                    class="add"
+                    onclick="addTask()"
+                >
+                    Add
+                </button>
+
+            </div>
+
+            <ul id="taskList"></ul>
+
+        </div>
+
+    </main>
 
 
     <!-- ================= THIS WEEK ================= -->
 
-    <div class="card">
+    <main id="weekPage" class="folder-page">
 
-        <h2>This Week</h2>
+        <h2 class="page-title">This Week</h2>
 
-        <div id="weekStats"></div>
+        <div class="card">
 
-        <div class="week-total">
+            <div id="weekStats"></div>
 
-            Total:
-            <span id="weekTotal">0m</span>
+            <div class="week-total">
+
+                Total:
+                <span id="weekTotal">0m</span>
+
+            </div>
 
         </div>
 
-    </div>
-
-
-    <!-- ================= ONLINE STUDY ROOM ================= -->
-
-    <div class="card online-card">
-
-        <h2>Online Study Room</h2>
-
-        <p class="online-description">
-            Study together with other people in a shared online room.
-        </p>
-
-        <button
-            class="online-button"
-            onclick="openOnlineRoom()"
-        >
-            Enter Online Room
-        </button>
-
-    </div>
-
+    </main>
 
 </div>
 
 
+<!-- ================= ONLINE PLACEHOLDER ================= -->
+
+<button
+    class="online-float"
+    aria-label="Online Study Room"
+    title="Online Study Room"
+    onclick="openOnlineRoom()"
+>
+    <svg
+        viewBox="0 0 64 64"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+    >
+        <!-- desk/table -->
+        <path
+            d="M14 42H50"
+            stroke="currentColor"
+            stroke-width="3.5"
+            stroke-linecap="round"
+        />
+        <path
+            d="M19 42V51M45 42V51"
+            stroke="currentColor"
+            stroke-width="3.5"
+            stroke-linecap="round"
+        />
+
+        <!-- three people -->
+        <circle cx="20" cy="23" r="5" stroke="currentColor" stroke-width="3"/>
+        <path
+            d="M12 38C12.7 31.5 15.4 29 20 29C24.6 29 27.3 31.5 28 38"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+        />
+
+        <circle cx="32" cy="20" r="5" stroke="currentColor" stroke-width="3"/>
+        <path
+            d="M24 36C24.7 29.5 27.4 26 32 26C36.6 26 39.3 29.5 40 36"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+        />
+
+        <circle cx="44" cy="23" r="5" stroke="currentColor" stroke-width="3"/>
+        <path
+            d="M36 38C36.7 31.5 39.4 29 44 29C48.6 29 51.3 31.5 52 38"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+        />
+    </svg>
+</button>
+
+
 <script>
+
+
+/* =========================================================
+   FOLDER NAVIGATION
+========================================================= */
+
+function showPage(pageId, button) {
+
+    const pages =
+        document.querySelectorAll(".folder-page");
+
+    pages.forEach(function(page) {
+
+        page.classList.remove("active");
+
+    });
+
+
+    const selectedPage =
+        document.getElementById(pageId);
+
+    if (selectedPage) {
+
+        selectedPage.classList.add("active");
+
+    }
+
+
+    const tabs =
+        document.querySelectorAll(".folder-tab");
+
+    tabs.forEach(function(tab) {
+
+        tab.classList.remove("active");
+
+    });
+
+
+    if (button) {
+
+        button.classList.add("active");
+
+    }
+
+}
 
 
 /* =========================================================
@@ -1310,6 +1547,20 @@ function renderSubjects() {
     });
 
 
+    /* Add-subject action stays inside the subject list. */
+
+    const addOption =
+        document.createElement("option");
+
+    addOption.value = "__ADD_SUBJECT__";
+
+    addOption.textContent = "＋ Add subject";
+
+    addOption.classList.add("add-subject-option");
+
+    select.appendChild(addOption);
+
+
     /*
         Restore the previous subject
         if it still exists.
@@ -1340,6 +1591,7 @@ function renderSubjects() {
 }
 
 
+
 /* =========================================================
    SUBJECT CHANGE
 ========================================================= */
@@ -1350,10 +1602,25 @@ document
         "change",
         function() {
 
+            if (this.value === "__ADD_SUBJECT__") {
+
+                this.value =
+                    localStorage.getItem(
+                        SELECTED_SUBJECT_KEY
+                    ) || subjects[0] || "";
+
+                addSubject();
+
+                return;
+
+            }
+
+
             saveSelectedSubject();
 
         }
     );
+
 
 
 /* =========================================================
@@ -1362,35 +1629,67 @@ document
 
 function addSubject() {
 
-    const input =
-        document.getElementById(
-            "subjectInput"
+    if (timerRunning) {
+
+        alert(
+            "Stop the timer before adding a subject."
         );
-
-
-    const name =
-        input.value.trim();
-
-
-    if (name === "") {
 
         return;
 
     }
 
 
-    if (subjects.includes(name)) {
+    const name =
+        prompt("Enter the new subject name:");
+
+
+    if (name === null) {
+
+        renderSubjects();
+
+        return;
+
+    }
+
+
+    const trimmedName =
+        name.trim();
+
+
+    if (trimmedName === "") {
+
+        renderSubjects();
+
+        return;
+
+    }
+
+
+    if (subjects.includes(trimmedName)) {
 
         alert(
             "This subject already exists."
         );
 
+        renderSubjects();
+
+        const existingSelect =
+            document.getElementById(
+                "subjectSelect"
+            );
+
+        existingSelect.value =
+            trimmedName;
+
+        saveSelectedSubject();
+
         return;
 
     }
 
 
-    subjects.push(name);
+    subjects.push(trimmedName);
 
 
     saveSubjects();
@@ -1398,9 +1697,7 @@ function addSubject() {
     renderSubjects();
 
 
-    /*
-        Select the newly added subject.
-    */
+    /* Select the newly added subject. */
 
     const select =
         document.getElementById(
@@ -1408,14 +1705,12 @@ function addSubject() {
         );
 
 
-    select.value = name;
+    select.value = trimmedName;
 
     saveSelectedSubject();
 
-
-    input.value = "";
-
 }
+
 
 
 /* =========================================================
@@ -2046,7 +2341,8 @@ function updateWeek() {
 
 
         day.classList.add(
-            "day"
+            "day",
+            "week-day-content"
         );
 
 
@@ -2200,22 +2496,15 @@ document
    ENTER KEY - SUBJECT
 ========================================================= */
 
-document
-    .getElementById("subjectInput")
-    .addEventListener(
-        "keydown",
-        function(event) {
+/*
+    There is no visible subject text input in this version.
+    Adding a subject is intentionally handled by the
+    "＋ Add subject" option inside #subjectSelect.
 
-            if (
-                event.key === "Enter"
-            ) {
-
-                addSubject();
-
-            }
-
-        }
-    );
+    The old code tried to attach a keydown listener to
+    #subjectInput, which does not exist and caused a
+    JavaScript error during page startup.
+*/
 
 
 /* =========================================================
