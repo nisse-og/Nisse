@@ -1617,25 +1617,6 @@
             .study-scene-wrap { width: 150px; min-width: 150px; height: 124px; }
         }
 
-        .study-hour-smoke {
-            position: absolute;
-            left: 52%;
-            top: 22%;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(90,86,80,.14);
-            filter: blur(1px);
-            pointer-events: none;
-            z-index: 4;
-            animation: studyHourSmoke 3.2s ease-out both;
-        }
-
-        @keyframes studyHourSmoke {
-            0% { opacity: 0; transform: translate(-50%, 0) scale(.55); }
-            20% { opacity: .42; }
-            100% { opacity: 0; transform: translate(-50%, -24px) scale(1.45); }
-        }
 
         /* =========================================================
            TODAY RESET
@@ -3070,7 +3051,6 @@ function startTimer() {
 
     startTimerInterval();
     updateStudyScene();
-    scheduleStudyDeskReaction();
 
 }
 
@@ -3369,9 +3349,14 @@ function resetStudyAnimatedImage(image, src) {
     if (!image) return;
     image.style.visibility = "hidden";
     image.style.opacity = "0";
-    image.src = "";
+
+    /* Never assign an empty string to an <img>. In browsers that can resolve
+       to the current document and create an extra load during a transition.
+       A cache-busting fragment restarts the animated WebP without creating a
+       second visual layer or changing the actual asset. */
+    image.removeAttribute("src");
     void image.offsetWidth;
-    image.src = src;
+    image.src = src + "#restart=" + Date.now();
 }
 
 function pauseStudyVideos(reset = false) {
@@ -3456,20 +3441,6 @@ function triggerStudyReaction() {
     }, 5835);
 }
 
-function triggerStudyHourSmoke() {
-    const layer = document.getElementById("studyVideoLayer");
-    if (!layer || !timerRunning) return;
-
-    const smoke = document.createElement("span");
-    smoke.className = "study-hour-smoke";
-    smoke.setAttribute("aria-hidden", "true");
-    layer.appendChild(smoke);
-
-    window.setTimeout(function() {
-        smoke.remove();
-    }, 3600);
-}
-
 function updateStudyScene() {
     const { wrap, study } = getStudyVideoElements();
     if (!wrap) return;
@@ -3487,7 +3458,11 @@ function updateStudyScene() {
 
     if (currentHour > studySceneLastHour) {
         studySceneLastHour = currentHour;
-        triggerStudyHourSmoke();
+
+        /* The real hourly event is the existing hand-to-head reaction.
+           Minute changes deliberately do nothing until Leonardo's real
+           page-turn animation is added. */
+        triggerStudyReaction();
     }
 
     if (study && !studyDeskReactionPlaying && study.style.visibility !== "visible") {
@@ -3497,32 +3472,13 @@ function updateStudyScene() {
     }
 }
 
-function scheduleStudyDeskReaction() {
-    if (studyDeskReactionTimeout) clearTimeout(studyDeskReactionTimeout);
-
-    function later() {
-        if (!timerRunning) return;
-        triggerStudyReaction();
-        studyDeskReactionTimeout = window.setTimeout(later, 38000 + Math.random() * 42000);
-    }
-
-    studyDeskReactionTimeout = window.setTimeout(later, 28000 + Math.random() * 30000);
-}
-
 function stopStudyDeskBehavior() {
     pauseStudyVideos(true);
 }
 
 function setupStudyCharacterInteraction() {
-    const layer = document.getElementById("studyVideoLayer");
-    if (!layer || layer.dataset.behaviorReady) return;
-    layer.dataset.behaviorReady = "1";
-
-    layer.addEventListener("pointerdown", function(event) {
-        if (!timerRunning) return;
-        event.preventDefault();
-        triggerStudyReaction();
-    });
+    /* Intentionally empty until the real Leonardo head-reaction animation
+       exists. The current study animation must not react to arbitrary taps. */
 }
 
 setupStudyCharacterInteraction();
