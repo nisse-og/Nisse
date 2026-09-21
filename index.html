@@ -3305,6 +3305,8 @@ let studyScenePendingHour = false;
 let studySceneInitialized = false;
 let studySceneReactionKind = null;
 let studySceneRenderFrame = null;
+let studySceneVideoFrameCallbackId = null;
+let studySceneVideoFrameCallbackVideo = null;
 let studySceneActiveVideo = null;
 let studySceneFrameLocked = false;
 let studySceneVideos = {};
@@ -3312,11 +3314,11 @@ let studySceneVideosReady = false;
 
 const STUDY_VIDEO_ASSETS = {
     study: "study_loop.webm",
-    page: "page.webm",
-    tap: "tap.webm",
-    tapReturn: "tap_return.webm",
-    hour: "hour.webm",
-    hourReturn: "hour_return.webm"
+    page: "page.mp4",
+    tap: "tap.mp4",
+    tapReturn: "tap_return.mp4",
+    hour: "hour.mp4",
+    hourReturn: "hour_return.mp4"
 };
 
 function getStudySceneElements() {
@@ -3374,20 +3376,50 @@ function drawStudyVideoFrame(video) {
     }
 }
 
-function renderStudySceneFrame() {
-    studySceneRenderFrame = null;
-    if (!timerRunning || studySceneState === "IDLE") return;
-    if (studySceneActiveVideo && !studySceneFrameLocked) drawStudyVideoFrame(studySceneActiveVideo);
-    studySceneRenderFrame = requestAnimationFrame(renderStudySceneFrame);
+function cancelStudySceneVideoFrameCallback() {
+    if (studySceneVideoFrameCallbackId !== null && studySceneVideoFrameCallbackVideo) {
+        try {
+            studySceneVideoFrameCallbackVideo.cancelVideoFrameCallback(studySceneVideoFrameCallbackId);
+        } catch (error) {}
+    }
+    studySceneVideoFrameCallbackId = null;
+    studySceneVideoFrameCallbackVideo = null;
+}
+
+function scheduleStudySceneVideoFrame(video) {
+    if (!video || !timerRunning || studySceneState === "IDLE" || studySceneFrameLocked) return;
+
+    if (typeof video.requestVideoFrameCallback === "function") {
+        cancelStudySceneVideoFrameCallback();
+        studySceneVideoFrameCallbackVideo = video;
+        studySceneVideoFrameCallbackId = video.requestVideoFrameCallback(function() {
+            studySceneVideoFrameCallbackId = null;
+            studySceneVideoFrameCallbackVideo = null;
+            if (!timerRunning || studySceneState === "IDLE" || studySceneFrameLocked || studySceneActiveVideo !== video) return;
+            drawStudyVideoFrame(video);
+            scheduleStudySceneVideoFrame(video);
+        });
+        return;
+    }
+
+    if (studySceneRenderFrame === null) {
+        studySceneRenderFrame = requestAnimationFrame(function renderFallback() {
+            studySceneRenderFrame = null;
+            if (!timerRunning || studySceneState === "IDLE" || studySceneFrameLocked || studySceneActiveVideo !== video) return;
+            drawStudyVideoFrame(video);
+            scheduleStudySceneVideoFrame(video);
+        });
+    }
 }
 
 function ensureStudySceneRenderLoop() {
-    if (studySceneRenderFrame === null && timerRunning && studySceneState !== "IDLE") {
-        studySceneRenderFrame = requestAnimationFrame(renderStudySceneFrame);
+    if (timerRunning && studySceneState !== "IDLE" && studySceneActiveVideo && !studySceneFrameLocked) {
+        scheduleStudySceneVideoFrame(studySceneActiveVideo);
     }
 }
 
 function stopStudySceneRenderLoop() {
+    cancelStudySceneVideoFrameCallback();
     if (studySceneRenderFrame !== null) {
         cancelAnimationFrame(studySceneRenderFrame);
         studySceneRenderFrame = null;
@@ -3510,9 +3542,20 @@ function showReactionVideo(key, stateName, onFinished) {
         const startReaction = function() {
             if (token !== studySceneEventToken || !timerRunning) return;
 
-            /* Draw the actual first frame before playback starts, then unlock. */
-            drawStudyVideoFrame(video);
-            studySceneFrameLocked = false;
+            /* Wait for the decoder to present an actual frame before unlocking.
+               This avoids drawing a partially decoded seek frame on mobile GPUs. */
+            const unlockOnRealFrame = function() {
+                if (token !== studySceneEventToken || !timerRunning) return;
+                drawStudyVideoFrame(video);
+                studySceneFrameLocked = false;
+                scheduleStudySceneVideoFrame(video);
+            };
+
+            if (typeof video.requestVideoFrameCallback === "function") {
+                video.requestVideoFrameCallback(unlockOnRealFrame);
+            } else {
+                requestAnimationFrame(unlockOnRealFrame);
+            }
 
             video.onended = function() {
                 if (token !== studySceneEventToken || !timerRunning) return;
