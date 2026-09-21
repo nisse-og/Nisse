@@ -3318,12 +3318,6 @@ const STUDY_VIDEO_ASSETS = {
     hourReturn: "hour_return.webm"
 };
 
-/* The live repository's study_loop contains several generated clips.
-   We deliberately use only one stable, same-quality section of its first
-   clip. This prevents the visible quality jump between different clips. */
-const STUDY_LOOP_START = 0.80;
-const STUDY_LOOP_END = 2.00;
-
 function getStudySceneElements() {
     return {
         wrap: document.getElementById("studySceneWrap"),
@@ -3359,9 +3353,22 @@ function drawStudyVideoFrame(video) {
     const ctx = canvas.getContext("2d");
     if (!ctx) return false;
     try {
+        /*
+           IMPORTANT: the canvas is persistent. Every new video frame must
+           completely replace the previous one. Without clearing first,
+           transparent/semi-transparent pixels from the old frame remain on
+           the canvas and create the visible motion trails/ghosts.
+        */
+        ctx.save();
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = "source-over";
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        ctx.restore();
         return true;
     } catch (error) {
+        try { ctx.restore(); } catch (restoreError) {}
         return false;
     }
 }
@@ -3506,23 +3513,6 @@ function showReactionVideo(key, stateName, onFinished) {
     return true;
 }
 
-function startStudyLoopVideo() {
-    const studyVideo = setActiveStudyVideo("study", true);
-    if (!studyVideo) return null;
-
-    studyVideo.loop = false;
-    try { studyVideo.currentTime = STUDY_LOOP_START; } catch (error) {}
-    studyVideo.ontimeupdate = function() {
-        if (!timerRunning || studySceneState !== "STUDY") return;
-        if (studyVideo.currentTime >= STUDY_LOOP_END) {
-            try { studyVideo.currentTime = STUDY_LOOP_START; } catch (error) {}
-        }
-    };
-    playHiddenVideo(studyVideo);
-    ensureStudySceneRenderLoop();
-    return studyVideo;
-}
-
 function returnToStudyAfterEvent() {
     if (!timerRunning) return;
 
@@ -3540,7 +3530,12 @@ function returnToStudyAfterEvent() {
         return;
     }
 
-    startStudyLoopVideo();
+    const studyVideo = setActiveStudyVideo("study", false);
+    if (studyVideo) {
+        studyVideo.loop = true;
+        playHiddenVideo(studyVideo);
+    }
+    ensureStudySceneRenderLoop();
 }
 
 function playReactionWithReturn(reactionKey, returnKey, stateName) {
@@ -3592,7 +3587,6 @@ function stopStudyScene() {
     studyScenePendingPage = false;
     studyScenePendingHour = false;
     studySceneReactionKind = null;
-    studySceneInitialized = false;
     stopStudySceneRenderLoop();
     pauseAllStudyVideos();
     studySceneActiveVideo = null;
@@ -3619,7 +3613,12 @@ function startStudyScene() {
         studySceneInitialized = true;
         studySceneState = "STUDY";
         hideReactionVideo();
-        startStudyLoopVideo();
+        const studyVideo = setActiveStudyVideo("study", false);
+        if (studyVideo) {
+            studyVideo.loop = true;
+            playHiddenVideo(studyVideo);
+        }
+        ensureStudySceneRenderLoop();
     }
 }
 
