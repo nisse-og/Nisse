@@ -3496,18 +3496,50 @@ function showReactionVideo(key, stateName, onFinished) {
         if (token !== studySceneEventToken || !timerRunning) return;
 
         setActiveStudyVideo(key, true);
-        /* Draw the first frame before playback starts. The visible renderer
-           therefore never shows two videos or a blank/opacity transition. */
-        drawStudyVideoFrame(video);
 
-        video.onended = function() {
+        /*
+           IMPORTANT: setting currentTime = 0 is asynchronous. On some
+           mobile decoders the next draw can otherwise happen before the
+           seek has actually produced frame 0. That can briefly expose a
+           stale/partially updated frame, which is especially noticeable
+           when the TAP animation starts. Wait for the real seek completion
+           before drawing or playing the reaction.
+        */
+        const startReaction = function() {
             if (token !== studySceneEventToken || !timerRunning) return;
-            video.onended = null;
-            if (typeof onFinished === "function") onFinished();
+
+            /* Draw the actual first frame before playback starts. */
+            drawStudyVideoFrame(video);
+
+            video.onended = function() {
+                if (token !== studySceneEventToken || !timerRunning) return;
+                video.onended = null;
+                if (typeof onFinished === "function") onFinished();
+            };
+
+            playHiddenVideo(video);
+            ensureStudySceneRenderLoop();
         };
 
-        playHiddenVideo(video);
-        ensureStudySceneRenderLoop();
+        if (video.readyState >= 2 && Math.abs(video.currentTime) < 0.001) {
+            /* currentTime may already be 0, so there is nothing to seek. */
+            requestAnimationFrame(startReaction);
+        } else {
+            let seekFinished = false;
+            const finishSeek = function() {
+                if (seekFinished) return;
+                seekFinished = true;
+                video.removeEventListener("seeked", finishSeek);
+                requestAnimationFrame(startReaction);
+            };
+            video.addEventListener("seeked", finishSeek, { once: true });
+            try {
+                video.currentTime = 0;
+            } catch (error) {
+                video.removeEventListener("seeked", finishSeek);
+                requestAnimationFrame(startReaction);
+            }
+        }
     });
 
     return true;
